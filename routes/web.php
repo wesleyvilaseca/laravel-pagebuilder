@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/user/save', [UserController::class, 'store'])->name('user.save');
 
     Route::get('/eventos', [EventController::class, 'index'])->name('events');
-    Route::get('/gerenciar-evento/{id}', [EventManegerController::class, 'index'])->name('event.pages');
+    Route::get('/gerenciar-evento/{url}', [EventManegerController::class, 'index'])->name('event.pages');
 
     Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/user/{id}/update', [UserController::class, 'update'])->name('user.update');

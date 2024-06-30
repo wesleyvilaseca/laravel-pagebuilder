@@ -31,4 +31,11 @@ class Utils
     {
         return url('/');
     }
+
+    public static function getPageRoute() {
+        $event = @$_GET['event'] ?? null;
+        $page = @$_GET['page']  ?? null;
+        $route =  env('APP_URL') . '/' . $event . '/' . $page;
+        return $route;
+    }
 }

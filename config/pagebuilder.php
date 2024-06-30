@@ -12,9 +12,9 @@ return [
      |
      */
     'general' => [
-        'base_url' => env('APP_URL'),
+        'base_url' => Utils::getPageRoute(),
         'language' => 'en',
-        'assets_url' => '/assets',
+        'assets_url' => env('APP_URL') . '/assets',
         'uploads_url' => asset('/storage/pagebuilder/uploads')
     ],
 
