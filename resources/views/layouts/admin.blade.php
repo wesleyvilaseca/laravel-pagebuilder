@@ -24,6 +24,9 @@
     <!-- sweet alert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
 
+    <script src="{{ mix('js/sitebuilder-app.js') }}" defer></script>
+
+
     <title>{{ @$title ? $title : 'ACL' }}</title>
 
 </head>
