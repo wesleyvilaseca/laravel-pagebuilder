@@ -14,7 +14,6 @@ use App\Supports\Helper\Utils;
     <link rel="stylesheet" href="<?= phpb_theme_asset('css/owl/owl.theme.default.min.css') ?>" />
     <link rel="stylesheet" href="<?= phpb_theme_asset('css/magnific-popup.css') ?>" />
     <link rel="stylesheet" href="<?= phpb_theme_asset('css/main.css') ?>" />
-
     <title><?= $page->get('title'); ?></title>
     <script>
         let site_url = '<?= Utils::get_site_url() ?>';
@@ -25,6 +24,7 @@ use App\Supports\Helper\Utils;
 
     <?= $body ?>
     <!--JS-->
+    <script src="<?= mix('js/sitebuilder-app.js') ?>" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="<?= phpb_theme_asset('js/bootstrap.min.js') ?>"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
