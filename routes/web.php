@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function() {
      */
     Route::any('/settings/pages/{id}/build', [PageBuilderController::class, 'build'])->name('pagebuilder.build');
     Route::any('/settings/pages/build', [PageBuilderController::class, 'build']);
+    Route::any('/{event}/{uri}/settings/pages/build', [PageBuilderController::class, 'build']);
 });
 
 
@@ -68,5 +69,5 @@ Route::get('/', function () {
 });
 
 Route::get('/notfound', [ControllersWebsiteController::class, 'notfound'])->name('notfound');
-Route::any('/',         [ControllersWebsiteController::class, 'uri']);
-Route::any('/{uri}',    [ControllersWebsiteController::class, 'uri']);
+Route::any('/{uri}',         [ControllersWebsiteController::class, 'uri']);
+Route::any('/{domain}/{uri}',    [ControllersWebsiteController::class, 'uri']);
