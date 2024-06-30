@@ -102,7 +102,7 @@ class EventManegerController extends Controller
             return redirect()->back()->with('error', 'erro na operação');
         }
 
-        return redirect()->route('pages', $event->id)->with('success', 'Pagina criado com sucesso');
+        return redirect()->route('event.pages', $event->id)->with('success', 'Pagina criado com sucesso');
     }
 
     public function update(Request $request, $event_id, $pageid)
