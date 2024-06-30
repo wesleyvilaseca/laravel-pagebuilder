@@ -16,8 +16,8 @@ class Utils
 {
     public static function back_route_pagebuilder()
     {
-        $id = @$_GET['event'] ? $_GET['event'] : 0;
-        $route =  '/gerenciar-evento/' . $id;
+        $event = @$_GET['event'] ?? null;
+        $route =  env('APP_URL') . '/gerenciar-evento/' . $event;
         return $route;
     }
 
@@ -30,5 +30,12 @@ class Utils
     public static function get_site_url()
     {
         return url('/');
+    }
+
+    public static function getPageRoute() {
+        $event = @$_GET['event'] ?? null;
+        $page = @$_GET['page']  ?? null;
+        $route =  env('APP_URL') . '/' . $event . '/' . $page;
+        return $route;
     }
 }

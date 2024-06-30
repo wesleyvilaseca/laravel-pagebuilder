@@ -14,19 +14,22 @@ class ControllersWebsiteController extends Controller
     /**
      * Show the website page that corresponds with the current URI.
      */
-    public function uri(Request $request, $uri = '')
+    public function uri(Request $request, $event = '', $uri = '')
     {
-        $url = request()->getHttpHost();
+        $event = Event::where('url', $event)->first();
+        if ($event && !$uri) {
+            $page = Page::where(['event_id' => $event->id, 'homepage' => Page::HOME_PAGE])->first();
 
-        $website = Event::where('site_url', 'http://' . $url)->orWhere('site_url', 'https://' . $url)->first();
-
-        if (!$uri) {
-            $page = Page::where(['website_id' => $website->id, 'homepage' => 1])->first();
+            if (!$page) {
+                $page = Page::where(['event_id' => $event->id])->first();
+            }
         } else {
-            $page = Page::where(['website_id' => $website->id, 'route' => $uri])->first();
+            $page = Page::where(['event_id' => $event->id, 'route' => $uri])->first();
         }
 
-        if (!$page) return redirect()->route('notfound');
+        if (!$page) {
+            return redirect()->route('notfound');
+        }
 
         $theme = new Theme(config('pagebuilder.theme'), config('pagebuilder.theme.active_theme'));
         $page = (new PageRepository)->findWithId($page->id);

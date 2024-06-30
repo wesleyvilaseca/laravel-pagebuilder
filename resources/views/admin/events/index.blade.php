@@ -50,7 +50,7 @@
                         </td>
 
                         <td>
-                            <a href="{{ route('event.pages', $event->id) }}" class="btn btn-sm btn-success">Gerenciar</a>
+                            <a href="{{ route('event.pages', $event->url) }}" class="btn btn-sm btn-success">Gerenciar</a>
                         </td>
                     </tr>
                     @empty

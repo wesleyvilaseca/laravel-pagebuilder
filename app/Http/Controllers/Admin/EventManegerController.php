@@ -11,12 +11,12 @@ use Illuminate\Support\Str;
 
 class EventManegerController extends Controller
 {
-    public function index($eventId) {
-        if (!$eventId) {
+    public function index($url) {
+        if (!$url) {
             return Redirect::back();
         }
 
-        $event = Event::find($eventId);
+        $event = Event::where('url', $url)->first();
         if (!$event) {
             return Redirect::back();
         }
@@ -43,7 +43,7 @@ class EventManegerController extends Controller
         $data['toptitle']       = 'Paginas do evento ' . $event->title;
         $data['breadcrumb'][]   = ['route' => route('painel'), 'title' => 'Painel de controle'];
         $data['breadcrumb'][]   = ['route' => route('events'), 'title' => 'Eventos'];
-        $data['breadcrumb'][]   = ['route' => route('event.pages', $event->id), 'title' => 'Páginas do evento ' . $event->title];
+        $data['breadcrumb'][]   = ['route' => route('event.pages', $event->url), 'title' => 'Páginas do evento ' . $event->title];
         $data['breadcrumb'][]   = ['route' => '#', 'title' => 'Nova página', 'active' => true];
         $data['event']          = $event;
         $data['events_']        = true;
@@ -65,7 +65,7 @@ class EventManegerController extends Controller
         $data['toptitle']       = 'Evento ' . $event->name;
         $data['breadcrumb'][]   = ['route' => route('painel'), 'title' => 'Painel de controle'];
         $data['breadcrumb'][]   = ['route' => route('events'), 'title' => 'Eventos'];
-        $data['breadcrumb'][]   = ['route' => route('event.pages', $event->id), 'title' => 'Páginas do evento ' . $event->name];
+        $data['breadcrumb'][]   = ['route' => route('event.pages', $event->url), 'title' => 'Páginas do evento ' . $event->name];
         $data['breadcrumb'][]   = ['route' => '#', 'title' => 'Editar página ' . $page->name, 'active' => true];
         $data['event']        = $event;
         $data['page']           = $page;
