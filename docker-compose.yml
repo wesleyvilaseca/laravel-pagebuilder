@@ -1,0 +1,28 @@
+version: '3'
+services:
+  admin:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - TARGETPLATFORM=linux/amd64
+    command: 'php artisan serve --host=0.0.0.0'
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8004:8000
+    depends_on:
+      - site_builder_db
+
+  site_builder_db:
+    image: mysql:5.7.34
+    platform: linux/amd64
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    volumes:
+      - ./storage/dbdata:/var/lib/mysql
+    ports:
+      - "33071:3306"

@@ -1,0 +1,21 @@
+<!--SLIDER-->
+<div id="slider" class="block">
+    <div class="container pt-5">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 align-self-center mb-md-0 mb-4">
+                <h1>Lorem Ipsun Dolor aondeai</h1>
+                <h4 class="mb-4">Et Sumi kapa namur aondeai rocus pocus</h4>
+                <a href="#"
+                    class="button btn btn-primary button-primary d-md-inline-block d-block mb-md-0 mb-2 mr-md-2">Saiba
+                    mais</a>
+                <a href="#"
+                    class="button btn btn-outline-primary button-primary-outline d-md-inline-block d-block">Contato</a>
+            </div>
+            <div class="col-lg-8 col-md-6 align-self-center text-center">
+                <img src="https://cms.codevila.com.br/assets/adm/img/images/DEFAULT/destaque1.png" class="img-fluid"
+                    class="section1" />
+            </div>
+        </div>
+    </div>
+</div>
+<!--//SLIDER-->
