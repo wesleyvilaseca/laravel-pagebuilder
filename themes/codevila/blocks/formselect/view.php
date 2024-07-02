@@ -8,8 +8,7 @@ $name = Illuminate\Support\Str::slug($block->setting('label'));
 
 $errors = Session::get('errors', new Illuminate\Support\MessageBag);
 $controller = new Controller;
-
-// dd($controller->get_data());
+// print_r($name);
 ?>
 <form action="/busca" action="POST">
     <div class="form-group">

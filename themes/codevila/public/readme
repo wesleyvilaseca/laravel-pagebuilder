@@ -1,0 +1,10 @@
+the files and path need be on public patch with inside assets-themes with the theme name 
+
+asset-themes
+    my-theme/
+        ├── css/
+        ├── js/
+        ├── block-thumbs/
+
+to usage on public.php of the theme
+Utils::getasset('assets-themes/my-theme/css/file.css')

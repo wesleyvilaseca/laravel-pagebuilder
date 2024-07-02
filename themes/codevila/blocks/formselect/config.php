@@ -4,6 +4,11 @@ return [
     "category" => "Form components",
     "title" => "Form select element",
     "settings" => [
+        "filter" => [
+            "type" => "text",
+            "label" => "filtro",
+            "value" => "Example filtro",
+        ],
         "label" => [
             "type" => "text",
             "label" => "Label",

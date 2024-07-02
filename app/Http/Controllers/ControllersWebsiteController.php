@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Page;
 use Illuminate\Http\Request;
+use PHPageBuilder\Modules\GrapesJS\Block\BaseModel;
 use PHPageBuilder\Modules\GrapesJS\PageRenderer;
 use PHPageBuilder\Repositories\PageRepository;
 use PHPageBuilder\Theme;
@@ -36,6 +37,10 @@ class ControllersWebsiteController extends Controller
         $pageRenderer = new PageRenderer($theme, $page);
         $html = $pageRenderer->render();
         return $html;
+    }
+
+    public function editora(Request $request, $event = '') {
+        echo $this->uri($request, $event);
     }
 
     public function notfound(Request $request)

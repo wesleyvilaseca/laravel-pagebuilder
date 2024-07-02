@@ -71,3 +71,4 @@ Route::get('/', function () {
 Route::get('/notfound', [ControllersWebsiteController::class, 'notfound'])->name('notfound');
 Route::any('/{uri}',         [ControllersWebsiteController::class, 'uri']);
 Route::any('/{domain}/{uri}',    [ControllersWebsiteController::class, 'uri']);
+Route::any('/{domain}/editora/{editora}', [ControllersWebsiteController::class, 'editora']);

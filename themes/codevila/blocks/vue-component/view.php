@@ -1,5 +1,11 @@
-<?php 
+<?php
+
+use Illuminate\Support\Facades\Request;
+
 $id = 'ID_' . Illuminate\Support\Str::random(20);
+$routeParams = Request::route()->parameters();
+print_r($routeParams);
+echo $block->setting('filter');
 ?>
 
 <div class="container">
