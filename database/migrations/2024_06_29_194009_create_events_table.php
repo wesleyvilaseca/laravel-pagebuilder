@@ -18,6 +18,7 @@ class CreateEventsTable extends Migration
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->string('url')->nullable();
+            $table->integer('theme_id')->nullable();
             $table->integer('status')->nullable();
             $table->timestamps();
         });

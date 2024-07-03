@@ -149,7 +149,7 @@ return [
         'class' => PHPageBuilder\Theme::class,
         'folder' => base_path('themes'),
         'folder_url' => '/themes',
-        'active_theme' => 'codevila'
+        'active_theme' => Utils::getActiveTheme()
     ],
 
     /*

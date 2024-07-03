@@ -1,17 +1,6 @@
 <?php
 
 namespace App\Supports\Helper;
-
-use App\Models\Site;
-use App\Models\TenantSites;
-use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Route;
-
 class Utils
 {
     public static function back_route_pagebuilder()
@@ -37,5 +26,9 @@ class Utils
         $page = @$_GET['page']  ?? null;
         $route =  env('APP_URL') . '/' . $event . '/' . $page;
         return $route;
+    }
+
+    public static function getActiveTheme() {
+        return env('ACTIVE_THEME');
     }
 }

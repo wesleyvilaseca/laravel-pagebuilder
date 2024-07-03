@@ -102,7 +102,7 @@ class EventManegerController extends Controller
             return redirect()->back()->with('error', 'erro na operação');
         }
 
-        return redirect()->route('event.pages', $event->id)->with('success', 'Pagina criado com sucesso');
+        return redirect()->route('event.pages', $event->url)->with('success', 'Pagina criado com sucesso');
     }
 
     public function update(Request $request, $event_id, $pageid)
@@ -129,7 +129,7 @@ class EventManegerController extends Controller
             return redirect()->back()->with('error', 'erro na operação');
         }
 
-        return redirect()->route('event.pages', $event->id)->with('success', 'Pagina editada com sucesso');
+        return redirect()->route('event.pages', $event->url)->with('success', 'Pagina editada com sucesso');
     }
 
     public function delete($event_id, $pageid)
@@ -147,6 +147,6 @@ class EventManegerController extends Controller
             return redirect()->back()->with('error', 'erro na operação');
         }
 
-        return redirect()->route('event.pages', $event->id)->with('success', 'Página removido com sucesso');
+        return redirect()->route('event.pages', $event->url)->with('success', 'Página removido com sucesso');
     }
 }
