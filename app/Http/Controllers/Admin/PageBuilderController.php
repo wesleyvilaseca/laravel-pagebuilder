@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
+use App\Models\Theme;
 use Illuminate\Http\Request;
+use PHPageBuilder\PHPageBuilder;
 
 class PageBuilderController extends Controller
 {
@@ -23,10 +26,10 @@ class PageBuilderController extends Controller
 
         $phpPageBuilder = app()->make('phpPageBuilder');
         $pageBuilder = $phpPageBuilder->getPageBuilder();
-
+        
         $customScripts = view("pagebuilder.scripts")->render();
+        
         $pageBuilder->customScripts('head', $customScripts);
-
         $pageBuilder->handleRequest($route, $action, $page);
     }
 }

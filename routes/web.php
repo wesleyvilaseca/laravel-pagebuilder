@@ -37,7 +37,6 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/user/save', [UserController::class, 'store'])->name('user.save');
 
     Route::get('/eventos', [EventController::class, 'index'])->name('events');
-    Route::get('/gerenciar-evento/{url}', [EventManegerController::class, 'index'])->name('event.pages')->middleware('check.theme');
 
     Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/user/{id}/update', [UserController::class, 'update'])->name('user.update');
@@ -55,9 +54,12 @@ Route::middleware(['auth'])->group(function() {
     /**
      * page builder
      */
-    Route::any('/settings/pages/{id}/build', [PageBuilderController::class, 'build'])->name('pagebuilder.build');
     Route::any('/settings/pages/build', [PageBuilderController::class, 'build']);
     Route::any('/{event}/{uri}/settings/pages/build', [PageBuilderController::class, 'build']);
+    Route::middleware(['check.theme'])->group(function() {
+        Route::get('/gerenciar-evento/{event}', [EventManegerController::class, 'index'])->name('event.pages');
+        Route::any('/settings/pages/{id}/build', [PageBuilderController::class, 'build'])->name('pagebuilder.build');
+    });
 });
 
 
@@ -68,7 +70,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/notfound', [ControllersWebsiteController::class, 'notfound'])->name('notfound');
-Route::any('/{uri}',         [ControllersWebsiteController::class, 'uri']);
-Route::any('/{domain}/{uri}',    [ControllersWebsiteController::class, 'uri']);
-Route::any('/{domain}/editora/{editora}', [ControllersWebsiteController::class, 'editora']);
+Route::middleware(['check.theme.site'])->group(function() {
+    Route::get('/notfound', [ControllersWebsiteController::class, 'notfound'])->name('notfound');
+    Route::any('/{domain}',         [ControllersWebsiteController::class, 'uri']);
+    Route::any('/{domain}/{uri}',    [ControllersWebsiteController::class, 'uri']);
+    Route::any('/{domain}/editora/{editora}', [ControllersWebsiteController::class, 'editora']);
+});

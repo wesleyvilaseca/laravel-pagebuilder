@@ -16,8 +16,8 @@
             <tbody>
                 @forelse ($events as $event)
                     <tr>
-                        <td>{{ env('APP_URL') . '/' . $event->name }}</td>
-                        <td>{{ $event->url }}</td>
+                        <td>{{ $event->name }}</td>
+                        <td>{{env('APP_URL') . '/' . $event->url }}</td>
                         <td>
                             @switch(@$event->status)
                                 @case(0)
