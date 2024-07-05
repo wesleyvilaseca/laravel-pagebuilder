@@ -16,13 +16,13 @@ class Utils
 
     public static function getasset($route)
     {
-        return asset($route);
+        // return asset($route);
     }
 
 
     public static function get_site_url()
     {
-        return url('/');
+        // return url('/');
     }
 
     public static function getPageRoute() {
