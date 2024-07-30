@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PermissionRoleController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\TemplateController;
+use App\Http\Controllers\Admin\TemplatesController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ControllersWebsiteController;
 use App\Http\Controllers\LoginController;
@@ -41,6 +43,14 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/user/{id}/update', [UserController::class, 'update'])->name('user.update');
     Route::get('/user/{id}/remove', [UserController::class, 'delete'])->name('user.remove');
+
+    Route::get('/templates', [TemplatesController::class, 'index'])->name('templates');
+    Route::get('/template/new', [TemplatesController::class, 'create'])->name('templates.new');
+    Route::post('/templates', [TemplatesController::class, 'store'])->name('templates.save');
+    Route::get('/templates/{id}/edit', [TemplatesController::class, 'edit'])->name('templates.edit');
+    Route::put('/templates/{id}', [TemplatesController::class, 'update'])->name('templates.update');
+    Route::get('/templates/{id}/show', [TemplatesController::class, 'show'])->name('templates.show');
+    Route::delete('/templates/{id}/remove', [TemplatesController::class, 'delete'])->name('templates.destroy');
 
     /**
      * pages admin

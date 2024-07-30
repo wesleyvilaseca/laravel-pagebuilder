@@ -19,7 +19,6 @@ class Utils
         return asset($route);
     }
 
-
     public static function get_site_url()
     {
         return url('/');
@@ -39,6 +38,27 @@ class Utils
 
         $event = @$_GET['event'];
         return @$_SESSION[$event] ? $_SESSION[$event] : 'demo';
+    }
+
+    public static function getRouteAdminSettingsPage() {
+        $defaultRoute = '/settings/pages/build';
+        $event = @$_GET['event'] ?? null;
+        $template = @$_GET['template'] ?? null;
+        $route = '';
+
+        if ($event) {
+            $route = $defaultRoute;
+        }
+
+        if ($template) {
+            $route = '/settings/templates/build';
+        }
+
+        if (!$route) {
+            return $defaultRoute;
+        }
+
+        return $route;
     }
 
         /**

@@ -14,6 +14,7 @@ use App\Supports\Helper\Utils;
     <link rel="stylesheet" href="<?= Utils::getasset('assets-themes/codevila/css/owl/owl.theme.default.min.css') ?>" />
     <link rel="stylesheet" href="<?= Utils::getasset('assets-themes/codevila/css/magnific-popup.css') ?>" />
     <link rel="stylesheet" href="<?= Utils::getasset('assets-themes/codevila/css/main.css') ?>" />
+
     <title><?= $page->get('title'); ?></title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

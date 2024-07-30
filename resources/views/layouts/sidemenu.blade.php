@@ -13,10 +13,18 @@
                     <li class="header-menu">
                         <span>Navegação</span>
                     </li>
+
                     <li class="{{ @$home ? 'ativo' : '' }}">
                         <a href="{{ route('painel') }}">
                             <i class="fas fa-chart-bar"></i>
                             <span>Home</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ @$templates_ ? 'ativo' : '' }}">
+                        <a href="{{ route('templates') }}">
+                            <i class="fas fa-vector-square"></i>
+                            <span>Templates</span>
                         </a>
                     </li>
 

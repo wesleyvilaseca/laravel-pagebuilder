@@ -32,4 +32,8 @@ class PageBuilderController extends Controller
         $pageBuilder->customScripts('head', $customScripts);
         $pageBuilder->handleRequest($route, $action, $page);
     }
+
+    public function buildTemplate($templateId = null) {
+        dd('aqui');
+    }
 }
