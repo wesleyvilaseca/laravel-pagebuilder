@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'check.theme' => \App\Http\Middleware\ActiveThemeEventMiddleware::class,
+        'check.theme.template' => \App\Http\Middleware\ActiveThemeTemplateEventMiddleware::class,
         'check.theme.site' => \App\Http\Middleware\ActiveThemeEventSiteMiddleware::class,
     ];
 }

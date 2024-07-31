@@ -22,7 +22,7 @@
                       <i class="far fa-eye"></i>
                     </a>
 
-                    <a href="#" class="btn btn-sm btn-success">
+                    <a href="{{ route('template.pages', $template->url)}}" class="btn btn-sm btn-success">
                       <i class="fas fa-newspaper"></i>
                     </a>
                 </td>

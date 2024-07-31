@@ -1,16 +1,22 @@
 <?php
 
 namespace App\Supports\Helper;
-
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Session;
-
 class Utils
 {
-    public static function back_route_pagebuilder()
+    public static function back_route_pagebuilder() : string
     {
         $event = @$_GET['event'] ?? null;
-        $route =  env('APP_URL') . '/gerenciar-evento/' . $event;
+        $template = @$_GET['template'] ?? null;
+        $route = '';
+
+        if($event) {
+            $route =  env('APP_URL') . '/gerenciar-evento/' . $event;
+        }
+
+        if($template) {
+            $route =  env('APP_URL') . '/template-pages/' . $template;
+        }
+
         return $route;
     }
 
@@ -25,9 +31,19 @@ class Utils
     }
 
     public static function getPageRoute() {
+        $template = @$_GET['template'] ?? null;
         $event = @$_GET['event'] ?? null;
         $page = @$_GET['page']  ?? null;
-        $route =  env('APP_URL') . '/' . $event . '/' . $page;
+        $route = '';
+
+        if($event) {
+            $route =  env('APP_URL') . '/' . $event . '/' . $page;
+        }
+
+        if ($template) {
+            $route =  env('APP_URL') . '/' . $template . '/' . $page;
+        }
+        
         return $route;
     }
 
@@ -37,7 +53,18 @@ class Utils
         }
 
         $event = @$_GET['event'];
-        return @$_SESSION[$event] ? $_SESSION[$event] : 'demo';
+        $template = @$_GET['template'];
+        $defaultTheme = 'demo';
+
+        if(@$_SESSION[$event]) {
+            return $_SESSION[$event];
+        }
+
+        if(@$_SESSION[$template]) {
+            return $_SESSION[$template];
+        }
+
+        return $defaultTheme;
     }
 
     public static function getRouteAdminSettingsPage() {

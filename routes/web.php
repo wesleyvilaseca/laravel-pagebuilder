@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/templates/{id}/show', [TemplatesController::class, 'show'])->name('templates.show');
     Route::delete('/templates/{id}/remove', [TemplatesController::class, 'delete'])->name('templates.destroy');
 
+     
     /**
      * pages admin
      */
@@ -70,8 +71,18 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/gerenciar-evento/{event}', [EventManegerController::class, 'index'])->name('event.pages');
         Route::any('/settings/pages/{id}/build', [PageBuilderController::class, 'build'])->name('pagebuilder.build');
     });
-});
 
+    /**
+     * template pages
+     */
+    Route::get('/template-page/{id}/create', [TemplateController::class, 'create'])->name('template.pages.create');
+    Route::post('/template-page/{id}/create', [TemplateController::class, 'store'])->name('template.pages.store');
+    Route::any('/{template}/{uri}/settings/templates/build', [PageBuilderController::class, 'build']);
+    Route::middleware(['check.theme.template'])->group(function() {
+        Route::get('/template-pages/{template}', [TemplateController::class, 'index'])->name('template.pages');
+        Route::any('/settings/templates/{id}/build', [PageBuilderController::class, 'build'])->name('template.pagebuilder.build');
+    });
+});
 
 Route::get('/register',     [RegisterController::class, 'index'])->name('register');
 Route::post('/register',    [RegisterController::class, 'create'])->name('register.create');

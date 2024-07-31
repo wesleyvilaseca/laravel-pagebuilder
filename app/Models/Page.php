@@ -12,4 +12,9 @@ class Page extends Model
     const HOME_PAGE = 1;
     protected $table = 'pages';
     protected $fillable = ['event_id', 'name', 'layout', 'route', 'homepage', 'data'];
+
+    public function templates()
+    {
+        return $this->belongsToMany(Template::class, 'template_pages', 'page_id', 'template_id');
+    }
 }

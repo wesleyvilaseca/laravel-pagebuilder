@@ -10,6 +10,7 @@ use App\Models\Theme;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class TemplatesController extends Controller
 {
@@ -72,6 +73,7 @@ class TemplatesController extends Controller
         $data['breadcrumb'][] = ['route' => route('templates'), 'title' => 'Templates'];
         $data['breadcrumb'][] = ['route' => '#', 'title' => 'Apagar template - ' . $template->name, 'active' => true];
         $data['template'] = $template;
+        $data['theme'] = Theme::find($template->theme_id);
 
         return view('admin.templates.show', $data);
     }
@@ -80,6 +82,7 @@ class TemplatesController extends Controller
 
         DB::beginTransaction();
         try {
+            $request->request->add(['url' => Str::slug($request->name)]);
             Template::create($request->all());
             DB::commit();
 
@@ -98,6 +101,7 @@ class TemplatesController extends Controller
                 return redirect()->back();
             }
 
+            $request->request->add(['url' => Str::slug($request->name)]);
             Template::where('id', $template->id)->update($request->except(['_token', '_method']));
             DB::commit();
 

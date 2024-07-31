@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\TemplatePage;
 use App\Models\Theme;
 use Illuminate\Http\Request;
+use PHPageBuilder\Contracts\PageContract;
+use PHPageBuilder\Modules\GrapesJS\Thumb\ThumbGenerator;
 use PHPageBuilder\PHPageBuilder;
 
 class PageBuilderController extends Controller
@@ -31,9 +34,5 @@ class PageBuilderController extends Controller
         
         $pageBuilder->customScripts('head', $customScripts);
         $pageBuilder->handleRequest($route, $action, $page);
-    }
-
-    public function buildTemplate($templateId = null) {
-        dd('aqui');
     }
 }

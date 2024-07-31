@@ -10,6 +10,9 @@
                 <li>
                     <strong>Descrição: </strong> {{ $template->description }}
                 </li>
+                <li>
+                    <strong>Thema: </strong> {{ $theme->name }}
+                </li>
             </ul>
 
             <form action="{{ route('templates.destroy', $template->id) }}" method="POST">

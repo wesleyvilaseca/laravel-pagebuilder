@@ -15,12 +15,8 @@ class CreateTemplatePagesTable extends Migration
     {
         Schema::create('template_pages', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
             $table->integer('template_id')->nullable();
-            $table->string('layout')->nullable();
-            $table->json('data')->nullable();
-            $table->integer('homepage')->default(0);
-            $table->string('route')->nullable();
+            $table->string('page_id')->nullable();
             $table->timestamps();
         });
     }
