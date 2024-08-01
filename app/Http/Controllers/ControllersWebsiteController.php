@@ -18,6 +18,10 @@ class ControllersWebsiteController extends Controller
     public function uri(Request $request, $event = '', $uri = '')
     {
         $event = Event::where('url', $event)->first();
+        if(!$event && $uri) {
+            $page = Page::where('route', $uri)->first();
+        }
+
         if ($event && !$uri) {
             $page = Page::where(['event_id' => $event->id, 'homepage' => Page::HOME_PAGE])->first();
 
@@ -25,7 +29,7 @@ class ControllersWebsiteController extends Controller
                 $page = Page::where(['event_id' => $event->id])->first();
             }
         } else {
-            $page = Page::where(['event_id' => $event->id, 'route' => $uri])->first();
+            $page = Page::where(['route' => $uri])->first();
         }
 
         if (!$page) {

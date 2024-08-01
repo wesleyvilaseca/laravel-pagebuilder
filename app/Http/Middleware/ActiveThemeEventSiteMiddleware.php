@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Event;
+use App\Models\Page;
 use App\Models\Theme;
 use App\Supports\Helper\Utils;
 use Closure;
@@ -24,10 +25,20 @@ class ActiveThemeEventSiteMiddleware
         $eventUrl = $params['domain'];
         $event = Event::where('url', $eventUrl)->first();
         if (!$event) {
-            return abort(404);
-        }    
+            $uri = @$params['uri'];
+            if (!$uri) {
+                return abort(404);
+            }
+
+            $page = Page::where('route', $uri)->first();
+            if (!$page) {
+                return abort(404);
+            }
+        }
+        
+        $theme_id = $event ? $event->theme_id : $page->templates[0]->theme_id;
     
-        $activeThemeEvent = Theme::find($event->theme_id);
+        $activeThemeEvent =Theme::find($theme_id);
 
         config(['pagebuilder.theme.active_theme' => $activeThemeEvent->alias]);
         $pageBuilder = new PHPageBuilder(config('pagebuilder'));
