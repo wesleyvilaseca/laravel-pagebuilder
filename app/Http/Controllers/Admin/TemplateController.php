@@ -55,6 +55,34 @@ class TemplateController extends Controller
         return view('admin.template.create-page', $data);
     }
 
+    public function edit($template_id = null, $page_id = null) {
+        if (!$template_id || !$page_id) {
+            return redirect()->back();
+        }
+
+        $template = Template::find($template_id);
+        if (!$template) {
+            return redirect()->back();
+        }
+
+        $page = Page::find($page_id);
+        if(!$page) {
+            return redirect()->route('template.pages', $template->url)->with('warning',  'Página não localizada');
+        }
+
+        $data['templates_'] = true;
+        $data['toptitle'] = 'Editar página - ' . $page->name;
+        $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
+        $data['breadcrumb'][] = ['route' => route('templates'), 'title' => 'Templates'];
+        $data['breadcrumb'][]   = ['route' => route('template.pages', $template->url), 'title' => 'Paginas template - ' . $template->name];
+        $data['breadcrumb'][] = ['route' => '#', 'title' => 'Editar página - ' . $page->name, 'active' => true];
+        $data['template'] = $template;
+        $data['page'] = $page;
+        $data['action'] = route('template.pages.update', [$template->id, $page->id]);
+
+        return view('admin.template.edit-page', $data);
+    }
+
     public function store(Request $request, $templateId)
     {
         DB::beginTransaction();
@@ -82,6 +110,77 @@ class TemplateController extends Controller
 
             DB::commit();
             return redirect()->route('template.pages', $template->url)->with('success', 'Página criada com sucesso');
+        } catch (ModelNotFoundException $e) {
+            DB::rollback();
+            return redirect()->route('template.pages', $template->url)->with('warning',  $e->getMessage());
+        }
+    }
+
+    public function update(Request $request, $templateId, $pageId) {
+        DB::beginTransaction();
+        try {
+            $template = Template::where(['id' => $templateId])->first();
+            if (!$template) {
+                return redirect()->back();
+            }
+
+            $page = $template->pages->find($pageId);
+            if (!$page) {
+                return redirect()->back()->with('error', 'erro ao atualiza a página');
+            }
+
+            $data = $request->except(['_token']);
+            $data['route'] = Str::slug($request->name);
+            $data['template_id'] = $template->id;
+
+            if ($page->route != $data['route']) {
+                $pageSameRoute = $template->pages->where('route', $data['route'])->first();
+                if ($pageSameRoute) {
+                    return redirect()->back()->with('error', 'Já existe um página com o nome ' . $data['name'] . ' para esse template.');
+                }
+            }
+
+            $hashomepage = $template->pages->where(['homepage' => Page::HOME_PAGE])->first();
+            if ($hashomepage && $request->homepage == Page::HOME_PAGE) {
+                $result = $hashomepage->update(['homepage' => 0]);
+                if (!$result) {
+                    return redirect()->back()->with('error', 'erro ao atualiza a homepage');
+                }
+            }
+           
+            $page->update($data);
+
+            DB::commit();
+            return redirect()->route('template.pages', $template->url)->with('success', 'Página atualizada com sucesso');
+        } catch (ModelNotFoundException $e) {
+            DB::rollback();
+            return redirect()->route('template.pages', $template->url)->with('warning',  $e->getMessage());
+        }
+    }
+
+    public function destroy($templateId, $pageId) {
+        DB::beginTransaction();
+        try {
+            $template = Template::where(['id' => $templateId])->first();
+            if (!$template) {
+                return redirect()->back();
+            }
+
+            $page = $template->pages->find($pageId);
+            if (!$page) {
+                return redirect()->back()->with('error', 'Página não localizada');
+            }
+           
+            TemplatePage::where([
+                'page_id' => $page->id,
+                'template_id' => $template->id
+                ])
+                ->delete();
+
+            $page->delete();
+
+            DB::commit();
+            return redirect()->route('template.pages', $template->url)->with('success', 'Página removida com sucesso');
         } catch (ModelNotFoundException $e) {
             DB::rollback();
             return redirect()->route('template.pages', $template->url)->with('warning',  $e->getMessage());

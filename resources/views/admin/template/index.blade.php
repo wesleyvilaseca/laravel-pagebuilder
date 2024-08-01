@@ -19,7 +19,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="#" class="btn btn-sm btn-info">
+                            <a href="{{ route('template.pages.edit', [$template->id, $page->id])}}" class="btn btn-sm btn-info">
                               <i class="fas fa-edit"></i>
                             </a>
 
@@ -27,7 +27,7 @@
                               <i class="fas fa-grip-vertical"></i>
                             </a>
 
-                            <a href="#"
+                            <a href="{{ route('template.pages.destroy', [$template->id, $page->id]) }}"
                                 onclick="return deleteSite('{{ $page->name }}');" 
                                 class="btn btn-sm btn-danger">
                                 <i class="fas fa-trash"></i>

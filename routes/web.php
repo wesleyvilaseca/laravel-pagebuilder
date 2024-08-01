@@ -77,6 +77,9 @@ Route::middleware(['auth'])->group(function() {
      */
     Route::get('/template-page/{id}/create', [TemplateController::class, 'create'])->name('template.pages.create');
     Route::post('/template-page/{id}/create', [TemplateController::class, 'store'])->name('template.pages.store');
+    Route::get('/template-page/{id}/edit/{pageId}', [TemplateController::class, 'edit'])->name('template.pages.edit');
+    Route::put('/template-page/{id}/update/{pageId}', [TemplateController::class, 'update'])->name('template.pages.update');
+    Route::get('/template-page/{id}/update/{pageId}', [TemplateController::class, 'destroy'])->name('template.pages.destroy');
     Route::any('/{template}/{uri}/settings/templates/build', [PageBuilderController::class, 'build']);
     Route::middleware(['check.theme.template'])->group(function() {
         Route::get('/template-pages/{template}', [TemplateController::class, 'index'])->name('template.pages');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TemplateCreateRequest;
 use App\Http\Requests\TemplateUpdateRequest;
 use App\Models\Template;
+use App\Models\TemplatePage;
 use App\Models\Theme;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -119,6 +120,15 @@ class TemplatesController extends Controller
             if (!$template) {
                 return redirect()->back();
             }
+
+            $pages = $template->pages;
+            if ($pages->count() > 0) {
+                foreach ($pages as $page) {
+                    $page->delete();
+                }
+            }
+
+            TemplatePage::where('template_id', $template->id)->delete();
 
             $template->delete();
             DB::commit();
