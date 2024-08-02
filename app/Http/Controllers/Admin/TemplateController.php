@@ -24,10 +24,11 @@ class TemplateController extends Controller
         }
 
         $data['templates_'] = true;
-        $data['toptitle'] = 'Paginas do template';
+        $data['title'] = 'Paginas do template ';
+        $data['toptitle'] = $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
         $data['breadcrumb'][] = ['route' => route('templates'), 'title' => 'Templates'];
-        $data['breadcrumb'][] = ['route' => '#', 'title' => 'Paginas template - ' . $template->name, 'active' => true];
+        $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'] . $template->name, 'active' => true];
         $data['pages'] = $template->pages;
         $data['template']       = $template;
 

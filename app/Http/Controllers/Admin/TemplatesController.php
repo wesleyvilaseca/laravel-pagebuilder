@@ -17,19 +17,21 @@ class TemplatesController extends Controller
 {
     public function index() {
         $data['templates_'] = true;
-        $data['toptitle'] = 'Templates';
+        $data['title'] = 'Templates';
+        $data['toptitle'] = $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
-        $data['breadcrumb'][] = ['route' => '#', 'title' => 'Templates', 'active' => true];
+        $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
         $data['list'] = Template::paginate(15);
         return view('admin.templates.index', $data);
     }
 
     public function create() {
         $data['templates_'] = true;
-        $data['toptitle'] = 'Templates';
+        $data['title'] = 'Novo templates';
+        $data['toptitle'] = $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
         $data['breadcrumb'][] = ['route' => route('templates'), 'title' => 'Templates'];
-        $data['breadcrumb'][] = ['route' => '#', 'title' => 'Novo template', 'active' => true];
+        $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
         $data['themes'] = Theme::all();
         $data['action'] = route('templates.save');
 
@@ -47,10 +49,11 @@ class TemplatesController extends Controller
         }
 
         $data['templates_'] = true;
-        $data['toptitle'] = 'Editar templates - ' . $template->name;
+        $data['title'] = 'Editar templates - ' . $template->name;
+        $data['toptitle'] = $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
         $data['breadcrumb'][] = ['route' => route('templates'), 'title' => 'Templates'];
-        $data['breadcrumb'][] = ['route' => '#', 'title' => 'Editar template - ' . $template->name, 'active' => true];
+        $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
         $data['themes'] = Theme::all();
         $data['template'] = $template;
         $data['action'] = route('templates.update', $template->id);
@@ -69,10 +72,11 @@ class TemplatesController extends Controller
         }
 
         $data['templates_'] = true;
-        $data['toptitle'] = 'Template - ' . $template->name;
+        $data['title'] = 'Template - ' . $template->name;
+        $data['toptitle'] =  $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
         $data['breadcrumb'][] = ['route' => route('templates'), 'title' => 'Templates'];
-        $data['breadcrumb'][] = ['route' => '#', 'title' => 'Apagar template - ' . $template->name, 'active' => true];
+        $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
         $data['template'] = $template;
         $data['theme'] = Theme::find($template->theme_id);
 
