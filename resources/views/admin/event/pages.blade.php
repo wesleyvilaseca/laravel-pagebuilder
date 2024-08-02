@@ -8,6 +8,7 @@
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Action</th>
+                    <th>#</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,15 +21,20 @@
                         </td>
                         <td>
                             <a href="{{ route('pages.edit', [$event->id, $page->id]) }}"
-                                class="btn btn-sm btn-info">Editar</a>
-
-                            <a href="{{ route('pagebuilder.build', $page->id) }}?event={{ $event->url }}&page={{ $page->route }}"
-                                class="btn btn-sm btn-warning">Editar layout</a>
-
+                                class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </a>
                             <a href="{{ route('pages.delete', [$event->id, $page->id]) }}"
                                 onclick="return deleteSite('{{ $page->name }}');" 
                                 class="btn btn-sm btn-danger">
-                                Remove
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+
+                        <td>
+                            <a href="{{ route('pagebuilder.build', $page->id) }}?event={{ $event->url }}&page={{ $page->route }}"
+                                class="btn btn-sm btn-success">
+                                <i class="fas fa-newspaper"></i>
                             </a>
                         </td>
                     </tr>
