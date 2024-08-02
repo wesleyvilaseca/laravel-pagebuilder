@@ -38,7 +38,15 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/user/new', [UserController::class, 'create'])->name('user.new');
     Route::post('/user/save', [UserController::class, 'store'])->name('user.save');
 
-    Route::get('/eventos', [EventController::class, 'index'])->name('events');
+    /**
+     * events
+     */
+    Route::get('/events', [EventController::class, 'index'])->name('events');
+    Route::get('/events/create', [EventController::class, 'create'])->name('event.create');
+    Route::post('/events/store', [EventController::class, 'store'])->name('event.store');
+    Route::get('/events/{id}/edit', [EventController::class, 'edit'])->name('event.edit');
+    Route::put('/events/{id}/update', [EventController::class, 'update'])->name('event.update');
+    Route::get('/events/{id}/delete',[EventController::class, 'delete'])->name('event.delete');
 
     Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/user/{id}/update', [UserController::class, 'update'])->name('user.update');

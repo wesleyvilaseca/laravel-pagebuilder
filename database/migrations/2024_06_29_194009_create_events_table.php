@@ -20,6 +20,7 @@ class CreateEventsTable extends Migration
             $table->string('url')->nullable();
             $table->integer('theme_id')->nullable();
             $table->integer('status')->nullable();
+            $table->integer('principal')->default(0);
             $table->timestamps();
         });
     }

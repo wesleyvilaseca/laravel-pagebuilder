@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <div class="container-fluid">
-        <a href="#" class="btn btn-primary btn-sm">ADD</a>
+        <a href="{{ route('event.create') }}" class="btn btn-primary btn-sm">ADD</a>
 
         <table class="table" id="customers-table">
             <thead>
@@ -16,7 +16,13 @@
             <tbody>
                 @forelse ($events as $event)
                     <tr>
-                        <td>{{ $event->name }}</td>
+                        <td>
+                            {{ $event->name }}
+                            @if ($event->principal == 1)
+                                <i class="fas fa-star" style="color: #FFD700"></i>
+                            @endif
+
+                        </td>
                         <td>{{env('APP_URL') . '/' . $event->url }}</td>
                         <td>
                             @switch(@$event->status)
@@ -25,7 +31,7 @@
                                 @break
 
                                 @case(1)
-                                    <span class="badge badge-warning">Em manutenção</span>
+                                    <span class="badge badge-warning">Evento ativo</span>
                                 @break
 
                                 @case(2)
@@ -38,19 +44,26 @@
                             @endswitch
                         </td>
                         <td>
-                            <a href="#" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{{ route('event.edit', $event->id)}}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i>
+                            </a>
 
-                            <a href="#"
+                            <a href="{{ route('event.delete', $event->id)}} "
                                 onclick="return deleteSite('{{ $event->name }}');"
                                 class="btn
-                                btn-sm btn-danger">Remove</a>
+                                btn-sm btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
 
-                            <a href="{{ $event->site_url }}" class="btn btn-sm btn-success" target="_blanck"><i
-                                    class="fas fa-eye"></i> Visualizar</a>
+                            <a href="{{ $event->site_url }}" class="btn btn-sm btn-success" target="_blanck">
+                                <i class="far fa-eye"></i>
+                            </a>
                         </td>
 
                         <td>
-                            <a href="{{ route('event.pages', $event->url) }}" class="btn btn-sm btn-success">Gerenciar</a>
+                            <a href="{{ route('event.pages', $event->url) }}" class="btn btn-sm btn-success">
+                                <i class="fas fa-newspaper"></i>
+                            </a>
                         </td>
                     </tr>
                     @empty
@@ -71,7 +84,7 @@
             });
 
             function deleteSite(title) {
-                if (!confirm(`Tem certeza que deseja remover o website ${title}?`))
+                if (!confirm(`Ao remover o evento, todas as páginas serão apagadas. Tem certeza que deseja remover o evento ${title}?`))
                     event.preventDefault();
             }
         </script>
