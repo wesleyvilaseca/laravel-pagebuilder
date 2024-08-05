@@ -21,6 +21,14 @@
                         </a>
                     </li>
 
+
+                    <li class="{{ @$publisher_ ? 'ativo' : '' }}">
+                        <a href="{{ route('publishers') }}">
+                            <i class="fas fa-pen-fancy"></i>
+                            <span>Editoras</span>
+                        </a>
+                    </li>
+
                     <li class="{{ @$templates_ ? 'ativo' : '' }}">
                         <a href="{{ route('templates') }}">
                             <i class="fas fa-vector-square"></i>

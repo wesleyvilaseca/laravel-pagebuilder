@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\PainelController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PermissionRoleController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TemplateController;
 use App\Http\Controllers\Admin\TemplatesController;
@@ -69,6 +70,14 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/evento-page/{event}/edit/{id}',  [EventManegerController::class, 'edit'])->name('pages.edit');
     Route::post('/evento-page/{event}/edit/{id}', [EventManegerController::class, 'update'])->name('pages.update');
     Route::get('/evento-page/{event}/delete/{id}',[EventManegerController::class, 'delete'])->name('pages.delete');
+
+    /**
+     * editoras|publisher
+     */
+    Route::get('/publisher',     [PublisherController::class, 'index'])->name('publishers');
+    Route::get('/publisher/create',     [PublisherController::class, 'create'])->name('publisher.create');
+    Route::post('/publisher/store',     [PublisherController::class, 'store'])->name('publisher.store');
+
 
     /**
      * page builder
