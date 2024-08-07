@@ -20,4 +20,14 @@ class Publisher extends Model
         return $this->belongsToMany(SystemUpload::class, 'upload_relations', 'relation_id', 'system_upload_id');
     }
 
+    /**
+     * Define an accessor to cast the 'data' column to an object.
+     *
+     * @param  string  $value
+     * @return mixed
+     */
+    public function getDataAttribute($value)
+    {
+        return json_decode($value);
+    }
 }

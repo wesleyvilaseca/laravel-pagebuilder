@@ -7,18 +7,16 @@ use App\Models\Upload;
 use App\Models\UploadRelation;
 use Exception;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UploadFileService {
 
-    protected $uploadRepository;
-    protected $uploadRelationRepository;
-
-    public function __construct(SystemUpload $uploadRepository, UploadRelation $uploadRelationRepository)
+    public function __construct(
+        protected SystemUpload $uploadRepository,
+        protected UploadRelation $uploadRelationRepository)
     {
-        $this->uploadRepository = $uploadRepository;
-        $this->uploadRelationRepository = $uploadRelationRepository;
     }
     
     public function upload(UploadedFile $file, string $directory = 'uploads', string $disk = 'public'): array
@@ -26,8 +24,7 @@ class UploadFileService {
         try {
             $publicId = sha1(uniqid(rand(), true));
 
-            $directory = $directory . '/' . $publicId;
-            $filename = uniqid() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
+            $filename = $publicId . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
     
             $server_file = $file->storeAs($directory, $filename, $disk);
     
@@ -81,12 +78,40 @@ class UploadFileService {
         return $this->uploadRelationRepository->create($data);
     }
 
-    public function deleteFile($path) {
-        Storage::disk('public')->delete($path);
+    public function deleteFile(string $path = null, SystemUpload $file = null, bool $deletePublisherDirectory = false) {
+        DB::beginTransaction();
+        try {
+            if ($file) {
+                $path = $file->server_file;
+                $this->uploadRelationRepository->where('system_upload_id', $file->id)->delete();
+                $this->uploadRepository->where('id', $file->id)->delete();
+            }
 
-        if (count(Storage::disk('public')->files($path)) === 0 &&
-            count(Storage::disk('public')->directories($path)) === 0) {
-            Storage::disk('public')->deleteDirectory($path);
+            if(!$file && !$path) {
+                throw new Exception('server_file is required.');
+            }
+
+            $dir = dirname($path);
+
+            Storage::disk('public')->delete($path);
+    
+            if (count(Storage::disk('public')->files($dir)) === 0&&
+                count(Storage::disk('public')->directories($dir)) === 0) {
+                Storage::disk('public')->deleteDirectory($dir);
+
+                $parentDir = dirname($dir);
+        
+                if($deletePublisherDirectory) {
+                    if (count(Storage::disk('public')->files($parentDir)) === 0){
+                        Storage::disk('public')->deleteDirectory($parentDir);
+                    }
+                }
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new Exception($e->getMessage());
         }
+        
     }
 }

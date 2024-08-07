@@ -76,7 +76,10 @@ Route::middleware(['auth'])->group(function() {
      */
     Route::get('/publisher',     [PublisherController::class, 'index'])->name('publishers');
     Route::get('/publisher/create',     [PublisherController::class, 'create'])->name('publisher.create');
+    Route::get('/publisher/{id}/edit',     [PublisherController::class, 'edit'])->name('publisher.edit');
+    Route::put('/publisher/{id}/update',     [PublisherController::class, 'update'])->name('publisher.update');
     Route::post('/publisher/store',     [PublisherController::class, 'store'])->name('publisher.store');
+    Route::get('/publisher/{id}/delete',  [PublisherController::class, 'delete'])->name('publisher.delete');
 
 
     /**

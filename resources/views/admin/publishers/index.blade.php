@@ -34,11 +34,11 @@
                             <img src="{{ asset('storage/' . $logo['server_file'])}}" alt="Descrição da Imagem">
                         </td>
                         <td>
-                            <a href="#" class="btn btn-sm btn-info">
+                            <a href="{{ route('publisher.edit', $publisher->id) }}" class="btn btn-sm btn-info">
                               <i class="fas fa-edit"></i>
                             </a>
 
-                            <a href="#"
+                            <a href="{{ route('publisher.delete', $publisher->id) }}"
                                 onclick="return deleteSite('{{ $publisher->name }}');" 
                                 class="btn btn-sm btn-danger">
                                 <i class="fas fa-trash"></i>
@@ -63,7 +63,7 @@
         });
 
         function deleteSite(title) {
-            if (!confirm(`Tem certeza que deseja remover a página ${title}?`))
+            if (!confirm(`Atenção! ao remover a editora, todos os arquivos vinculados a ela e os seus relacionamento com os livros serão apagados. Tem certeza que deseja remover a editora ${title}?`))
                 event.preventDefault();
         }
     </script>
