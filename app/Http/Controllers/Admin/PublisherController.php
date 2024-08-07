@@ -140,11 +140,11 @@ class PublisherController extends Controller
             return redirect()->route('publishers')->with('success', 'Editora criada com sucesso');
         } catch (Exception $e) {
             DB::rollback();
-            if ($storedFileLogo) {
+            if (isset($storedFileLogo)) {
                 $this->uploadFileService->deleteFile($storedFileLogo['server_file']);
             }
 
-            if ($storedFilePriceList) {
+            if (isset($storedFilePriceList)) {
                 $this->uploadFileService->deleteFile($storedFilePriceList['server_file']);
             }
             return redirect()->route('publishers')->with('warning',  $e->getMessage());
@@ -238,6 +238,13 @@ class PublisherController extends Controller
             return redirect()->route('publishers')->with('success', 'Editora editada com sucesso');
         } catch (Exception $e) {
             DB::rollback();
+            if (isset($storedFileLogo)) {
+                $this->uploadFileService->deleteFile($storedFileLogo['server_file']);
+            }
+
+            if (isset($storedFilePriceList)) {
+                $this->uploadFileService->deleteFile($storedFilePriceList['server_file']);
+            }
             return redirect()->route('publishers')->with('warning',  $e->getMessage());
         }
     }
