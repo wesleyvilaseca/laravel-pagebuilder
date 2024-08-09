@@ -152,8 +152,8 @@ class PublisherController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $publisher = $this->repository->find($id);
-        if (!$publisher) {
+        $editora = $this->repository->find($id);
+        if (!$editora) {
             return redirect()->back()->with('error', 'Editora não localizada');
         }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\EventManegerController;
 use App\Http\Controllers\Admin\PageBuilderController;
@@ -80,6 +81,17 @@ Route::middleware(['auth'])->group(function() {
     Route::put('/publisher/{id}/update',     [PublisherController::class, 'update'])->name('publisher.update');
     Route::post('/publisher/store',     [PublisherController::class, 'store'])->name('publisher.store');
     Route::get('/publisher/{id}/delete',  [PublisherController::class, 'delete'])->name('publisher.delete');
+
+     /**
+     * editoras|publisher
+     */
+    Route::get('/books',     [BookController::class, 'index'])->name('books');
+    Route::get('/books/create',     [BookController::class, 'create'])->name('book.create');
+    Route::get('/books/{id}/edit',     [BookController::class, 'edit'])->name('book.edit');
+    Route::get('/books/{id}/show',     [BookController::class, 'show'])->name('book.show');
+    Route::put('/books/{id}/update',     [BookController::class, 'update'])->name('book.update');
+    Route::post('/books/store',     [BookController::class, 'store'])->name('book.store');
+    Route::delete('/book/{id}/delete',  [BookController::class, 'delete'])->name('book.delete');
 
 
     /**

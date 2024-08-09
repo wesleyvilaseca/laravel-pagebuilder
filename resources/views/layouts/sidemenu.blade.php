@@ -29,6 +29,13 @@
                         </a>
                     </li>
 
+                    <li class="{{ @$books_ ? 'ativo' : '' }}">
+                        <a href="{{ route('books') }}">
+                            <i class="fas fa-book"></i>
+                            <span>Livros</span>
+                        </a>
+                    </li>
+
                     <li class="{{ @$templates_ ? 'ativo' : '' }}">
                         <a href="{{ route('templates') }}">
                             <i class="fas fa-vector-square"></i>

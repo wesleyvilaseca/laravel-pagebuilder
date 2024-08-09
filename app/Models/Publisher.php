@@ -20,6 +20,11 @@ class Publisher extends Model
         return $this->belongsToMany(SystemUpload::class, 'upload_relations', 'relation_id', 'system_upload_id');
     }
 
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'publisher_books', 'publisher_id', 'book_id');
+    }
+
     /**
      * Define an accessor to cast the 'data' column to an object.
      *

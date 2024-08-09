@@ -17,7 +17,10 @@ class CreateBooksTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
+            $table->double('price', 10, 2)->nullable();
+            $table->double('discount', 10, 2)->nullable();
             $table->json('data')->nullable();
+            $table->string('url')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });
