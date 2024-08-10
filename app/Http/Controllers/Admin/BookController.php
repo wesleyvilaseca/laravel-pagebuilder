@@ -57,11 +57,11 @@ class BookController extends Controller
             return redirect()->back();
         }
 
-        $data['publisher_'] = true;
+        $data['books_'] = true;
         $data['title']  = 'Editar livro - ' . $book->name;
         $data['toptitle'] =  $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
-        $data['breadcrumb'][] = ['route' => route('publishers'), 'title' => 'Editoras'];
+        $data['breadcrumb'][] = ['route' => route('books'), 'title' => 'Livros'];
         $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
         $data['publishers'] = $this->publisherRepository->all();
         $data['image'] = $book->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_BOOK_SINGLE_IMAGE)->first();
@@ -82,11 +82,11 @@ class BookController extends Controller
             return redirect()->back();
         }
 
-        $data['publisher_'] = true;
+        $data['books_'] = true;
         $data['title']  = 'Livro - ' . $book->name;
         $data['toptitle'] =  $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
-        $data['breadcrumb'][] = ['route' => route('publishers'), 'title' => 'Editoras'];
+        $data['breadcrumb'][] = ['route' => route('books'), 'title' => 'Livros'];
         $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
         $data['publishers'] = $this->publisherRepository->all();
         $data['image'] = $book->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_BOOK_SINGLE_IMAGE)->first();
@@ -102,13 +102,13 @@ class BookController extends Controller
         DB::beginTransaction();
         try {
             $request->validate([
-                'image' => 'required|file|mimes:jpg,jpeg,png|max:2048',
+                'image' => 'file|mimes:jpg,jpeg,png|max:5048',
                 'name' => 'required|string',
                 'status' => 'required|integer',
                 'description' => 'string',
                 'publisher_id' => 'integer|exists:publishers,id',
-                'price' => 'regex:/^\d+(\.\d{1,2})?$/',
-                'discount' => 'regex:/^\d+(\.\d{1,2})?$/'
+                'price' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
+                'discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/'
             ]);
 
             $url = Str::slug($request->name);
@@ -141,7 +141,7 @@ class BookController extends Controller
             if($request->file('image')) {
                 $storedFileSigleImage = $this->uploadFileService->upload(
                     $request->file('image'),
-                    'books/' .  $url . '/' . $this->repository::FILE_CATEGORY_BOOK_SINGLE_IMAGE
+                    'books/book-' .  $book->id . '/' . $this->repository::FILE_CATEGORY_BOOK_SINGLE_IMAGE
                 );
 
                 $upload = $this->uploadFileService->store($storedFileSigleImage);
@@ -175,32 +175,27 @@ class BookController extends Controller
         DB::beginTransaction();
         try {
             $request->validate([
-                'image' => 'required|file|mimes:jpg,jpeg,png|max:2048',
+                'image' => 'file|mimes:jpg,jpeg,png|max:5048',
                 'name' => 'required|string',
                 'status' => 'required|integer',
                 'description' => 'string',
-                'publisher_id' => 'integer',
-                'price' => 'numeric|decimal:2',
-                'discount' => 'numeric|decimal:2'
+                'publisher_id' => 'integer|exists:publishers,id',
+                'price' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
+                'discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/'
             ]);
 
             $url = Str::slug($request->name);
             if ($request->publisher_id && $request->name != $book->name) {
-                $hasBookName = $this->repository-checkIfPublisherHasBook($request->publisher_id, $url);
+                $hasBookName  = $this->repository->publishers()
+                            ->where('publisher_id', $request->publisher_id)
+                            ->whereHas('books', function ($query) use ($url) {
+                                $query->where('url', $url);
+                            })->first();
 
                 if($hasBookName) {
                     return redirect()->back()->with('warning', 'A editora já possui um livro com o nome ' . $request->name);
                 }
             }
-
-            $book = $this->repository->where('id', $book->id)->update([
-                'name' => $request->name,
-                'status' => $request->status,
-                'description' => $request->description,
-                'price' => @$request->price,
-                'discount' => @$request->discount,
-                'url' => $url
-            ]);
 
             if ($request->file('image')) {
                 $image = $book->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_BOOK_SINGLE_IMAGE)->first();
@@ -210,7 +205,7 @@ class BookController extends Controller
 
                 $storedFileSigleImage = $this->uploadFileService->upload(
                     $request->file('image'),
-                    'publishers/' . $url . '/' . $this->repository::FILE_CATEGORY_BOOK_SINGLE_IMAGE
+                    'books/book-' . $book->id . '/' . $this->repository::FILE_CATEGORY_BOOK_SINGLE_IMAGE
                 );
                 $upload = $this->uploadFileService->store($storedFileSigleImage);
 
@@ -221,6 +216,15 @@ class BookController extends Controller
                     'alias_category' => $this->repository::FILE_CATEGORY_BOOK_SINGLE_IMAGE
                 ]);
             }
+
+            $book = $this->repository->where('id', $book->id)->update([
+                'name' => $request->name,
+                'status' => $request->status,
+                'description' => $request->description,
+                'price' => @$request->price,
+                'discount' => @$request->discount,
+                'url' => $url
+            ]);
 
             DB::commit();
             return redirect()->route('books')->with('success', 'Livro editado com sucesso');
