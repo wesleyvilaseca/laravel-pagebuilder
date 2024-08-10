@@ -109,7 +109,7 @@ class PublisherController extends Controller
 
             $storedFileLogo = $this->uploadFileService->upload(
                 $request->file('logo'),
-                'publishers/' .  Str::slug($publisher->name) . '/' . $this->repository::FILE_CATEGORY_LOGO
+                'publishers/publisher-' . $publisher->id . '/' . $this->repository::FILE_CATEGORY_LOGO
             );
 
             $upload = $this->uploadFileService->store($storedFileLogo);
@@ -124,7 +124,7 @@ class PublisherController extends Controller
             if ($request->file('price_list')) {
                 $storedFilePriceList = $this->uploadFileService->upload(
                     $request->file('price_list'),
-                    'publishers/' .  Str::slug($publisher->name) . '/' . $this->repository::FILE_CATEGORY_PUBLISHER_BOOK_PRICE_LIST
+                    'publishers/publisher-' . $publisher->id . '/' . $this->repository::FILE_CATEGORY_PUBLISHER_BOOK_PRICE_LIST
                 );
                 $upload = $this->uploadFileService->store($storedFilePriceList);
 
@@ -152,8 +152,8 @@ class PublisherController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $editora = $this->repository->find($id);
-        if (!$editora) {
+        $publisher = $this->repository->find($id);
+        if (!$publisher) {
             return redirect()->back()->with('error', 'Editora não localizada');
         }
 
@@ -176,7 +176,7 @@ class PublisherController extends Controller
 
                 $storedFileLogo = $this->uploadFileService->upload(
                     $request->file('logo'),
-                    'publishers/' .  Str::slug($publisher->name) . '/' . $this->repository::FILE_CATEGORY_LOGO
+                    'publishers/publisher-' . $publisher->id . '/' . $this->repository::FILE_CATEGORY_LOGO
                 );
                 $upload = $this->uploadFileService->store($storedFileLogo);
 
@@ -196,7 +196,7 @@ class PublisherController extends Controller
 
                 $storedFilePriceList = $this->uploadFileService->upload(
                     $request->file('price_list'),
-                    'publishers/' .  Str::slug($publisher->name) . '/' . $this->repository::FILE_CATEGORY_PUBLISHER_BOOK_PRICE_LIST
+                    'publishers/publisher-' . $publisher->id . '/' . $this->repository::FILE_CATEGORY_PUBLISHER_BOOK_PRICE_LIST
                 );
                 $upload = $this->uploadFileService->store($storedFilePriceList);
 
