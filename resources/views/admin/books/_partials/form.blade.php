@@ -50,7 +50,7 @@
         <select class="form-control" id="publisher_id" name="publisher_id">
             <option disabled selected>Selecione uma opção</option>
             @foreach ($publishers as $publisher)
-                    <option value="{{ $publisher->id }}" {{ @$publisherBook->id == $publisherBook->id || @old('publisher_id') == $publisher->id ? 'selected' : '' }}>{{ $publisher->name }}</option>
+                    <option value="{{ $publisher->id }}" {{ @$publisherBook->id == $publisher->id || @old('publisher_id') == $publisher->id ? 'selected' : '' }}>{{ $publisher->name }}</option>
                 @endforeach
         </select>
     </div>
@@ -66,7 +66,7 @@
 </div>
 
 <div class="text-center">
-    <button type="submit" class="btn btn-{{ @$show ? 'danger' : 'success' }} btn-sm">{{ @$show ? 'APAGAR LIVRO ' . @$book->name . ' ?' : 'Salvar'}}</button>
+    <button type="submit" id="bookButtonSubmit" class="btn btn-{{ @$show ? 'danger' : 'success' }} btn-sm">{{ @$show ? 'APAGAR LIVRO ' . @$book->name . ' ?' : 'Salvar'}}</button>
 </div>
 
 <style>
