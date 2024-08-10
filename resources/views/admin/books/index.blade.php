@@ -19,22 +19,30 @@
             <thead>
                 <tr>
                     <th scope="col">Livro</th>
-                    <th scope="col">Ação</th>
+                    <th scope="col">#</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($books as $book)
                     <tr>
                         <td>{{ $book->name }}</td>
-                        <td>
-                            <a href="{{ route('book.edit', $book->id) }}" class="btn btn-sm btn-info">
-                              <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="{{ route('book.show', $book->id) }}" class="btn btn-sm btn-info">
-                            <i class="far fa-eye"></i>
-                            </a>
+                        <td style="width=10px;">
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Ação
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                  <a class="dropdown-item" href="{{ route('book.edit', $book->id) }}">
+                                    <i class="fas fa-edit text-primary"></i> Editar
+                                  </a>
+                                  <a class="dropdown-item" href="{{ route('book.show', $book->id) }}">
+                                    <i class="far fa-eye text-info"></i> Visualizar
+                                  </a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
+
                 @empty
                     nothing to list
                 @endforelse

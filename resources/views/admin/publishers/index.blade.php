@@ -20,7 +20,7 @@
                 <tr>
                     <th scope="col">Editora</th>
                     <th scope="col">Logo</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">#</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,16 +33,21 @@
                             @endphp
                             <img src="{{ asset('storage/' . $logo['server_file'])}}" alt="Descrição da Imagem">
                         </td>
-                        <td>
-                            <a href="{{ route('publisher.edit', $publisher->id) }}" class="btn btn-sm btn-info">
-                              <i class="fas fa-edit"></i>
-                            </a>
 
-                            <a href="{{ route('publisher.delete', $publisher->id) }}"
-                                onclick="return deleteSite('{{ $publisher->name }}');" 
-                                class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash"></i>
-                            </a>
+                        <td style="width=10px;">
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Ação
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                  <a class="dropdown-item" href="{{ route('publisher.edit', $publisher->id) }}">
+                                    <i class="fas fa-edit text-primary"></i> Editar
+                                  </a>
+                                  <a class="dropdown-item" href="{{ route('publisher.delete', $publisher->id) }}" onclick="return deleteSite('{{ $publisher->name }}');" >
+                                    <i class="fas fa-trash text-danger"></i> Apagar
+                                  </a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @empty

@@ -7,7 +7,6 @@
             <thead>
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Action</th>
                     <th>#</th>
                 </tr>
             </thead>
@@ -19,23 +18,23 @@
                                 <i class="fas fa-star" style="color: #FFD700"></i>
                             @endif
                         </td>
-                        <td>
-                            <a href="{{ route('pages.edit', [$event->id, $page->id]) }}"
-                                class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="{{ route('pages.delete', [$event->id, $page->id]) }}"
-                                onclick="return deleteSite('{{ $page->name }}');" 
-                                class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </td>
-
-                        <td>
-                            <a href="{{ route('pagebuilder.build', $page->id) }}?event={{ $event->url }}&page={{ $page->route }}"
-                                class="btn btn-sm btn-success">
-                                <i class="fas fa-newspaper"></i>
-                            </a>
+                        <td style="width=10px;">
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Ação
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                  <a class="dropdown-item" href="{{ route('pages.edit', [$event->id, $page->id]) }}">
+                                    <i class="fas fa-edit text-primary"></i> Editar
+                                  </a>
+                                  <a class="dropdown-item" href="{{ route('pages.delete', [$event->id, $page->id]) }}" onclick="return deleteSite('{{ $page->name }}');" >
+                                    <i class="fas fa-trash text-danger"></i> Apagar
+                                  </a>
+                                  <a class="dropdown-item" href="{{ route('pagebuilder.build', $page->id) }}?event={{ $event->url }}&page={{ $page->route }}" >
+                                    <i class="fas fa-newspaper text-success"></i> Editar interface da Página
+                                  </a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @empty

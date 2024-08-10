@@ -9,8 +9,8 @@
                     <th scope="col">Name</th>
                     <th scope="col">Url</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Action</th>
-                    <th>#</th>
+                    <th scope="col">#</th>
+                    {{-- <th>#</th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -43,27 +43,29 @@
                                 @default
                             @endswitch
                         </td>
-                        <td>
-                            <a href="{{ route('event.edit', $event->id)}}" class="btn btn-sm btn-warning">
-                                <i class="fas fa-edit"></i>
-                            </a>
-
-                            <a href="{{ route('event.delete', $event->id)}} "
-                                onclick="return deleteSite('{{ $event->name }}');"
-                                class="btn
-                                btn-sm btn-danger">
-                                <i class="fas fa-trash"></i>
-                            </a>
-
-                            <a href="{{ $event->site_url }}" class="btn btn-sm btn-success" target="_blanck">
-                                <i class="far fa-eye"></i>
-                            </a>
-                        </td>
-
-                        <td>
-                            <a href="{{ route('event.pages', $event->url) }}" class="btn btn-sm btn-success">
-                                <i class="fas fa-newspaper"></i>
-                            </a>
+                        <td style="width=10px;">
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Ação
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                  <a class="dropdown-item" href="{{ route('event.edit', $event->id)}}">
+                                    <i class="fas fa-edit text-primary"></i> Editar
+                                  </a>
+                                  <a class="dropdown-item" href="{{ route('event.delete', $event->id) }}" onclick="return deleteSite('{{ $event->name }}');">
+                                    <i class="fas fa-trash text-danger"></i> Apagar
+                                  </a>
+                                  <a class="dropdown-item" href="#">
+                                    <i class="fas fa-images text-warning"></i> Banners do evento
+                                  </a>
+                                  <a class="dropdown-item" href="#">
+                                    <i class="fas fa-images text-warning"></i> Mapa de bancadas do evento
+                                  </a>
+                                  <a class="dropdown-item" href="{{ route('event.pages', $event->url) }}">
+                                    <i class="fas fa-newspaper text-info"></i> Páginas do evento
+                                  </a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     @empty
