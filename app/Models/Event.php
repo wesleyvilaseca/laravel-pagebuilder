@@ -17,4 +17,27 @@ class Event extends Model
 
     protected $fillable = ['name', 'description', 'url', 'status', 'theme_id', 'principal'];
 
+    public function publishers()
+    {
+        return $this->belongsToMany(Publisher::class, 'event_publishers', 'event_id', 'publisher_id');
+    }
+
+    /**
+     * Cateroies not linked with this product
+     */
+    public function publishersAvailable($filter = null)
+    {
+        $publishers = Publisher::whereNotIn('publishers.id', function ($query) {
+            $query->select('event_publishers.publisher_id');
+            $query->from('event_publishers');
+            $query->whereRaw("event_publishers.event_id={$this->id}");
+        })
+            ->where(function ($queryFilter) use ($filter) {
+                if ($filter)
+                    $queryFilter->where('publishers.name', 'LIKE', "%{$filter}%");
+            })
+            ->paginate();
+
+        return $publishers;
+    }
 }

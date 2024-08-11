@@ -3,14 +3,10 @@
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\EventManegerController;
+use App\Http\Controllers\Admin\EventPublisherController;
 use App\Http\Controllers\Admin\PageBuilderController;
-use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PainelController;
-use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\PermissionRoleController;
-use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PublisherController;
-use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TemplateController;
 use App\Http\Controllers\Admin\TemplatesController;
 use App\Http\Controllers\Admin\UserController;
@@ -71,6 +67,15 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/evento-page/{event}/edit/{id}',  [EventManegerController::class, 'edit'])->name('pages.edit');
     Route::post('/evento-page/{event}/edit/{id}', [EventManegerController::class, 'update'])->name('pages.update');
     Route::get('/evento-page/{event}/delete/{id}',[EventManegerController::class, 'delete'])->name('pages.delete');
+
+    /**
+     * event-publishers
+     */
+    
+    Route::get('/event/{id}/publishers',[EventPublisherController::class, 'index'])->name('event.publishers');
+    Route::get('/event/{id}/available',[EventPublisherController::class, 'available'])->name('event.publishers.available');
+    Route::post('/event/{id}/available',[EventPublisherController::class, 'attachPublisherEvent'])->name('event.publishers.available');
+    Route::post('/event/{eventId}/available/{publisherId}',[EventPublisherController::class, 'detachEventPublisher'])->name('event.publishers.detach');
 
     /**
      * editoras|publisher

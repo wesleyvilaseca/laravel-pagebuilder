@@ -52,8 +52,8 @@
                                   <a class="dropdown-item" href="{{ route('event.edit', $event->id)}}">
                                     <i class="fas fa-edit text-primary"></i> Editar
                                   </a>
-                                  <a class="dropdown-item" href="{{ route('event.delete', $event->id) }}" onclick="return deleteSite('{{ $event->name }}');">
-                                    <i class="fas fa-trash text-danger"></i> Apagar
+                                  <a class="dropdown-item" href="{{ route('event.publishers', $event->id)}}">
+                                    <i class="fas fa-book-reader text-dark"></i> Editoras do evento
                                   </a>
                                   <a class="dropdown-item" href="#">
                                     <i class="fas fa-images text-warning"></i> Banners do evento
@@ -63,6 +63,9 @@
                                   </a>
                                   <a class="dropdown-item" href="{{ route('event.pages', $event->url) }}">
                                     <i class="fas fa-newspaper text-info"></i> Páginas do evento
+                                  </a>
+                                  <a class="dropdown-item" href="{{ route('event.delete', $event->id) }}" onclick="return deleteSite('{{ $event->name }}');">
+                                    <i class="fas fa-trash text-danger"></i> Apagar
                                   </a>
                                 </div>
                             </div>
