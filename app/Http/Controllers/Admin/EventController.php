@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EventCreateRequest;
 use App\Http\Requests\EventUpdateRequest;
 use App\Models\Event;
+use App\Models\EventPublisher;
 use App\Models\Page;
 use App\Models\Template;
 use App\Models\Theme;
@@ -194,6 +195,7 @@ class EventController extends Controller
             }
 
             Page::where('event_id', $event->id)->delete();
+            EventPublisher::where('event_id')->delete();
             $event->delete();
 
             DB::commit();
