@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\Admin\EventBannerGalleryController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\EventManegerController;
 use App\Http\Controllers\Admin\EventPublisherController;
@@ -98,6 +99,16 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/books/store',     [BookController::class, 'store'])->name('book.store');
     Route::delete('/book/{id}/delete',  [BookController::class, 'delete'])->name('book.delete');
 
+    /**
+     * event banner
+     */
+    Route::get('/event/{id}/banner-gallery',     [EventBannerGalleryController::class, 'index'])->name('event.banner.gallery');
+    Route::get('/event/{id}/banner-gallery-create',     [EventBannerGalleryController::class, 'create'])->name('event.banner.gallery.create');
+    Route::post('/event/{id}/banner-gallery-create',     [EventBannerGalleryController::class, 'store'])->name('event.banner.gallery.store');
+    Route::get('/event/{id}/banner-gallery/{bannerId}/edit',     [EventBannerGalleryController::class, 'edit'])->name('event.banner.gallery.edit');
+    Route::put('/event/{id}/banner-gallery/{bannerId}/update',     [EventBannerGalleryController::class, 'update'])->name('event.banner.gallery.update');
+    Route::get('/event/{id}/banner-gallery/{bannerId}/show',     [EventBannerGalleryController::class, 'show'])->name('event.banner.gallery.show');
+    Route::delete('/event/{id}/banner-gallery/{bannerId}/delete',     [EventBannerGalleryController::class, 'delete'])->name('event.banner.gallery.delete');
 
     /**
      * page builder

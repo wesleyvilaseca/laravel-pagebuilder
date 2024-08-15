@@ -55,7 +55,7 @@
                                   <a class="dropdown-item" href="{{ route('event.publishers', $event->id)}}">
                                     <i class="fas fa-book-reader text-dark"></i> Editoras do evento
                                   </a>
-                                  <a class="dropdown-item" href="#">
+                                  <a class="dropdown-item" href="{{ route('event.banner.gallery', $event->id) }}">
                                     <i class="fas fa-images text-warning"></i> Banners do evento
                                   </a>
                                   <a class="dropdown-item" href="#">

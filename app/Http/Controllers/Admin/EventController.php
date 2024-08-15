@@ -205,5 +205,5 @@ class EventController extends Controller
             DB::rollback();
             return redirect()->route('events')->with('warning',  $e->getMessage());
         } 
-    } 
+    }
 }

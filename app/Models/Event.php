@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\UploadFileService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,11 @@ class Event extends Model
         return $this->belongsToMany(Publisher::class, 'event_publishers', 'event_id', 'publisher_id');
     }
 
+    public function banners()
+    {
+        return $this->hasMany(EventBannerGallery::class, 'event_id');
+    }
+
     /**
      * Cateroies not linked with this product
      */
@@ -39,5 +45,17 @@ class Event extends Model
             ->paginate();
 
         return $publishers;
+    }
+
+    public function delete() {
+        $uploadFileService = new UploadFileService(new SystemUpload(), new UploadRelation());
+        $this->banners->each(function ($banner) use ($uploadFileService) {
+            if($banner->uploads[0]) {
+                $uploadFileService->deleteFile('', $banner->uploads[0], true);
+            }
+
+            $banner->delete();
+        });
+        parent::delete();
     }
 }
