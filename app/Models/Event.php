@@ -28,6 +28,10 @@ class Event extends Model
         return $this->hasMany(EventBannerGallery::class, 'event_id');
     }
 
+    public function banchMaps() {
+        return $this->hasMany(EventBenchMapGallery::class, 'event_id');
+    }
+
     /**
      * Cateroies not linked with this product
      */
@@ -50,6 +54,14 @@ class Event extends Model
     public function delete() {
         $uploadFileService = new UploadFileService(new SystemUpload(), new UploadRelation());
         $this->banners->each(function ($banner) use ($uploadFileService) {
+            if($banner->uploads[0]) {
+                $uploadFileService->deleteFile('', $banner->uploads[0], true);
+            }
+
+            $banner->delete();
+        });
+
+        $this->banchMaps->each(function ($banner) use ($uploadFileService) {
             if($banner->uploads[0]) {
                 $uploadFileService->deleteFile('', $banner->uploads[0], true);
             }

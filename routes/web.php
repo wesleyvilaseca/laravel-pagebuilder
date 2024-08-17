@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\EventBannerGalleryController;
+use App\Http\Controllers\Admin\EventBenchMapGalleryController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\EventManegerController;
 use App\Http\Controllers\Admin\EventPublisherController;
@@ -109,6 +110,17 @@ Route::middleware(['auth'])->group(function() {
     Route::put('/event/{id}/banner-gallery/{bannerId}/update',     [EventBannerGalleryController::class, 'update'])->name('event.banner.gallery.update');
     Route::get('/event/{id}/banner-gallery/{bannerId}/show',     [EventBannerGalleryController::class, 'show'])->name('event.banner.gallery.show');
     Route::delete('/event/{id}/banner-gallery/{bannerId}/delete',     [EventBannerGalleryController::class, 'delete'])->name('event.banner.gallery.delete');
+
+    /**
+     * event benchmap
+     */
+    Route::get('/event/{id}/benchmap',     [EventBenchMapGalleryController::class, 'index'])->name('event.benchmap.gallery');
+    Route::get('/event/{id}/benchmap-create',     [EventBenchMapGalleryController::class, 'create'])->name('event.benchmap.gallery.create');
+    Route::post('/event/{id}/benchmap-create',     [EventBenchMapGalleryController::class, 'store'])->name('event.benchmap.gallery.store');
+    Route::get('/event/{id}/benchmap/{benchmapId}/edit',     [EventBenchMapGalleryController::class, 'edit'])->name('event.benchmap.gallery.edit');
+    Route::put('/event/{id}/benchmap/{benchmapId}/update',     [EventBenchMapGalleryController::class, 'update'])->name('event.benchmap.gallery.update');
+    Route::get('/event/{id}/benchmap/{benchmapId}/show',     [EventBenchMapGalleryController::class, 'show'])->name('event.benchmap.gallery.show');
+    Route::delete('/event/{id}/benchmap/{benchmapId}/delete',     [EventBenchMapGalleryController::class, 'delete'])->name('event.benchmap.gallery.delete');
 
     /**
      * page builder

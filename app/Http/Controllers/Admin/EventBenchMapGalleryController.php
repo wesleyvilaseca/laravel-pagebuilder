@@ -4,17 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
-use App\Models\EventBannerGallery;
+use App\Models\EventBenchMapGallery;
 use App\Services\UploadFileService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class EventBannerGalleryController extends Controller
+class EventBenchMapGalleryController extends Controller
 {
-
+ 
     public function __construct(
-        protected EventBannerGallery $repository,
+        protected EventBenchMapGallery $repository,
         protected Event $eventRepository,
         protected UploadFileService $uploadFileService
         )
@@ -32,7 +32,7 @@ class EventBannerGalleryController extends Controller
         }
 
         $data['events_'] = true;
-        $data['title'] = 'Banners evento - ' . $event->name;
+        $data['title'] = 'Mapa de bancadas do evento - ' . $event->name;
         $data['toptitle'] = $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
         $data['breadcrumb'][] = ['route' => route('events'), 'title' => 'Eventos'];
@@ -40,7 +40,7 @@ class EventBannerGalleryController extends Controller
         $data['event'] = $event;
         $data['gallery'] = $this->repository->where('event_id', $event->id)->get();
 
-        return view('admin.events-banner-gallery.index', $data);
+        return view('admin.events-benchmap-gallery.index', $data);
     }
 
     public function create($eventId) {
@@ -54,16 +54,16 @@ class EventBannerGalleryController extends Controller
         }
 
         $data['events_'] = true;
-        $data['title'] = 'Novo banner evento - ' . $event->name;
+        $data['title'] = 'Novo mapa de bancada evento - ' . $event->name;
         $data['toptitle'] = $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
         $data['breadcrumb'][] = ['route' => route('events'), 'title' => 'Eventos'];
-        $data['breadcrumb'][] = ['route' => route('event.banner.gallery', $event->id), 'title' => 'Banners do evento - ' . $event->name];
+        $data['breadcrumb'][] = ['route' => route('event.benchmap.gallery', $event->id), 'title' => 'Mapa de bancada do evento - ' . $event->name];
         $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
         $data['event'] = $event;
-        $data['action'] = route('event.banner.gallery.store', $event->id);
+        $data['action'] = route('event.benchmap.gallery.store', $event->id);
 
-        return view('admin.events-banner-gallery.create', $data);
+        return view('admin.events-benchmap-gallery.create', $data);
     }
 
     public function edit($eventId, $bannerId) {
@@ -83,19 +83,20 @@ class EventBannerGalleryController extends Controller
         }
 
         $data['events_'] = true;
-        $data['title'] = 'Editar banner - ' . $banner->name;
+        $data['title'] = 'Editar mapa de bancada - ' . $banner->name;
         $data['toptitle'] = $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
         $data['breadcrumb'][] = ['route' => route('events'), 'title' => 'Eventos'];
-        $data['breadcrumb'][] = ['route' => route('event.banner.gallery', $event->id), 'title' => 'Banners do evento - ' . $event->name];
+        $data['breadcrumb'][] = ['route' => route('event.benchmap.gallery', $event->id), 'title' => 'Mapa de bancada do evento - ' . $event->name];
         $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
         $data['event'] = $event;
-        $data['action'] = route('event.banner.gallery.update', [$event->id, $banner->id]);
-        $data['image'] = $banner->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_BANNER)->first();
+        $data['action'] = route('event.benchmap.gallery.update', [$event->id, $banner->id]);
+        $data['image'] = $banner->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_BENCHMAP)->first();
         $data['banner'] = $banner;
 
-        return view('admin.events-banner-gallery.edit', $data);
+        return view('admin.events-benchmap-gallery.edit', $data);
     }
+
 
     public function show($eventId, $bannerId) {
         if (!$eventId || !$bannerId) {
@@ -114,19 +115,19 @@ class EventBannerGalleryController extends Controller
         }
 
         $data['events_'] = true;
-        $data['title'] = 'Banner - ' . $banner->name;
+        $data['title'] = 'Mapa de bancada do envento - ' . $banner->name;
         $data['toptitle'] = $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
         $data['breadcrumb'][] = ['route' => route('events'), 'title' => 'Eventos'];
-        $data['breadcrumb'][] = ['route' => route('event.banner.gallery', $event->id), 'title' => 'Banners do evento - ' . $event->name];
+        $data['breadcrumb'][] = ['route' => route('event.benchmap.gallery', $event->id), 'title' => 'Mapa de bancada do evento - ' . $event->name];
         $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
         $data['event'] = $event;
-        $data['action'] = route('event.banner.gallery.delete', [$event->id, $banner->id]);
-        $data['image'] = $banner->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_BANNER)->first();
+        $data['action'] = route('event.benchmap.gallery.delete', [$event->id, $banner->id]);
+        $data['image'] = $banner->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_BENCHMAP)->first();
         $data['banner'] = $banner;
         $data['show'] = true;
 
-        return view('admin.events-banner-gallery.show', $data);
+        return view('admin.events-benchmap-gallery.show', $data);
     }
 
     public function store(Request $request, $eventId) {
@@ -160,7 +161,7 @@ class EventBannerGalleryController extends Controller
 
             $storeBanner = $this->uploadFileService->upload(
                 $request->file('image'),
-                'events/event-' . $event->id . '/' . $this->repository::FILE_CATEGORY_BANNER
+                'events/event-' . $event->id . '/' . $this->repository::FILE_CATEGORY_BENCHMAP
             );
 
             $upload = $this->uploadFileService->store($storeBanner);
@@ -169,16 +170,16 @@ class EventBannerGalleryController extends Controller
                 'system_upload_id' => $upload->id,
                 'relation_id' => $banner->id,
                 'alias_model_relation' => $this->repository::MODEL_ALIAS,
-                'alias_category' => $this->repository::FILE_CATEGORY_BANNER
+                'alias_category' => $this->repository::FILE_CATEGORY_BENCHMAP
             ]);
             DB::commit();
-            return redirect()->route('event.banner.gallery', $event->id)->with('success', 'Banner armazenado com sucesso.');
+            return redirect()->route('event.benchmap.gallery', $event->id)->with('success', 'Mapa de bancada armazenado com sucesso.');
         } catch (Exception $e) {
             DB::rollback();
             if (isset($storeBanner)) {
                 $this->uploadFileService->deleteFile($storeBanner['server_file']);
             }
-            return redirect()->route('publishers')->with('warning',  $e->getMessage());
+            return redirect()->route('events')->with('warning',  $e->getMessage());
         }
     }
 
@@ -215,10 +216,10 @@ class EventBannerGalleryController extends Controller
             ]);
 
             DB::commit();
-            return redirect()->route('event.banner.gallery', $event->id)->with('success', 'Banner editado com sucesso.');
+            return redirect()->route('event.benchmap.gallery', $event->id)->with('success', 'Mapa de bancada editado com sucesso.');
         } catch (Exception $e) {
             DB::rollback();
-            return redirect()->route('event.banner.gallery', $event->id)->with('warning',  $e->getMessage());
+            return redirect()->route('event.benchmap.gallery', $event->id)->with('warning',  $e->getMessage());
         }
     }
 
@@ -247,10 +248,10 @@ class EventBannerGalleryController extends Controller
 
             $banner->delete();
             DB::commit();
-            return redirect()->route('event.banner.gallery', $event->id)->with('success', 'Banner removido com sucesso');
+            return redirect()->route('event.benchmap.gallery', $event->id)->with('success', 'Mapa de bancada removido com sucesso');
         } catch (Exception $e) {
             DB::rollback();
-            return redirect()->route('event.banner.gallery', $event->id)->with('warning',  $e->getMessage());
+            return redirect()->route('event.benchmap.gallery', $event->id)->with('warning',  $e->getMessage());
         }
     }
 }
