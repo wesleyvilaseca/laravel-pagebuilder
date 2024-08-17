@@ -70,6 +70,17 @@ class EventController extends Controller
     public function store(EventCreateRequest $request) {
         DB::beginTransaction();
         try {
+            $address = (object) [
+                'address' => @$request->address,
+                'zip_code' => @$request->zip_code,
+                'state' => @$request->state,
+                'district' => @$request->district,
+                'city' => @$request->city,
+                'number' => @$request->number,
+                'latitude' => @$request->latitude,
+                'longitude' => @$request->longitude
+            ];
+
             if ($request->select_template == 1) {
                 $template = Template::find($request->template_id);
                 if (!$template) {
@@ -82,7 +93,10 @@ class EventController extends Controller
                     'principal' => $request->principal,
                     'status' => $request->status,
                     'url' => Str::slug($request->name),
-                    'theme_id' => $template->theme_id
+                    'theme_id' => $template->theme_id,
+                    'data' => json_encode((object)[
+                        'address' => $address
+                    ])
                 ]);
 
                 $pages = $template->pages;
@@ -110,7 +124,10 @@ class EventController extends Controller
                     'principal' => $request->principal,
                     'status' => $request->status,
                     'url' => Str::slug($request->name),
-                    'theme_id' => $request->theme_id
+                    'theme_id' => $request->theme_id,
+                    'data' => json_encode((object)[
+                        'address' => $address
+                    ])
                 ]);
             }
 
@@ -164,13 +181,27 @@ class EventController extends Controller
                 $principalEvent->update(['principal' => Event::NOT_PRINCIPAL_ENVENT]);
             }
 
+            $address = (object) [
+                'address' => @$request->address,
+                'zip_code' => @$request->zip_code,
+                'state' => @$request->state,
+                'district' => @$request->district,
+                'city' => @$request->city,
+                'number' => @$request->number,
+                'latitude' => @$request->latitude,
+                'longitude' => @$request->longitude
+            ];
+
             $event->update([
                 'name' => $request->name,
                 'description' => $request->description,
                 'principal' => $request->principal,
                 'status' => $request->status,
                 'url' => Str::slug($request->name),
-                'theme_id' => $event->theme_id
+                'theme_id' => $event->theme_id,
+                'data' => json_encode((object)[
+                    'address' => $address
+                ])
             ]);
 
             DB::commit();

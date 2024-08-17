@@ -16,7 +16,7 @@ class Event extends Model
     const EVENT_ACTIVE = 1;
     const EVENT_INACTIVE = 0;
 
-    protected $fillable = ['name', 'description', 'url', 'status', 'theme_id', 'principal'];
+    protected $fillable = ['name', 'description', 'url', 'status', 'theme_id', 'principal', 'data'];
 
     public function publishers()
     {
@@ -69,5 +69,16 @@ class Event extends Model
             $banner->delete();
         });
         parent::delete();
+    }
+
+     /**
+     * Define an accessor to cast the 'data' column to an object.
+     *
+     * @param  string  $value
+     * @return mixed
+     */
+    public function getDataAttribute($value)
+    {
+        return json_decode($value);
     }
 }
