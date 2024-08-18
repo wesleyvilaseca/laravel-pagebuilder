@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
         Permission::with('roles')->get()->map(function ($permission) {
             Gate::define($permission->label, function (User $user) use ($permission) {
-                return $user->hasPermission($permission);
+                return $user->hasPermission($permission->label);
             });
         });
 
@@ -37,8 +37,6 @@ class AuthServiceProvider extends ServiceProvider
             if ($user->isAdmin()) {
                 return true;
             }
-
-            return false;
         });
     }
 }

@@ -47,10 +47,24 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'role_users');
     }
-    
-    public function hasPermission(Permission $permission)
+
+    public function permissionsRole(): array
     {
-        return $this->hasAnyRoles($permission->roles);
+        $roles = $this->roles()->with('permissions')->get();
+
+        $permissions = [];
+        foreach ($roles as $role) {
+            foreach ($role->permissions as $permission) {
+                array_push($permissions, $permission->label);
+            }
+        }
+
+        return $permissions;
+    }
+    
+    public function hasPermission(string $permissionName)
+    {
+        return in_array($permissionName, $this->permissionsRole());
     }
     
     public function hasAnyRoles($roles)
@@ -59,7 +73,7 @@ class User extends Authenticatable
             return !! $roles->intersect($this->roles)->count();
         }
         
-        return $this->roles->contains('name', $roles);
+        return $this->roles->contains('label', $roles);
     }
 
     public function isAdmin(): bool

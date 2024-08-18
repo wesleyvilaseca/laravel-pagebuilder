@@ -18,7 +18,7 @@ class PermissionRoleController extends Controller
         protected PermissionRole $permissionRoleRepository
     )
     {
-        $this->middleware(['can:permission_role']);
+        $this->middleware(['can:permissions']);
     }
 
     public function index($roleId)
