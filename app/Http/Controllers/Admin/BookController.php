@@ -20,7 +20,8 @@ class BookController extends Controller
         protected PublisherBook $publisherBookRepository,
         protected UploadFileService $uploadFileService
     )
-    { 
+    {
+        $this->middleware(['can:books']);
     }
 
     public function index() {

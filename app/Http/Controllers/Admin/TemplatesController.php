@@ -15,6 +15,11 @@ use Illuminate\Support\Str;
 
 class TemplatesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['can:templates']);
+    }
+
     public function index() {
         $data['templates_'] = true;
         $data['title'] = 'Templates';

@@ -14,6 +14,7 @@ class EventPublisherController extends Controller
         protected Publisher $publisherRepository
     )
     {
+        $this->middleware(['can:events']);
     }
 
     public function index(int $eventId)

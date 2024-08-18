@@ -19,6 +19,7 @@ class EventBannerGalleryController extends Controller
         protected UploadFileService $uploadFileService
         )
     {
+        $this->middleware(['can:events']);
     }
 
     public function index($eventId) {

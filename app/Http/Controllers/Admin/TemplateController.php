@@ -13,6 +13,11 @@ use Illuminate\Support\Str;
 
 class TemplateController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['can:templates']);
+    }
+
     public function index($url = null) {
         if (!$url) {
             return redirect()->back();

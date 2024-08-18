@@ -17,6 +17,11 @@ use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['can:events']);
+    }
+
     public function index() {
         $data['events_'] = true;
         $data['title']  = 'Eventos';

@@ -19,6 +19,7 @@ class PublisherController extends Controller
         protected PublisherBook $publisherBook
         )
     {
+        $this->middleware(['can:publishers']);
     }
 
     public function index() {

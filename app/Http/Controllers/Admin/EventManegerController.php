@@ -11,6 +11,11 @@ use Illuminate\Support\Str;
 
 class EventManegerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['can:events']);        
+    }
+
     public function index($url) {
         if (!$url) {
             return Redirect::back();
