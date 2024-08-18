@@ -20,7 +20,16 @@
                             <span>Home</span>
                         </a>
                     </li>
-                   
+
+                    @can('users')
+                        <li class="{{ @$users_ ? 'ativo' : '' }}">
+                            <a href="{{ route('users') }}">
+                                <i class="fas fa-users"></i>
+                                <span>Usuários</span>
+                            </a>
+                        </li>
+                    @endcan
+
                    @can('publishers')
                         <li class="{{ @$publisher_ ? 'ativo' : '' }}">
                             <a href="{{ route('publishers') }}">

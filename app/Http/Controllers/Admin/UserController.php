@@ -6,33 +6,45 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function __construct()
+    public function __construct(
+        protected User $repository,
+        protected Role $roleRepository,
+        protected RoleUser $roleUserRepository
+    )
     {
         $this->middleware(['can:users']);
     }
 
     public function index()
     {
-        $data['title']      = 'Users';
-        $data['toptitle']   = 'Users';
-        $data['list']       = User::all();
-        $data['users']      = true;
+        $data['users_'] = true;
+        $data['title']  = 'Usuários';
+        $data['toptitle'] =  $data['title'];
+        $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
+        $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
+        $data['list']       = $this->repository->all();
+        $data['users_']     = true;
 
         return view('admin.users.index', $data);
     }
 
     public function create()
     {
-        $data['title']      = 'New Post';
-        $data['toptitle']   = 'New Post';
-        $data['roles_list']      = Role::all();
-        $data['users']      = true;
+        $data['title']      = 'Novo usuário';
+        $data['toptitle']   = $data['title'];
+        $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
+        $data['breadcrumb'][] = ['route' => route('users'), 'title' => 'Usuários'];
+        $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
+        $data['roles_list'] = $this->roleRepository->all();
+        $data['users_']      = true;
         $data['action']     = route('user.save');
 
         return view('admin.users.create', $data);
@@ -40,49 +52,54 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = $this->repository->find($id);
         if (!$user) {
             return redirect()->back();
         }
 
-        $data['title']      = 'Edit user ' . $user->title;
-        $data['toptitle']   = 'Edit user ' . $user->title;
-        $data['roles_list']      = Role::all();
-        $data['users']      = true;
+        $data['title']      = 'Editar usuário ' . $user->title;
+        $data['toptitle']   = $data['title'];
+        $data['roles_list'] =$this->roleRepository->all();
+        $data['users_']     = true;
         $data['user']       = $user;
-        $data['role_user'] = $user->roles->first()->id;
+        $data['role_user'] = @$user->roles->first()->id;
         $data['action']     = route('user.update', $user->id);
 
-        return view('admin.users.create', $data);
+        return view('admin.users.edit', $data);
     }
 
     public function store(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'name'         => ['required'],
-            'email'   => ['required'],
-            'password'   => ['required'],
-            'role_id'   => ['required']
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email'   => 'required|email|unique:users,email',
+            'password'   => 'required|string|min:6',
+            'role_id'   => 'required|integer'
         ]);
 
         if ($validate->fails()) {
             return redirect()->back()->with('errors', $validate->errors());
         }
 
-        $result = user::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
+        DB::beginTransaction();
+        try {
+          
+            $result = $this->repository->create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ]);
 
-        ]);
+            $this->roleUserRepository->create(['role_id' => $request->role_id, 'user_id' => $result->id]);
 
-        if (!$result) {
-            return redirect()->back()->with('warning', 'error on execution operation');
+            DB::commit();
+            return redirect()->route('users')->with('success', 'Usuário criado com sucesso');
+        } catch (Exception $e) {
+            DB::rollback();
+            return redirect()->route('users')->with('warning',  $e->getMessage());
         }
-
-        RoleUser::create(['role_id' => $request->role_id, 'user_id' => $result->id]);
-
-        return redirect()->route('users')->with('success', 'success on create role');
     }
 
     public function update($id, Request $request)
@@ -93,48 +110,56 @@ class UserController extends Controller
         }
 
         $validate = Validator::make($request->all(), [
-            'name'         => ['required'],
-            'email'         => ['required'],
-            'role_id'       => ['required']
+            'first_name'    => 'required|string',
+            'last_name' => 'required|string',
+            'email'   => 'required|email|unique:users,email,' . $id,
+            'password'   => 'nullable|string|min:6',
+            'role_id'   => 'required|integer'
         ]);
 
         if ($validate->fails()) {
             return redirect()->back()->with('errors', $validate->errors());
         }
 
-        $data = [
-            'name'         => $request->name,
-            'email'        => $request->email
-        ];
+        DB::beginTransaction();
+        try {
+            $data = [
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email'        => $request->email
+            ];
 
-        if ($request->password) {
-            $data['password'] = Hash::make($request->password);
+            $this->repository->where('id', $id)->update($data);
+
+            if(!$user->roles->first()) {
+                $this->roleUserRepository->create(['role_id' => $request->role_id, 'user_id' => $user->id]);
+            } else {
+                $this->roleUserRepository->where('user_id', $user->id)->update(['role_id' => $request->role_id]);
+            }
+
+            DB::commit();
+            return redirect()->route('users')->with('success', 'Usuário editado com sucesso');
+        } catch (Exception $e) {
+            DB::rollback();
+            return redirect()->route('users')->with('warning',  $e->getMessage());
         }
-
-        $result = User::where('id', $id)->update($data);
-
-        if (!$result) {
-            return redirect()->back()->with('warning', 'error on execution operation');
-        }
-
-        RoleUser::where('user_id', $user->id)->update(['role_id' => $request->role_id]);
-
-        return redirect()->route('users')->with('success', 'success on edit role');
     }
 
     public function delete($id)
     {
-        $user = User::find($id);
+        $user = $this->repository->find($id);
         if (!$user) {
             return redirect()->back();
         }
 
-        $result = User::where('id', $id)->delete();
-
-        if (!$result) {
-            return redirect()->back()->with('warning', 'error on execution operation');
+        DB::beginTransaction();
+        try {
+            $user->delete();
+            DB::commit();
+            return redirect()->route('users')->with('success', 'Usuário removido com sucesso');
+        } catch (Exception $e) {
+            DB::rollback();
+            return redirect()->route('users')->with('warning',  $e->getMessage());
         }
-
-        return redirect()->route('users')->with('success', 'success on delete role');
     }
 }

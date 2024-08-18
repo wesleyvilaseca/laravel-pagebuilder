@@ -37,9 +37,16 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function() {
     Route::get('/painel', [PainelController::class, 'index'])->name('painel');
+
+    /**
+     * usuers
+     */
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::get('/user/new', [UserController::class, 'create'])->name('user.new');
     Route::post('/user/save', [UserController::class, 'store'])->name('user.save');
+    Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user/{id}/update', [UserController::class, 'update'])->name('user.update');
+    Route::get('/user/{id}/remove', [UserController::class, 'delete'])->name('user.remove');
 
     /**
      * events
@@ -50,10 +57,6 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/events/{id}/edit', [EventController::class, 'edit'])->name('event.edit');
     Route::put('/events/{id}/update', [EventController::class, 'update'])->name('event.update');
     Route::get('/events/{id}/delete',[EventController::class, 'delete'])->name('event.delete');
-
-    Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
-    Route::post('/user/{id}/update', [UserController::class, 'update'])->name('user.update');
-    Route::get('/user/{id}/remove', [UserController::class, 'delete'])->name('user.remove');
 
     Route::get('/templates', [TemplatesController::class, 'index'])->name('templates');
     Route::get('/template/new', [TemplatesController::class, 'create'])->name('templates.new');
