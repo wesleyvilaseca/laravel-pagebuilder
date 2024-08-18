@@ -9,7 +9,7 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'url', 'status', 'price', 'discount'];
+    protected $fillable = ['name', 'author', 'subject', 'isbn', 'description',  'price', 'presential_discount', 'virtual_discount', 'link', 'url', 'status'];
 
     const MODEL_ALIAS = 'book';
     const FILE_CATEGORY_BOOK_SINGLE_IMAGE = 'book-image';
@@ -25,13 +25,6 @@ class Book extends Model
         return $this->belongsToMany(Publisher::class, 'publisher_books', 'book_id', 'publisher_id');
     }
 
-    public function checkIfPublisherHasBook(int $publisherId, string $bookUrl) {
-        return $this->publishers()
-        ->where('publisher_id', $publisherId)
-        ->whereHas('books', function ($query) use ($bookUrl) {
-            $query->where('url', $bookUrl);
-        })->first();
-    }
     /**
      * Define an accessor to cast the 'data' column to an object.
      *

@@ -2,25 +2,6 @@
 @php
     use Illuminate\Support\Str;
 @endphp
-<div class="mb-3">
-    <label for="title" class="form-label">Nome do livro *</label>
-    <input type="text" class="form-control form-control-sm" id="name" name="name"
-        value="{{ @$book->name ?? old('name') }}">
-</div>
-
-<div class="form-group mb-3">
-    <label for="description">Descrição do livro</label>
-    <textarea class="form-control" id="description" rows="3" name="description">
-        {{ @$book->description ??  old('description')  }}
-    </textarea>
-</div>
-
-<div class="form-group mt-2">
-    <label>Preço:</label>
-    <input type="number" name="price" class="form-control form-control-sm" placeholder="Preço:" step="0.01" min="0"
-        value="{{ $book->price ?? old('price') }}">
-</div>
-
 <div class="card mb-3">
     <div class="row card-body">
         <div class="col-2 text-center">
@@ -43,6 +24,60 @@
     </div>    
 </div>
 
+<div class="mb-3">
+    <label for="title" class="form-label">Titulo do livro *</label>
+    <input type="text" class="form-control form-control-sm" id="name" name="name"
+        value="{{ @$book->name ?? old('name') }}">
+</div>
+
+<div class="form-group mb-3">
+    <label for="author">Autor(es), organizador(es)</label>
+    <input type="text" class="form-control form-control-sm" id="author" name="author"
+        value="{{ @$book->author ?? old('author') }}">
+</div>
+
+<div class="form-group mb-3">
+    <label for="subject">Assunto</label>
+    <input type="text" class="form-control form-control-sm" id="subject" name="subject"
+        value="{{ @$book->subject ?? old('subject') }}">
+</div>
+
+<div class="form-group mb-3">
+    <label for="subject">ISBN</label>
+    <input type="text" class="form-control form-control-sm" id="isbn" name="isbn"
+        value="{{ @$book->isbn ?? old('isbn') }}">
+</div>
+
+<div class="form-group mb-3">
+    <label for="description">Descrição do livro</label>
+    <textarea class="form-control" id="description" rows="3" name="description">
+        {{ @$book->description ??  old('description')  }}
+    </textarea>
+</div>
+
+<div class="form-group mt-2">
+    <label>Preço capa:</label>
+    <input type="number" name="price" class="form-control form-control-sm" placeholder="100" step="0.01" min="0"
+        value="{{ $book->price ?? old('price') }}">
+</div>
+
+<div class="form-group mt-2">
+    <label>Desconto presencial (valor percentual):</label>
+    <input type="number" name="presential_discount" class="form-control form-control-sm" placeholder="15.5" step="0.01" min="0"
+        value="{{ $book->presential_discount ?? old('presential_discount') }}">
+</div>
+
+<div class="form-group mt-2">
+    <label>Desconto virtual (valor percentual):</label>
+    <input type="number" name="virtual_discount" class="form-control form-control-sm" placeholder="15.5" step="0.01" min="0"
+        value="{{ $book->virtual_discount ?? old('virtual_discount') }}">
+</div>
+
+<div class="form-group mb-3">
+    <label for="subject">Link</label>
+    <input type="url" class="form-control form-control-sm" id="link" name="link"
+        value="{{ @$book->link ?? old('link') }}">
+</div>
 
 @if (!empty($publishers))
     <div class="form-group">

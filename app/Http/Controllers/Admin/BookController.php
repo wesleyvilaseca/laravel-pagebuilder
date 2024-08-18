@@ -99,25 +99,29 @@ class BookController extends Controller
     }
 
     public function store(Request $request) {
+        $request->validate([
+            'image' => 'file|mimes:jpg,jpeg,png|max:5048',
+            'name' => 'required|string',
+            'description' => 'string|nullable',
+            'author' => 'string|nullable',
+            'subject' => 'string|nullable',
+            'isbn' => 'string|nullable',
+            'link' => 'string|nullable',
+            'publisher_id' => 'integer|exists:publishers,id',
+            'price' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
+            'presential_price' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
+            'presential_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
+            'virtual_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
+            'status' => 'required|integer'
+        ]);
+
         DB::beginTransaction();
         try {
-            $request->validate([
-                'image' => 'file|mimes:jpg,jpeg,png|max:5048',
-                'name' => 'required|string',
-                'status' => 'required|integer',
-                'description' => 'string',
-                'publisher_id' => 'integer|exists:publishers,id',
-                'price' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
-                'discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/'
-            ]);
-
             $url = Str::slug($request->name);
             if ($request->publisher_id) {
-                $hasBookName  = $this->repository->publishers()
-                            ->where('publisher_id', $request->publisher_id)
-                            ->whereHas('books', function ($query) use ($url) {
-                                $query->where('url', $url);
-                            })->first();
+                $hasBookName  = $this->publisherRepository->whereHas('books', function ($query) use ($url) {
+                    $query->where('url', $url);
+                })->where('id', $request->publisher_id)->exists();
 
                 if($hasBookName) {
                     return redirect()->back()->with('warning', 'A editora já possui um livro com o nome ' . $request->name);
@@ -126,13 +130,18 @@ class BookController extends Controller
 
             $book = $this->repository->create([
                 'name' => $request->name,
-                'status' => $request->status,
+                'subject' => @$request->subject,
+                'author' => @$request->author,
+                'isbn' => @$request->isbn,
                 'description' => $request->description,
                 'price' => @$request->price,
-                'discount' => @$request->discount,
-                'url' => $url
+                'presential_price' => @$request->presential_price,
+                'presential_discount' => @$request->presential_discount,
+                'virtual_discount' => @$request->virtual_discount,
+                'link' => @$request->link,
+                'url' => $url,
+                'status' => $request->status,
             ]);
-
 
             if($request->publisher_id) {
                 $this->publisherBookRepository->create(['book_id' => $book->id, 'publisher_id' => $request->publisher_id]);
@@ -177,23 +186,35 @@ class BookController extends Controller
             $request->validate([
                 'image' => 'file|mimes:jpg,jpeg,png|max:5048',
                 'name' => 'required|string',
-                'status' => 'required|integer',
-                'description' => 'string',
+                'description' => 'string|nullable',
+                'author' => 'string|nullable',
+                'subject' => 'string|nullable',
+                'isbn' => 'string|nullable',
+                'link' => 'string|nullable',
                 'publisher_id' => 'integer|exists:publishers,id',
                 'price' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
-                'discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/'
+                'presential_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
+                'virtual_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
+                'status' => 'required|integer'
             ]);
 
             $url = Str::slug($request->name);
             if ($request->publisher_id && $request->name != $book->name) {
-                $hasBookName  = $this->repository->publishers()
-                            ->where('publisher_id', $request->publisher_id)
-                            ->whereHas('books', function ($query) use ($url) {
-                                $query->where('url', $url);
-                            })->first();
+                $hasBookName  = $this->publisherRepository->whereHas('books', function ($query) use ($url) {
+                    $query->where('url', $url);
+                })->where('id', $request->publisher_id)->exists();
 
                 if($hasBookName) {
                     return redirect()->back()->with('warning', 'A editora já possui um livro com o nome ' . $request->name);
+                }
+            }
+
+            $publisher = $book->publishers->first();
+            if($request->publisher_id && !$publisher) {
+                $this->publisherBookRepository->create(['book_id' => $book->id, 'publisher_id' => $request->publisher_id]);
+            } else {
+                if($publisher && $request->publisher_id != $publisher->id) {
+                    $this->publisherBookRepository->where('book_id', $book->id)->update(['publisher_id' => $request->publisher_id]);
                 }
             }
 
@@ -219,11 +240,16 @@ class BookController extends Controller
 
             $book = $this->repository->where('id', $book->id)->update([
                 'name' => $request->name,
-                'status' => $request->status,
+                'subject' => @$request->subject,
+                'author' => @$request->author,
+                'isbn' => @$request->isbn,
                 'description' => $request->description,
                 'price' => @$request->price,
-                'discount' => @$request->discount,
-                'url' => $url
+                'presential_discount' => @$request->presential_discount,
+                'virtual_discount' => @$request->virtual_discount,
+                'link' => @$request->link,
+                'url' => $url,
+                'status' => $request->status,
             ]);
 
             DB::commit();
