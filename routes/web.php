@@ -8,7 +8,10 @@ use App\Http\Controllers\Admin\EventManegerController;
 use App\Http\Controllers\Admin\EventPublisherController;
 use App\Http\Controllers\Admin\PageBuilderController;
 use App\Http\Controllers\Admin\PainelController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\PermissionRoleController;
 use App\Http\Controllers\Admin\PublisherController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TemplateController;
 use App\Http\Controllers\Admin\TemplatesController;
 use App\Http\Controllers\Admin\UserController;
@@ -60,6 +63,36 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/templates/{id}/show', [TemplatesController::class, 'show'])->name('templates.show');
     Route::delete('/templates/{id}/remove', [TemplatesController::class, 'delete'])->name('templates.destroy');
 
+    /**
+     * roles
+     */
+
+     Route::get('/roles', [RoleController::class, 'index'])->name('roles');
+     Route::get('/role/new', [RoleController::class, 'create'])->name('role.new');
+     Route::post('/role/save', [RoleController::class, 'store'])->name('role.save');
+ 
+     Route::get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('role.edit');
+     Route::put('/roles/{id}/update', [RoleController::class, 'update'])->name('role.update');
+     Route::get('/roles/{id}/remove', [RoleController::class, 'delete'])->name('role.remove');
+ 
+ 
+     /**
+      * permissions
+      */
+     Route::get('/role/{id}/permissions',    [PermissionRoleController::class, 'index'])->name('role.permissions');
+     Route::post('/permissions/{id}/sync',   [PermissionRoleController::class, 'sync'])->name('role.permissions.sync');
+ 
+     /**
+      * permissions
+      */
+ 
+     Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
+     Route::get('/permission/new', [PermissionController::class, 'create'])->name('permission.new');
+     Route::post('/permission/save', [PermissionController::class, 'store'])->name('permission.save');
+ 
+     Route::get('/permission/{id}/edit', [PermissionController::class, 'edit'])->name('permission.edit');
+     Route::put('/permission/{id}/update', [PermissionController::class, 'update'])->name('permission.update');
+     Route::get('/permission/{id}/remove', [PermissionController::class, 'delete'])->name('permission.remove');
      
     /**
      * pages admin
@@ -67,7 +100,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/evento-page/{event}/create',     [EventManegerController::class, 'create'])->name('pages.create');
     Route::post('/evento-page/{event}/create',    [EventManegerController::class, 'store'])->name('pages.store');
     Route::get('/evento-page/{event}/edit/{id}',  [EventManegerController::class, 'edit'])->name('pages.edit');
-    Route::post('/evento-page/{event}/edit/{id}', [EventManegerController::class, 'update'])->name('pages.update');
+    Route::put('/evento-page/{event}/edit/{id}', [EventManegerController::class, 'update'])->name('pages.update');
     Route::get('/evento-page/{event}/delete/{id}',[EventManegerController::class, 'delete'])->name('pages.delete');
 
     /**

@@ -30,40 +30,50 @@
                         </li>
                    @endcan
 
-                    <li class="{{ @$books_ ? 'ativo' : '' }}">
-                        <a href="{{ route('books') }}">
-                            <i class="fas fa-book"></i>
-                            <span>Livros</span>
-                        </a>
-                    </li>
+                   @can('books')
+                        <li class="{{ @$books_ ? 'ativo' : '' }}">
+                            <a href="{{ route('books') }}">
+                                <i class="fas fa-book"></i>
+                                <span>Livros</span>
+                            </a>
+                        </li>
+                    @endcan
 
-                    <li class="{{ @$templates_ ? 'ativo' : '' }}">
-                        <a href="{{ route('templates') }}">
-                            <i class="fas fa-vector-square"></i>
-                            <span>Templates</span>
-                        </a>
-                    </li>
+                    @can('templates')
+                        <li class="{{ @$templates_ ? 'ativo' : '' }}">
+                            <a href="{{ route('templates') }}">
+                                <i class="fas fa-vector-square"></i>
+                                <span>Templates</span>
+                            </a>
+                        </li>
+                    @endcan
 
-                    <li class="{{ @$events_ ? 'ativo' : '' }}">
-                        <a href="{{ route('events') }}">
-                            <i class="fas fa-chart-bar"></i>
-                            <span>Eventos</span>
-                        </a>
-                    </li>
-{{-- 
-                    <li class="sidebar-dropdown {{ @$relatorio ? 'active_side' : '' }}">
-                        <a>
-                            <i class="fas fa-chart-line"></i>
-                            <span>Relatório</span>
-                        </a>
-                        <div class="sidebar-submenu {{ @$relatorio ? 'd-block' : '' }}">
-                            <ul>
-                                <li class="">
-                                    <a href="#">Painel</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li> --}}
+                    @can('events')
+                        <li class="{{ @$events_ ? 'ativo' : '' }}">
+                            <a href="{{ route('events') }}">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Eventos</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('roles')
+                        <li class="{{ @$roles_ ? 'ativo' : '' }}">
+                            <a href="{{ route('roles') }}">
+                                <i class="fas fa-user"></i>
+                                <span>Perfis</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('permissions')
+                        <li class="{{ @$permissions_ ? 'ativo' : '' }}">
+                            <a href="{{ route('permissions') }}">
+                                <i class="fas fa-lock-open"></i>
+                                <span>Permisssões</span>
+                            </a>
+                        </li>
+                    @endcan
 
                     <li class="">
                         <a href="{{ route('logout') }}">
