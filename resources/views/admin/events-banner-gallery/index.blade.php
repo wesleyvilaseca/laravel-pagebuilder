@@ -33,7 +33,7 @@
                             @php
                                 $image = $banner->uploads()->wherePivot('alias_category', 'event-banner-gallery')->first();    
                             @endphp
-                            <img src="{{ asset('storage/' . $image['server_file'])}}" alt="Descrição da Imagem">
+                            <img src="{{ asset('storage/' . @$image['server_file'])}}" alt="Descrição da Imagem">
                         </td>
 
                         <td style="width=10px;">

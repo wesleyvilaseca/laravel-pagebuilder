@@ -17,6 +17,6 @@ class EventBannerGallery extends Model
 
     public function uploads()
     {
-        return $this->belongsToMany(SystemUpload::class, 'upload_relations', 'relation_id', 'system_upload_id');
+        return $this->belongsToMany(SystemUpload::class, 'upload_relations', 'relation_id', 'system_upload_id')->wherePivot('alias_model_relation', self::MODEL_ALIAS);
     }
 }

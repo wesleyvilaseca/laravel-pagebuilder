@@ -239,9 +239,9 @@ class EventBannerGalleryController extends Controller
 
         DB::beginTransaction();
         try {
-            $file = $banner->uploads[0];
+            $file = $banner->uploads;
 
-            if (!empty($file)) {
+            if (!empty($file[0])) {
                 $this->uploadFileService->deleteFile(null, $file, true);
             }
 
