@@ -27,15 +27,18 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        // Permission::with('roles')->get()->map(function ($permission) {
-        //     Gate::define($permission->label, function (User $user) use ($permission) {
-        //         return $user->hasPermission($permission);
-        //     });
-        // });
+        Permission::with('roles')->get()->map(function ($permission) {
+            Gate::define($permission->label, function (User $user) use ($permission) {
+                return $user->hasPermission($permission);
+            });
+        });
 
-        // Gate::before(function (User $user, $ability) {
-        //     if ($user->hasAnyRoles('admin'))
-        //         return true;
-        // });
+        Gate::before(function (User $user) {
+            if ($user->isAdmin()) {
+                return true;
+            }
+
+            return false;
+        });
     }
 }

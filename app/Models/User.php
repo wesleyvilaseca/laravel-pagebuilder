@@ -60,4 +60,13 @@ class User extends Authenticatable
         
         return $this->roles->contains('name', $roles);
     }
+
+    public function isAdmin(): bool
+    {
+        if($this->super_admin == 'Y'){
+            return true;
+        }
+
+        return false;      
+    }
 }

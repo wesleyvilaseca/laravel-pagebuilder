@@ -20,14 +20,15 @@
                             <span>Home</span>
                         </a>
                     </li>
-
-
-                    <li class="{{ @$publisher_ ? 'ativo' : '' }}">
-                        <a href="{{ route('publishers') }}">
-                            <i class="fas fa-pen-fancy"></i>
-                            <span>Editoras</span>
-                        </a>
-                    </li>
+                   
+                   @can('publishers')
+                        <li class="{{ @$publisher_ ? 'ativo' : '' }}">
+                            <a href="{{ route('publishers') }}">
+                                <i class="fas fa-pen-fancy"></i>
+                                <span>Editoras</span>
+                            </a>
+                        </li>
+                   @endcan
 
                     <li class="{{ @$books_ ? 'ativo' : '' }}">
                         <a href="{{ route('books') }}">
