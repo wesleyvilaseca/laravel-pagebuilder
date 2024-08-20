@@ -1,11 +1,5 @@
 <?php
-
-use Illuminate\Support\Facades\Request;
-
 $id = 'ID_' . Illuminate\Support\Str::random(20);
-$routeParams = Request::route()->parameters();
-print_r($routeParams);
-echo $block->setting('filter');
 ?>
 
 <div class="container">
@@ -22,6 +16,6 @@ echo $block->setting('filter');
 <script defer>
   $(document).ready(function(){
     var id  = '<?= $id ?>';
-    window.mountMeuBlocoComponent(id, 'teste', 'tese');
+    window.mountMeuBlocoComponent(id, window.uspEvent);
    });
 </script>
