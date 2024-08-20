@@ -9,12 +9,20 @@
 
 <script>
 export default {
-    props: [],
-    components: {  },
+    name: 'EventSlideinComponent',
+    props: {
+        event: {
+            type: String,
+            default: ''
+        }
+    },
+    components: { },
     data: () => ({}),
     computed: {},
     mounted() { },
-    created() { },
+    created() { 
+        console.log(this.event);
+    },
     methods: {
         testeFunction() {
             alert('alert from vue component');

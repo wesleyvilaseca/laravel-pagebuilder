@@ -20526,14 +20526,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  name: 'EventSlideinComponent',
+  props: {
+    event: {
+      type: String,
+      "default": ''
+    }
+  },
   components: {},
   data: function data() {
     return {};
   },
   computed: {},
   mounted: function mounted() {},
-  created: function created() {},
+  created: function created() {
+    console.log(this.event);
+  },
   methods: {
     testeFunction: function testeFunction() {
       alert('alert from vue component');
@@ -20618,10 +20626,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _testeComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./testeComponent.vue */ "./resources/js/pagbuilderComponents/themes/codevila/testComponent/testeComponent.vue");
 
 
-function mountMeuBlocoComponent(elementId, title, content) {
+
+/**
+ * 
+ * @param { string } elementId 
+ * @param { string } event - event props
+ */
+function mountMeuBlocoComponent(elementId, event) {
   var vnode = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_testeComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    title: title,
-    content: content
+    event: event
   });
   (0,vue__WEBPACK_IMPORTED_MODULE_0__.render)(vnode, document.getElementById(elementId));
 }
