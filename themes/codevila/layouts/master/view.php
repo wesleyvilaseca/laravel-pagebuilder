@@ -20,7 +20,7 @@ use App\Supports\Helper\Utils;
 
         <script defer>
             const site_url = '<?= Utils::get_site_url() ?>';
-            window.uspEvent = '<?= @$_GET['event'] ?>';
+            window.uspEvent = '<?= @$_GET['event'] ?? '' ?>';
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="<?= mix('js/sitebuilder-app.js') ?>" defer></script>
