@@ -78,7 +78,7 @@ class EventManegerController extends Controller
 
         $data['action']         = route('pages.update', [$event->id, $page->id]);
 
-        return view('admin.event.create-page', $data);
+        return view('admin.event.edit-page', $data);
     }
 
     public function store(Request $request, $event_id)
