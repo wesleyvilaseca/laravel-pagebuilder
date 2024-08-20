@@ -186,11 +186,12 @@ Route::middleware(['auth'])->group(function() {
 Route::get('/register',     [RegisterController::class, 'index'])->name('register');
 Route::post('/register',    [RegisterController::class, 'create'])->name('register.create');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::middleware(['check.theme.site'])->group(function() {
+    Route::get('/', [ControllersWebsiteController::class, 'index']);
     Route::get('/notfound', [ControllersWebsiteController::class, 'notfound'])->name('notfound');
     Route::any('/{domain}',         [ControllersWebsiteController::class, 'uri']);
     Route::any('/{domain}/{uri}',    [ControllersWebsiteController::class, 'uri']);
