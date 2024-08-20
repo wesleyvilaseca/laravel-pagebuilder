@@ -27,11 +27,11 @@
                                   <a class="dropdown-item" href="{{ route('pages.edit', [$event->id, $page->id]) }}">
                                     <i class="fas fa-edit text-primary"></i> Editar
                                   </a>
-                                  <a class="dropdown-item" href="{{ route('pages.delete', [$event->id, $page->id]) }}" onclick="return deleteSite('{{ $page->name }}');" >
-                                    <i class="fas fa-trash text-danger"></i> Apagar
-                                  </a>
                                   <a class="dropdown-item" href="{{ route('pagebuilder.build', $page->id) }}?event={{ $event->url }}&page={{ $page->route }}" >
                                     <i class="fas fa-newspaper text-success"></i> Editar interface da Página
+                                  </a>
+                                  <a class="dropdown-item" href="{{ route('pages.delete', [$event->id, $page->id]) }}" onclick="return deleteSite('{{ $page->name }}');" >
+                                    <i class="fas fa-trash text-danger"></i> Apagar
                                   </a>
                                 </div>
                             </div>
