@@ -183,7 +183,10 @@ class EventController extends Controller
                 ])
                 ->first();
 
-                $principalEvent->update(['principal' => Event::NOT_PRINCIPAL_ENVENT]);
+                if ($principalEvent) {
+                    $principalEvent->update(['principal' => Event::NOT_PRINCIPAL_ENVENT]);
+                }
+
             }
 
             $address = (object) [
