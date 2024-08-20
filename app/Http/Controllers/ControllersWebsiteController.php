@@ -12,23 +12,49 @@ use PHPageBuilder\Theme;
 
 class ControllersWebsiteController extends Controller
 {
+    protected $event;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->event = $request->session()->get('event');
+            return $next($request);
+        });
+    }
+
+    public function index() {
+        $page = Page::where(['event_id' => $this->event->id, 'homepage' => Page::HOME_PAGE])->first();
+        if (!$page) {
+            $page = Page::where(['event_id' => $this->event->id])->first();
+        }
+
+        $data['event'] = $this->event->url;
+        $data['html'] = $this->htmlPage($page);
+
+        return view('pagebuilder.base-view', $data);
+    }
+
     /**
      * Show the website page that corresponds with the current URI.
      */
-    public function uri(Request $request, $event = '', $uri = '')
+    public function uri(string $event = '', string $uri = '')
     {
         $event = Event::where('url', $event)->first();
         if(!$event && $uri) {
+            //has only uri, normaly is access on page create event
             $page = Page::where('route', $uri)->first();
-        }
-
-        if ($event && !$uri) {
+        }else if ($event && $uri) {
+            $page = Page::where(['event_id' => $event->id, 'route' => $uri])->first();
+        } else if ($event && !$uri) {
+            //access the especific event route
             $page = Page::where(['event_id' => $event->id, 'homepage' => Page::HOME_PAGE])->first();
 
+            //if not home page, show any page
             if (!$page) {
                 $page = Page::where(['event_id' => $event->id])->first();
             }
         } else {
+            //render a single template page
             $page = Page::where(['route' => $uri])->first();
         }
 
@@ -36,6 +62,10 @@ class ControllersWebsiteController extends Controller
             return redirect()->route('notfound');
         }
 
+        return $this->htmlPage($page); 
+    }
+
+    private function htmlPage(Page $page) {
         $theme = new Theme(config('pagebuilder.theme'), config('pagebuilder.theme.active_theme'));
         $page = (new PageRepository)->findWithId($page->id);
         $pageRenderer = new PageRenderer($theme, $page);
@@ -43,13 +73,14 @@ class ControllersWebsiteController extends Controller
         return $html;
     }
 
-    public function editora(Request $request, $event = '') {
-        echo $this->uri($request, $event);
-    }
-
     public function notfound(Request $request)
     {
         $data['title'] = 'Page not found';
         return view('common.404.pagenotfound', $data);
     }
+
+    public function editora(Request $request, $event = '') {
+        echo $this->uri($request, $event);
+    }
 }
+ 
