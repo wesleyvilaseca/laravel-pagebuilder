@@ -62,7 +62,10 @@ class ControllersWebsiteController extends Controller
             return redirect()->route('notfound');
         }
 
-        return $this->htmlPage($page); 
+        $data['event'] = $this->event->url ?? $event->url ?? '' ;
+        $data['html'] = $this->htmlPage($page);
+
+        return view('pagebuilder.base-view', $data);
     }
 
     private function htmlPage(Page $page) {
