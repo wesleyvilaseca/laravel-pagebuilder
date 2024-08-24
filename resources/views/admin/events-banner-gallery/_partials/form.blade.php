@@ -1,20 +1,49 @@
+@php
+$imageDesktop = $images->where('pivot.alias_category', 'event-banner-gallery-desktop')->first();
+$imageMobile = $images->where('pivot.alias_category', 'event-banner-gallery-mobile')->first();
+@endphp
 <div class="card mb-3">
     <div class="row card-body">
         <div class="col-2 text-center">
-            <img src="{{ @$image->server_file ?  asset('storage/' . $image->server_file) : asset('assets/images/no-image.jpg')}}" alt="{{ @$banner->name ?? ''  }}" style="max-width: 90px;" />
-           @if (@$image->server_file)
+            <img src="{{ @$imageDesktop->server_file ?  asset('storage/' . $imageDesktop->server_file) : asset('assets/images/no-image.jpg')}}" alt="{{ @$banner->name ?? ''  }}" style="max-width: 90px;" />
+           @if (@$imageDesktop->server_file)
                 <div class="mt-1">
-                    <small>{{ Str::limit($image->original_file, 10, '...') }}</small>
+                    <small>{{ Str::limit($imageDesktop->original_file, 10, '...') }}</small>
                 </div>
            @endif
         </div>
-        @if (!@$image)
+        @if (!@$imageDesktop)
             <div class="col-9">
                 <div class="input-group">
-                    <label>Foto do livro:</labe>
+                    <label>Imagem do banner desktop:</labe>
                     <div class="custom-file">
                     <input type="file" class="custom-file-input" id="image" name="image"> 
                     <label class="custom-file-label" for="image">Selecione o arquivo</label>
+                    </div>
+                </div>
+            </div>
+        @endif
+    </div>    
+</div>
+
+<div class="card mb-3">
+    <div class="row card-body">
+        <div class="col-2 text-center">
+            <img src="{{ @$imageMobile->server_file ?  asset('storage/' . $imageMobile->server_file) : asset('assets/images/no-image.jpg')}}" alt="{{ @$banner->name ?? ''  }}" style="max-width: 90px;" />
+           @if (@$imageMobile->server_file)
+                <div class="mt-1">
+                    <small>{{ Str::limit($imageMobile->original_file, 10, '...') }}</small>
+                </div>
+           @endif
+        </div>
+
+        @if (!@$imageMobile)
+            <div class="col-9">
+                <div class="input-group">
+                    <label>Imagem do banner mobile:</labe>
+                    <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="image_mobile" name="image_mobile"> 
+                    <label class="custom-file-label" for="image_mobile">Selecione o arquivo</label>
                     </div>
                 </div>
             </div>

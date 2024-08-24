@@ -92,7 +92,7 @@ class EventBannerGalleryController extends Controller
         $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
         $data['event'] = $event;
         $data['action'] = route('event.banner.gallery.update', [$event->id, $banner->id]);
-        $data['image'] = $banner->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_BANNER)->first();
+        $data['images'] = $banner->uploads;
         $data['banner'] = $banner;
 
         return view('admin.events-banner-gallery.edit', $data);
@@ -123,7 +123,7 @@ class EventBannerGalleryController extends Controller
         $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
         $data['event'] = $event;
         $data['action'] = route('event.banner.gallery.delete', [$event->id, $banner->id]);
-        $data['image'] = $banner->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_BANNER)->first();
+        $data['images'] = $banner->uploads;
         $data['banner'] = $banner;
         $data['show'] = true;
 
@@ -142,6 +142,7 @@ class EventBannerGalleryController extends Controller
 
         $request->validate([
             'image' => 'required|file|mimes:jpg,jpeg,png|max:5048',
+            'image_mobile' => 'nullable|file|mimes:jpg,jpeg,png|max:5048',
             'name' => 'required|string',
             'description' => 'nullable|string',
             'order' => 'nullable|integer',
@@ -161,25 +162,42 @@ class EventBannerGalleryController extends Controller
 
             $storeBanner = $this->uploadFileService->upload(
                 $request->file('image'),
-                'events/event-' . $event->id . '/' . $this->repository::FILE_CATEGORY_BANNER
+                'events/event-' . $event->id . '/' . $this->repository::FILE_CATEGORY_BANNER_DESKTOP
             );
 
-            $upload = $this->uploadFileService->store($storeBanner);
-
+        
             $this->uploadFileService->storeUploadRelation([
-                'system_upload_id' => $upload->id,
+                'system_upload_id' => $this->uploadFileService->store($storeBanner)->id,
                 'relation_id' => $banner->id,
                 'alias_model_relation' => $this->repository::MODEL_ALIAS,
-                'alias_category' => $this->repository::FILE_CATEGORY_BANNER
+                'alias_category' => $this->repository::FILE_CATEGORY_BANNER_DESKTOP
             ]);
+
+            if($request->file('image_mobile')) {
+                $storeBannerMobileBanner = $this->uploadFileService->upload(
+                    $request->file('image_mobile'),
+                    'events/event-' . $event->id . '/' . $this->repository::FILE_CATEGORY_BANNER_MOBILE
+                );
+                $this->uploadFileService->storeUploadRelation([
+                    'system_upload_id' => $this->uploadFileService->store($storeBannerMobileBanner)->id,
+                    'relation_id' => $banner->id,
+                    'alias_model_relation' => $this->repository::MODEL_ALIAS,
+                    'alias_category' => $this->repository::FILE_CATEGORY_BANNER_MOBILE
+                ]);
+            }
             DB::commit();
             return redirect()->route('event.banner.gallery', $event->id)->with('success', 'Banner armazenado com sucesso.');
         } catch (Exception $e) {
             DB::rollback();
-            if (isset($storeBanner)) {
+            if (@isset($storeBanner)) {
                 $this->uploadFileService->deleteFile($storeBanner['server_file']);
             }
-            return redirect()->route('publishers')->with('warning',  $e->getMessage());
+
+            if (@isset($storeBannerMobileBanner)) {
+                $this->uploadFileService->deleteFile($storeBannerMobileBanner['server_file']);
+            }
+
+            return redirect()->route('event.banner.gallery', $event->id)->with('warning',  $e->getMessage());
         }
     }
 
@@ -240,10 +258,12 @@ class EventBannerGalleryController extends Controller
 
         DB::beginTransaction();
         try {
-            $file = $banner->uploads;
+            $files = $banner->uploads;
 
-            if (!empty($file[0])) {
-                $this->uploadFileService->deleteFile(null, $file, true);
+            if (!empty($files)) {
+                foreach($files as $file) {
+                    $this->uploadFileService->deleteFile(null, $file, true);
+                }
             }
 
             $banner->delete();

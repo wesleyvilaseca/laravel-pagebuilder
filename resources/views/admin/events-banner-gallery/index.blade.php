@@ -31,7 +31,7 @@
                         <td>{{ $banner->order }}</td>
                         <td> 
                             @php
-                                $image = $banner->uploads()->wherePivot('alias_category', 'event-banner-gallery')->first();    
+                                $image = $banner->uploads()->wherePivot('alias_category', 'event-banner-gallery-desktop')->first();    
                             @endphp
                             <img src="{{ asset('storage/' . @$image['server_file'])}}" alt="Descrição da Imagem">
                         </td>
