@@ -14,8 +14,7 @@ $id = 'ID_' . Illuminate\Support\Str::random(20);
 
 
 <script defer>
-  $(document).ready(function(){
+    const _event = window.uspEvent ?? event ?? '';
     var id  = '<?= $id ?>';
-    window.mountMeuBlocoComponent(id, window.uspEvent);
-   });
+    window.mountMeuBlocoComponent(id, _event);
 </script>

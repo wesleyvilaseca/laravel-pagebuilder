@@ -23,7 +23,7 @@ use App\Supports\Helper\Utils;
             window.uspEvent = '<?= @$_GET['event'] ?? '' ?>';
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="<?= mix('js/sitebuilder-app.js') ?>" defer></script>
+        <script src="<?= mix('js/sitebuilder-app.js') ?>"></script>
     </head>
 
     <body>
