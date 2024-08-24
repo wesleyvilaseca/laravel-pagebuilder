@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\EventBannerGalleryController;
+use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
@@ -21,5 +22,6 @@ Route::group([
     'prefix' => 'v1',
     'namespace' => 'Api'
 ], function () {
+    Route::get('/event', [EventController::class, 'index']);
     Route::get('/event-banners', [EventBannerGalleryController::class, 'index']);
 });

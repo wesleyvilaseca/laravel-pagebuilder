@@ -16,6 +16,11 @@ class EventService {
 
     public function getEventByUrl(string $url) {
         return $this->eventRepository->where('url', $url)->first();
+        if (!$event) {
+            throw new NotFoundHttpException('Event not found');
+        }
+
+        return $event;
     }
 
     public function getEventBannerGalleryByEventUrl(string $url) {
