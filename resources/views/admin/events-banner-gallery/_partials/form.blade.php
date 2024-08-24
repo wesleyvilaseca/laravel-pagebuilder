@@ -1,6 +1,6 @@
 @php
-$imageDesktop = $images->where('pivot.alias_category', 'event-banner-gallery-desktop')->first();
-$imageMobile = $images->where('pivot.alias_category', 'event-banner-gallery-mobile')->first();
+$imageDesktop = @$images?->where('pivot.alias_category', 'event-banner-gallery-desktop')->first();
+$imageMobile = @$images?->where('pivot.alias_category', 'event-banner-gallery-mobile')->first();
 @endphp
 <div class="card mb-3">
     <div class="row card-body">
