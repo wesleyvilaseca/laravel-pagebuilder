@@ -3,7 +3,7 @@
 <div id='<?= $id ?>'></div>
 
 <script>
-    const _event = window.uspEvent ? window.uspEvent : event ? event : '';
+    var _event = window.uspEvent ? window.uspEvent : event ? event : '';
     var id  = '<?= $id ?>';
     window.SlideinBannerEventComponent(id, _event);
 </script>

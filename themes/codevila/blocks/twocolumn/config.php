@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'two columns',
-    'category' => 'General',
-    'icon' => 'fa fa-columns',
+    'hidden' => false,
+    'category' => 'Layout',
+    'title' => 'Duas colunas'
 ];

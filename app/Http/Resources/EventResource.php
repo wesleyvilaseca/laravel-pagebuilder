@@ -18,7 +18,9 @@ class EventResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description ?? '',
             'address' => $this->data->address,
-            'banners' => EventBannerGalleryResource::collection($this->banners)
+            'banners' => EventBannerGalleryResource::collection($this->banners),
+            'benchMapGallery' => EventBenchMapGalleryResource::collection($this->banchMaps()->orderBy('order', 'asc')->get()),
+            'attachments' => EventAttachmentResource::collection($this->attachments()->orderBy('order', 'asc')->get())
         ];
     }
 }

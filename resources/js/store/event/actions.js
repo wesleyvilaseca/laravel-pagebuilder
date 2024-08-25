@@ -1,6 +1,8 @@
 
 import { Http } from '../../config/axiosConfig.js';
+import cript from '../../supports/cript.js';
 import mutations from './mutations';
+
 const actions = {
    async getBannersExent(flag) {
         try {
@@ -13,6 +15,11 @@ const actions = {
     },
 
     async getEvent(flag) {
+        const hasEvent = localStorage.getItem('event');
+        if (hasEvent) {
+            mutations.SET_EVENT(JSON.parse(cript.decript(hasEvent)));
+        }   
+
         try {
             const params = { flag: flag};
             const { data } = await Http.get('event', { params });

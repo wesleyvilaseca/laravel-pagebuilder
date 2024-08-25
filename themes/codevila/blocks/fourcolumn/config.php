@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Four columns',
-    'category' => 'General',
-    'icon' => 'fa fa-bars',
+    'hidden' => false,
+    'category' => 'Layout',
+    'title' => 'Quatro colunas'
 ];

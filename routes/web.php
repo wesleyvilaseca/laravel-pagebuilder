@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\Admin\EventAttachmentController;
 use App\Http\Controllers\Admin\EventBannerGalleryController;
 use App\Http\Controllers\Admin\EventBenchMapGalleryController;
 use App\Http\Controllers\Admin\EventController;
@@ -147,6 +148,18 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/event/{id}/banner-gallery/{bannerId}/show',     [EventBannerGalleryController::class, 'show'])->name('event.banner.gallery.show');
     Route::delete('/event/{id}/banner-gallery/{bannerId}/delete',     [EventBannerGalleryController::class, 'delete'])->name('event.banner.gallery.delete');
 
+    /**
+     * event attachments
+     */
+    Route::get('/event/{id}/attachments',     [EventAttachmentController::class, 'index'])->name('event.attachments');
+    Route::get('/event/{id}/attachment-create',     [EventAttachmentController::class, 'create'])->name('event.attachment.create');
+    Route::post('/event/{id}/attachment-create',     [EventAttachmentController::class, 'store'])->name('event.attachment.store');
+    Route::get('/event/{id}/attachment/{bannerId}/edit',     [EventAttachmentController::class, 'edit'])->name('event.attachment.edit');
+    Route::put('/event/{id}/attachment/{bannerId}/update',     [EventAttachmentController::class, 'update'])->name('event.attachment.update');
+    Route::get('/event/{id}/attachment/{bannerId}/show',     [EventAttachmentController::class, 'show'])->name('event.attachment.show');
+    Route::delete('/event/{id}/attachment/{bannerId}/delete',     [EventAttachmentController::class, 'delete'])->name('event.attachment.delete');
+
+    
     /**
      * event benchmap
      */

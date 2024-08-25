@@ -99,13 +99,13 @@ class UploadFileService {
                 count(Storage::disk('public')->directories($dir)) === 0) {
                 Storage::disk('public')->deleteDirectory($dir);
 
-                $parentDir = dirname($dir);
+                // $parentDir = dirname($dir);
         
-                if($deletePublisherDirectory) {
-                    if (count(Storage::disk('public')->files($parentDir)) === 0){
-                        Storage::disk('public')->deleteDirectory($parentDir);
-                    }
-                }
+                // if($deletePublisherDirectory) {
+                //     if (count(Storage::disk('public')->files($parentDir)) === 0){
+                //         Storage::disk('public')->deleteDirectory($parentDir);
+                //     }
+                // }
             }
             DB::commit();
         } catch (Exception $e) {

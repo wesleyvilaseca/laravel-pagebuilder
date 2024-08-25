@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "hidden" => true,
     "category" => "Layout",
     "title" => "Layout",
     "settings" => [

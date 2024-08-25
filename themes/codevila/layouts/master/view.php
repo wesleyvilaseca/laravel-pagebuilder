@@ -8,7 +8,7 @@ use App\Supports\Helper\Utils;
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
+        <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" /> -->
 
         <link rel="stylesheet" href="<?= Utils::getasset('assets-themes/codevila/css/owl/owl.carousel.min.css') ?>" />
         <link rel="stylesheet" href="<?= Utils::getasset('assets-themes/codevila/css/owl/owl.theme.default.min.css') ?>" />
@@ -37,5 +37,4 @@ use App\Supports\Helper\Utils;
         <script src="<?= Utils::getasset('assets-themes/codevila/js/magnify/jquery.magnific-popup.min.js') ?>"></script>
         <script src="<?= Utils::getasset('assets-themes/codevila/js/main.js') ?>"></script>
     </body>
-
 </html>

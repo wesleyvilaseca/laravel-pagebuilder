@@ -1,5 +1,9 @@
-import mountMeuBlocoComponent from './testComponent/initComponent.js';
 import SlideinBannerEventComponent from './SlideinBannerEventComponent/initComponent.js';
+import HtmlBlockEventDescriptionComponent from './HtmlBlockEventDescriptionComponent/initComponent.js';
+import ListBenchMapGalleryEventComponent from './ListBenchMapGalleryEventComponent/initComponent.js';
+import HtmlBlockEventAttachmentsComponent from './HtmlBlockEventAttachmentsComponent/initComponent.js';
 
-window.mountMeuBlocoComponent = mountMeuBlocoComponent;
 window.SlideinBannerEventComponent = SlideinBannerEventComponent;
+window.HtmlBlockEventDescriptionComponent = HtmlBlockEventDescriptionComponent;
+window.ListBenchMapGalleryEventComponent = ListBenchMapGalleryEventComponent;
+window.HtmlBlockEventAttachmentsComponent = HtmlBlockEventAttachmentsComponent;

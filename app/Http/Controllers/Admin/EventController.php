@@ -83,7 +83,8 @@ class EventController extends Controller
                 'city' => @$request->city,
                 'number' => @$request->number,
                 'latitude' => @$request->latitude,
-                'longitude' => @$request->longitude
+                'longitude' => @$request->longitude,
+                'instruction' => @$request->instruction,
             ];
 
             if ($request->select_template == 1) {
@@ -175,7 +176,6 @@ class EventController extends Controller
                 return redirect()->route('events')->with('error', 'Não é possível desativar um evento principal.');
             }
 
-
             if($request->principal == Event::PRINCIPAL_EVENT && $request->status == Event::EVENT_ACTIVE) {
                 $principalEvent = Event::where([
                     'principal' => Event::PRINCIPAL_EVENT,
@@ -183,10 +183,9 @@ class EventController extends Controller
                 ])
                 ->first();
 
-                if ($principalEvent) {
+                if ($principalEvent && $principalEvent->id != $event->id) {
                     $principalEvent->update(['principal' => Event::NOT_PRINCIPAL_ENVENT]);
                 }
-
             }
 
             $address = (object) [
@@ -197,7 +196,8 @@ class EventController extends Controller
                 'city' => @$request->city,
                 'number' => @$request->number,
                 'latitude' => @$request->latitude,
-                'longitude' => @$request->longitude
+                'longitude' => @$request->longitude,
+                'instruction' => @$request->instruction,
             ];
 
             $event->update([

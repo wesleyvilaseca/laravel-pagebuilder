@@ -61,6 +61,9 @@
                                   <a class="dropdown-item" href="{{ route('event.benchmap.gallery', $event->id) }}">
                                     <i class="fas fa-images text-warning"></i> Mapa de bancadas do evento
                                   </a>
+                                  <a class="dropdown-item" href="{{ route('event.attachments', $event->id) }}">
+                                    <i class="fas fa-paperclip text-warning"></i> Anexos
+                                  </a>
                                   <a class="dropdown-item" href="{{ route('event.pages', $event->url) }}">
                                     <i class="fas fa-newspaper text-info"></i> Páginas do evento
                                   </a>

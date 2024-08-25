@@ -1,6 +1,5 @@
 <template>
   <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-    <!-- <transition name="fade"> -->
       <div v-if="!preloader" class="carousel-inner">
         <template v-if="banners.length > 0">
           <template v-for="(banner, index) in banners" :key="index">
@@ -27,9 +26,7 @@
           </a>
         </template>
       </div>
-    <!-- </transition> -->
 
-    <!-- <transition name="fade"> -->
       <div v-if="preloader" class="carousel-inner">
         <div class="carousel-item active">
           <div class="container-slidein">
@@ -37,11 +34,9 @@
           </div>
         </div>
       </div>
-    <!-- </transition> -->
   </div>
 </template>
 <style scoped>
-
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.1s;
 }
@@ -161,12 +156,7 @@ export default {
         async getBanners() {
             this.preloader = true;
             try {
-                if (!this.eventState.name) {
-                    await this.eventActions.getEvent(this.event);
-                }
-                this.banners = this.eventState.banners;
-                await timer(1000);
-                this.preloader= false;
+                await this.eventActions.getEvent(this.event);
             } catch (error) {
                 this.preloader = false;
                 console.error(error);
@@ -181,7 +171,15 @@ export default {
         },
 
         onImageLoad() {
-            this.imageLoaded = true; // Define imageLoaded como verdadeiro quando a imagem for carregada
+            this.imageLoaded = true;
+        }
+    },
+    watch: {
+        eventState() {
+            if (this.eventState.name) {
+                this.banners = this.eventState.banners;
+                return this.preloader = false;
+            }
         }
     },
 }

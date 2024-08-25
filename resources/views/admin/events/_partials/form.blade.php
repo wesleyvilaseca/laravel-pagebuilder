@@ -19,16 +19,23 @@
         value="{{ @$event ? $event->description : '' }}">
 </div>
 
-<div class="form-group">
-    <label for="status">Este evento é o principal?</label>
-    <select class="form-control form-control-sm" id="principal" name="principal" {{ @$event->principal ? 'disabled' : ''}}>
-        <option disabled selected>Selecione uma opção</option>
-        <option value="0" {{ @$event->principal == 0 ? 'selected' : '' }}>Não
-        </option>
-        <option value="1" {{ @$event->principal == 1 ? 'selected' : '' }}>Sim
-        </option>
-    </select>
-</div>
+{{-- @if (@$event->principal)
+    <div class="mb-3">
+        <label class="form-label">Este evento é o principal?</label>
+        <input type="text" class="form-control form-control-sm" value="Sim" disabled>
+    </div>
+@else --}}
+    <div class="form-group">
+        <label for="status">Este evento é o principal?</label>
+        <select class="form-control form-control-sm" id="principal" name="principal">
+            <option disabled selected>Selecione uma opção</option>
+            <option value="0" {{ @$event->principal == 0 ? 'selected' : '' }}>Não
+            </option>
+            <option value="1" {{ @$event->principal == 1 ? 'selected' : '' }}>Sim
+            </option>
+        </select>
+    </div>
+{{-- @endif --}}
 
 <div class="form-group">
     <label for="status">Selecione o status</label>
@@ -124,6 +131,18 @@
 <hr>
 <section>
     <div class="mb-2">
+        <h5>Instruções de localização do evento</h5>
+    </div>
+    <div class="form-group mt-2">
+        <textarea class="form-control" id="instruction" name="instruction" rows="3">
+            {{ @$event?->data?->address?->instruction ?? old('instruction') }}
+        </textarea>
+    </div>
+</section>
+
+<hr>
+<section>
+    <div class="mb-2">
         <h5>Coordenadas de geolocalização do evento</h5>
     </div>
 
@@ -142,7 +161,6 @@
                 value="{{ @$event?->data?->address?->longitude ?? old('longitude') }}" />
         </div>
    </div>
-
 </section>
 
 <div class="text-center">

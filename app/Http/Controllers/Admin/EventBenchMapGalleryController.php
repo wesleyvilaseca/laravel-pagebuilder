@@ -244,7 +244,7 @@ class EventBenchMapGalleryController extends Controller
             $file = $banner->uploads;
 
             if (!empty($file[0])) {
-                $this->uploadFileService->deleteFile(null, $file, true);
+                $this->uploadFileService->deleteFile(null, $file[0], true);
             }
 
             $banner->delete();
