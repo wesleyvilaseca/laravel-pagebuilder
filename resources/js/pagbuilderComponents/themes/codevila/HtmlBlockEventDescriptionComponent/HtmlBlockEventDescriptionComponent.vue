@@ -6,7 +6,7 @@
             </div>
           </template>
 
-          <template v-if="preloader">
+          <template v-if="preloader || !this.eventState.description">
             <div class="row">
                 <div class="col-md-6">
                     <VueSkeletonLoader class="pb-2" type="text" width="100%" height="100px"/>

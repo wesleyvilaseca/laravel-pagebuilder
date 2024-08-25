@@ -14,14 +14,9 @@
                     </template>
                 </div>
             </template>
-            <template v-else>
-                <div class="text-center">
-                    <VueSkeletonLoader class="pb-2" type="text" width="100%" height="300px"/>
-                </div>
-            </template>
           </template>
 
-          <template v-if="preloader">
+          <template v-if="preloader || gallery.length <= 0">
             <div class="row">
                 <VueSkeletonLoader class="pb-2" type="text" width="100%" height="400px"/>
               </div>

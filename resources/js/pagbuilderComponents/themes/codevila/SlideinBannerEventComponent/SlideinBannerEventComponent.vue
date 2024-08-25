@@ -15,6 +15,7 @@
             </div>
           </template>
         </template>
+  
         <template v-if="eventState.name && banners.length > 1">
           <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -27,7 +28,7 @@
         </template>
       </div>
 
-      <div v-if="preloader" class="carousel-inner">
+      <div v-if="preloader || banners.length <= 0" class="carousel-inner">
         <div class="carousel-item active">
           <div class="container-slidein">
             <VueSkeletonLoader type="text" width="100%" height="350px"/>
@@ -126,10 +127,7 @@ export default {
     data: () => ({
         imageLoaded: false,
         preloader: true,
-        banners: [{
-            image_mobile: "https://baconipsum.com/wp-content/uploads/2014/09/any-ipsum-banner-772x250.png",
-            image_desktop: "https://baconipsum.com/wp-content/uploads/2014/09/any-ipsum-banner-772x250.png" 
-        }],
+        banners: [],
     }),
     setup() {
         const eventState = store.event.state;

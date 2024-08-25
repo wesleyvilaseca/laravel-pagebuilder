@@ -20905,10 +20905,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     return {
       imageLoaded: false,
       preloader: true,
-      banners: [{
-        image_mobile: "https://baconipsum.com/wp-content/uploads/2014/09/any-ipsum-banner-772x250.png",
-        image_desktop: "https://baconipsum.com/wp-content/uploads/2014/09/any-ipsum-banner-772x250.png"
-      }]
+      banners: []
     };
   },
   setup: function setup() {
@@ -21054,7 +21051,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       href: attachmentOne.link,
       target: "_blank"
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(attachmentOne.name), 9 /* TEXT, PROPS */, _hoisted_8)]);
-  }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.preloader ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_VueSkeletonLoader, {
+  }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.preloader || this.eventState.attachments.length <= 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_VueSkeletonLoader, {
     "class": "pb-2",
     type: "text",
     width: "100%",
@@ -21108,7 +21105,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }])
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     innerHTML: _ctx.description
-  }, null, 8 /* PROPS */, _hoisted_2)], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.preloader ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_VueSkeletonLoader, {
+  }, null, 8 /* PROPS */, _hoisted_2)], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.preloader || !this.eventState.description ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_VueSkeletonLoader, {
     "class": "pb-2",
     type: "text",
     width: "100%",
@@ -21157,10 +21154,6 @@ var _hoisted_2 = {
 var _hoisted_3 = ["src", "alt"];
 var _hoisted_4 = {
   key: 1,
-  "class": "text-center"
-};
-var _hoisted_5 = {
-  key: 1,
   "class": "row"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -21180,12 +21173,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       src: image.image,
       alt: image.name
     }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_3);
-  }), 128 /* KEYED_FRAGMENT */))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_VueSkeletonLoader, {
-    "class": "pb-2",
-    type: "text",
-    width: "100%",
-    height: "300px"
-  })]))], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.preloader ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_VueSkeletonLoader, {
+  }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.preloader || _ctx.gallery.length <= 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_VueSkeletonLoader, {
     "class": "pb-2",
     type: "text",
     width: "100%",
@@ -21278,7 +21266,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 42 /* CLASS, PROPS, NEED_HYDRATION */, _hoisted_3)], 2 /* CLASS */);
   }), 128 /* KEYED_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.eventState.name && _ctx.banners.length > 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 1
-  }, [_hoisted_4, _hoisted_5], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.preloader ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_VueSkeletonLoader, {
+  }, [_hoisted_4, _hoisted_5], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.preloader || _ctx.banners.length <= 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_VueSkeletonLoader, {
     type: "text",
     width: "100%",
     height: "350px"
@@ -21636,7 +21624,8 @@ var state = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({
   name: '',
   description: '',
   address: {},
-  banners: []
+  banners: [],
+  attachments: []
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (state);
 

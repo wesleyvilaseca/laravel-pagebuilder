@@ -4,7 +4,8 @@ const state = ref({
     name: '',
     description: '',
     address: {},
-    banners: []
+    banners: [],
+    attachments: []
 });
 
 export default state;
