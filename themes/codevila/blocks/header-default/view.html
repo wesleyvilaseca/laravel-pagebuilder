@@ -21,9 +21,9 @@
 
 <script>
     $(document).ready(function() {
+        console.log('aqui');
         const link = document.getElementById('editorasLink');
         if (link) {
-            console.log('aqui')
             link.href = eventSubDomain ? `/${eventSubDomain}/editoras` : '/editoras';
         }
     })
