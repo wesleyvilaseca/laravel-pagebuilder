@@ -64,12 +64,14 @@
         height: 400px;
         width: 100%;
         overflow: hidden;
+        position: relative;
     }
 
-    .map-container div {
+    .map-container iframe {
         border: 0;
         width: 100%;
         height: 100%;
+        position: absolute;
     }
 </style>
 
