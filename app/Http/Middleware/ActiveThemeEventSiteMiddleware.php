@@ -33,14 +33,19 @@ class ActiveThemeEventSiteMiddleware
             $event = Event::where('url', $eventUrl)->first();
             if (!$event) {
                 $uri = @$params['uri'];
-                if (!$uri) {
-                    return abort(404);
-                }
-    
-                $page = Page::where('route', $uri)->first();
-                if (!$page) {
-                    return abort(404);
-                }
+                if ($uri) {
+                    $page = Page::where('route', $uri)->first();
+                    if (!$page) {
+                        return abort(404);
+                    }
+
+                } else {
+                    $event = Event::where('principal', Event::PRINCIPAL_EVENT)->first();
+                    $page = Page::where(['route' => $eventUrl, 'event_id' => $event->id])->first();
+                    if (!$page) {
+                        return abort(404);
+                    }
+                }  
             }
     
             if (!$event && @$page->event_id) {

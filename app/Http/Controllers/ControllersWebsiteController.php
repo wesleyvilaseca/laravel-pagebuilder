@@ -38,15 +38,11 @@ class ControllersWebsiteController extends Controller
     public function domain(string $domain = '') {
         $event = Event::where('url', $domain)->first();
         if(!$event) {
-            $page = Page::where(['route' => $domain])->first();
+            $event = Event::where('principal', Event::PRINCIPAL_EVENT)->first();
+            $page = Page::where(['route' => $domain, 'event_id' => $event->id,])->first();
             if (!$page) {
                 return redirect()->route('notfound');
             }
-        } else {
-            $page = Page::where(['event_id' => $event->id, 'homepage' => Page::HOME_PAGE])->first();
-            if (!$page) {
-                $page = Page::where(['event_id' => $event->id])->first();
-            }    
         }
         
         $data['event'] = $this->event->url ?? $event->url ?? '' ;
