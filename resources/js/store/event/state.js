@@ -5,7 +5,17 @@ const state = ref({
     description: '',
     address: {},
     banners: [],
-    attachments: []
+    attachments: [],
+    address: {
+        city: '',
+        state: '',
+        number: '',
+        address: '',
+        district: '',
+        google_iframe: '',
+        zip_code: '',
+        instruction: ''
+    }
 });
 
 export default state;

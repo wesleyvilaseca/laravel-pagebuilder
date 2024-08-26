@@ -82,9 +82,8 @@ class EventController extends Controller
                 'district' => @$request->district,
                 'city' => @$request->city,
                 'number' => @$request->number,
-                'latitude' => @$request->latitude,
-                'longitude' => @$request->longitude,
                 'instruction' => @$request->instruction,
+                'google_iframe' => @$request->google_iframe
             ];
 
             if ($request->select_template == 1) {
@@ -195,9 +194,8 @@ class EventController extends Controller
                 'district' => @$request->district,
                 'city' => @$request->city,
                 'number' => @$request->number,
-                'latitude' => @$request->latitude,
-                'longitude' => @$request->longitude,
                 'instruction' => @$request->instruction,
+                'google_iframe' => @$request->google_iframe,
             ];
 
             $event->update([

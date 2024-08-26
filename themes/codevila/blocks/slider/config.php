@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'hidden' => true,
     'title' => 'Slider Default',
     'category' => 'Widget',
     'icon' => 'fa fa-sliders',

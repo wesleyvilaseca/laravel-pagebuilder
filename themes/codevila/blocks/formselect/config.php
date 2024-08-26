@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "hidden" => true,
     "category" => "Form components",
     "title" => "Form select element",
     "settings" => [

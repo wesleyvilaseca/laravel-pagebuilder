@@ -143,24 +143,11 @@
 <hr>
 <section>
     <div class="mb-2">
-        <h5>Coordenadas de geolocalização do evento</h5>
+        <h5>Iframe do google maps</h5>
     </div>
-
-   <div class="row">
-        <div class="form-group mt-2 col-md-4">
-            <label>Latitude:</label>
-            <input type="text" id="latitude" name="latitude"
-                class="form-control form-control-sm" placeholder="41.40338:"
-                value="{{ @$event?->data?->address?->latitude ?? old('latitude') }}" />
-        </div>
-
-        <div class="form-group mt-2 col-md-4">
-            <label>Longitude:</label>
-            <input type="text" id="longitude" name="longitude"
-                class="form-control form-control-sm" placeholder="2.17403"
-                value="{{ @$event?->data?->address?->longitude ?? old('longitude') }}" />
-        </div>
-   </div>
+    <textarea class="form-control" id="google_iframe" name="google_iframe" rows="3">
+        {{ @$event?->data?->address?->google_iframe ?? old('google_iframe') }}
+    </textarea>
 </section>
 
 <div class="text-center">

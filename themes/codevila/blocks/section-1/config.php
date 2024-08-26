@@ -1,8 +1,9 @@
 <?php
 
 return [
+    'hidden' => true,
     'title' => 'Section 1',
-    'category' => 'General',
+    'category' => 'widget',
     'icon' => 'fa fa-bars',
     "label" => [
         "type" => "text",

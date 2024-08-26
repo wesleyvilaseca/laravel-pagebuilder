@@ -4,7 +4,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 700;
+  /* font-weight: 700; */
 }
 
 a {
@@ -16,11 +16,11 @@ a:hover {
   /* color: var(--secondary); */
 }
 
-.title {
+.title-default {
   text-transform: uppercase;
 }
 
-.subtitle {
+.subtitle-default {
   color: var(--medium);
   font-weight: 400;
 }

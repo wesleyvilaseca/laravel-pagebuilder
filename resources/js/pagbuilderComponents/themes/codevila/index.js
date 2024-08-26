@@ -2,8 +2,10 @@ import SlideinBannerEventComponent from './SlideinBannerEventComponent/initCompo
 import HtmlBlockEventDescriptionComponent from './HtmlBlockEventDescriptionComponent/initComponent.js';
 import ListBenchMapGalleryEventComponent from './ListBenchMapGalleryEventComponent/initComponent.js';
 import HtmlBlockEventAttachmentsComponent from './HtmlBlockEventAttachmentsComponent/initComponent.js';
+import BlockEventGoogleMapsLocationComponent from './BlockEventGoogleMapsLocationComponent/initComponent.js';
 
 window.SlideinBannerEventComponent = SlideinBannerEventComponent;
 window.HtmlBlockEventDescriptionComponent = HtmlBlockEventDescriptionComponent;
 window.ListBenchMapGalleryEventComponent = ListBenchMapGalleryEventComponent;
 window.HtmlBlockEventAttachmentsComponent = HtmlBlockEventAttachmentsComponent;
+window.BlockEventGoogleMapsLocationComponent = BlockEventGoogleMapsLocationComponent;
