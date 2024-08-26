@@ -199,23 +199,26 @@ Route::middleware(['auth'])->group(function() {
 Route::get('/register',     [RegisterController::class, 'index'])->name('register');
 Route::post('/register',    [RegisterController::class, 'create'])->name('register.create');
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
 
 Route::middleware(['check.theme.site'])->group(function() {
+    Route::any('{any}', [ControllersWebsiteController::class, 'uri'])->where('any', '.*');
+    Route::get('/notfound', [ControllersWebsiteController::class, 'notfound'])->name('notfound');
     /**
      * principal navigation
      */
-    Route::get('/', [ControllersWebsiteController::class, 'index']);
-    Route::get('/notfound', [ControllersWebsiteController::class, 'notfound'])->name('notfound');
+    // Route::get('/', [ControllersWebsiteController::class, 'index']);
     // Route::get('/editoras', [ControllersWebsiteController::class, 'editoras']);
     // Route::get('/editora/{editora}', [ControllersWebsiteController::class, 'editora']);
 
     /**
      * subomain
      */
-    Route::any('/{domain}',         [ControllersWebsiteController::class, 'domain']);
-    Route::any('/{domain}/{uri}',    [ControllersWebsiteController::class, 'domainUri']);
+    // Route::any('/{domain}',         [ControllersWebsiteController::class, 'domain']);
+    // Route::any('/{domain}/{uri}',    [ControllersWebsiteController::class, 'domainUri']);
     // Route::any('/{domain}/editora/{editora}', [ControllersWebsiteController::class, 'editora']);
 });
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
