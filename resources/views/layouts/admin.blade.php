@@ -76,7 +76,7 @@
     
     <!-- page-wrapper -->
   <!-- page-wrapper -->
-  <script src="https://cdn.tiny.cloud/1/pno1jzy3fokxrq842muonq3jfelg0kv5blqeryq4qxob95al/tinymce/5.8.0-111/tinymce.min.js"
+  <script src="https://cdn.tiny.cloud/1/957xh1332e4cnda4415vyfh0mmu9546pr8viekcnj5q0g1jd/tinymce/5.8.0-111/tinymce.min.js"
   referrerpolicy="origin"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
