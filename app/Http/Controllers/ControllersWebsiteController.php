@@ -30,19 +30,13 @@ class ControllersWebsiteController extends Controller
 
     public function uri() {
         //is event and has multiles uris
-        if($this->event && sizeof($this->uri) > 1) {
+        if($this->event) {
             $page = Page::where(['route' => end($this->uri), 'event_id' => $this->event->id])->first();
-            $data['event'] = $this->event->url ?? '' ;
-            $data['principal'] = $this->event->principal ?? false;
-            $data['html'] = $this->htmlPage($page);
-            return view('pagebuilder.base-view', $data);
-        }
-
-        //is event and has only subdomain event
-        if($this->event && sizeof($this->uri) <= 1) {
-            $page = Page::where(['event_id' => $this->event->id, 'homepage' => Page::HOME_PAGE])->first();
-            if (!$page) {
-                $page = Page::where(['event_id' => $this->event->id])->first();
+            if(!$page) {
+                $page = Page::where(['event_id' => $this->event->id, 'homepage' => Page::HOME_PAGE])->first();
+                if (!$page) {
+                    $page = Page::where(['event_id' => $this->event->id])->first();
+                }
             }
             $data['event'] = $this->event->url ?? '' ;
             $data['principal'] = $this->event->principal ?? false;

@@ -23,6 +23,8 @@ class ActiveThemeEventSiteMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        Session::forget('event');
+
         $url = explode('/', str_replace([env('APP_URL'), 'http://', 'https://'], "", request()->url()));
         $url = array_values(array_filter($url, function($value) {  return $value !== ""; }));
 
@@ -92,6 +94,19 @@ class ActiveThemeEventSiteMiddleware
 
             return $this->proccess($request, $next, $theme);
         }
+
+        //if !event e not a template try to access a page from a principal event
+        $page = Page::where(['route' => end($url)])->first();
+        if(!$page) {
+            return abort(404);
+        }
+
+        $event = Event::find($page->event_id);
+        Session::put('event', $event);
+
+        $theme = Theme::find($event->theme_id);
+
+        return $this->proccess($request, $next, $theme);
     }
 
     private function proccess(Request $request, Closure $next, Theme $theme) {
