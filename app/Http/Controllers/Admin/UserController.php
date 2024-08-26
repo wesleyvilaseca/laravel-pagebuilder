@@ -8,6 +8,7 @@ use App\Models\RoleUser;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -25,12 +26,18 @@ class UserController extends Controller
 
     public function index()
     {
+        if(Auth::user()->isAdmin) {
+            $list = $this->repository->all();
+        } else {
+            $list = $this->repository->where('super_admin', 'N')->get();
+        }
+        
         $data['users_'] = true;
         $data['title']  = 'Usuários';
         $data['toptitle'] =  $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
         $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
-        $data['list']       = $this->repository->all();
+        $data['list']       = $list;
         $data['users_']     = true;
 
         return view('admin.users.index', $data);
@@ -149,6 +156,14 @@ class UserController extends Controller
     {
         $user = $this->repository->find($id);
         if (!$user) {
+            return redirect()->back();
+        }
+
+        if($user->id == Auth::user()->id) {
+            return redirect()->back();
+        }
+
+        if($user->isAdmin && !Auth::user()->isAdmin) {
             return redirect()->back();
         }
 
