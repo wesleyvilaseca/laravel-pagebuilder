@@ -3,7 +3,7 @@ use App\Supports\Helper\Utils;
 use Illuminate\Support\Facades\Request;
 
 $params = Request::route()->parameters();
-$uri =  $params['domain'] ?? null;
+$uri = @isset($params['domain']) ? $params['domain'] : null;
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -25,7 +25,7 @@ $uri =  $params['domain'] ?? null;
 
         <script defer>
             const site_url = '<?= Utils::get_site_url() ?>';
-            const subdomain = '<?= $url ?>';
+            const eventSubDomain = '<?= $uri ?>';
             window.uspEvent = '<?= @$_GET['event'] ?? '' ?>';
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
