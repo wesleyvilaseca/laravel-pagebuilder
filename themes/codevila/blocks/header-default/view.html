@@ -20,8 +20,10 @@
 </div>
 
 <script>
-    const link = document.getElementById('editorasLink');
-    if (link) {
-        link.href = eventSubDomain ? `/${eventSubDomain}/editoras` : '/editoras';
-    } 
+    $(document).ready(function() {
+        const link = document.getElementById('editorasLink');
+        if (link) {
+            link.href = eventSubDomain ? `/${eventSubDomain}/editoras` : '/editoras';
+        }
+    })
 </script>
