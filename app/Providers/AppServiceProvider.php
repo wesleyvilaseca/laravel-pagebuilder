@@ -28,10 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->singleton(UploadFileService::class, function ($app) {
-            return new UploadFileService(new SystemUpload(), new UploadRelation());
-        });
-
         // register singleton phppagebuilder (this ensures all phpb_ helpers have the right config without first manually creating a pagebuilder instance)
         $this->app->singleton('phpPageBuilder', function ($app) {
             return new PHPageBuilder(config('pagebuilder'));
