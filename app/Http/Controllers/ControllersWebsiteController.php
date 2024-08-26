@@ -34,6 +34,10 @@ class ControllersWebsiteController extends Controller
         return view('pagebuilder.base-view', $data);
     }
 
+    public function editoras(Request $request, $event = '') {
+       $this->uri($this->event->url, 'editoras');
+    }
+
     /**
      * Show the website page that corresponds with the current URI.
      */
@@ -63,6 +67,7 @@ class ControllersWebsiteController extends Controller
         }
 
         $data['event'] = $this->event->url ?? $event->url ?? '' ;
+        $data['principal'] = $this->event->principal ?? false;
         $data['html'] = $this->htmlPage($page);
 
         return view('pagebuilder.base-view', $data);
@@ -80,10 +85,6 @@ class ControllersWebsiteController extends Controller
     {
         $data['title'] = 'Page not found';
         return view('common.404.pagenotfound', $data);
-    }
-
-    public function editoras(Request $request, $event = '') {
-        dd('pagina da editora');
     }
 }
  
