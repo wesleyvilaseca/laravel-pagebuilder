@@ -14,7 +14,6 @@
                         <div class="col-md-6">
                             <template v-for="(attachmentTwo, index) in attachmentsColTwo" :key="index">
                                 <p> 
-                                    <i class="fas fa-paperclip"></i>
                                     <a :href="attachmentTwo.link" target="_blank"> {{ attachmentTwo.name }} </a>
                                 </p>
                             </template>
