@@ -96,14 +96,13 @@ class ActiveThemeEventSiteMiddleware
         }
 
         //if !event e not a template try to access a page from a principal event
-        $page = Page::where(['route' => end($url)])->first();
+        $event = Event::where('principal', Event::PRINCIPAL_EVENT)->first();
+        $page = Page::where(['route' => end($url), 'event_id' => $event->id])->first();
         if(!$page) {
             return abort(404);
         }
-
-        $event = Event::find($page->event_id);
+        
         Session::put('event', $event);
-
         $theme = Theme::find($event->theme_id);
 
         return $this->proccess($request, $next, $theme);
