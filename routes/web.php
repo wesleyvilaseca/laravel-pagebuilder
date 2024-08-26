@@ -209,13 +209,13 @@ Route::middleware(['check.theme.site'])->group(function() {
      */
     Route::get('/', [ControllersWebsiteController::class, 'index']);
     Route::get('/notfound', [ControllersWebsiteController::class, 'notfound'])->name('notfound');
-    Route::get('/editoras/', [ControllersWebsiteController::class, 'editoras']);
-    Route::get('/editora/{editora}', [ControllersWebsiteController::class, 'editora']);
+    // Route::get('/editoras', [ControllersWebsiteController::class, 'editoras']);
+    // Route::get('/editora/{editora}', [ControllersWebsiteController::class, 'editora']);
 
     /**
      * subomain
      */
-    Route::any('/{domain}',         [ControllersWebsiteController::class, 'uri']);
-    Route::any('/{domain}/{uri}',    [ControllersWebsiteController::class, 'uri']);
-    Route::any('/{domain}/editora/{editora}', [ControllersWebsiteController::class, 'editora']);
+    Route::any('/{domain}',         [ControllersWebsiteController::class, 'domain']);
+    Route::any('/{domain}/{uri}',    [ControllersWebsiteController::class, 'domainUri']);
+    // Route::any('/{domain}/editora/{editora}', [ControllersWebsiteController::class, 'editora']);
 });

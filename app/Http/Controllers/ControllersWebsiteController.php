@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Page;
+use App\Models\Template;
 use Illuminate\Http\Request;
 use PHPageBuilder\Modules\GrapesJS\Block\BaseModel;
 use PHPageBuilder\Modules\GrapesJS\PageRenderer;
@@ -34,8 +35,56 @@ class ControllersWebsiteController extends Controller
         return view('pagebuilder.base-view', $data);
     }
 
-    public function editoras(Request $request, $event = '') {
-       $this->uri($this->event->url, 'editoras');
+    public function domain(string $domain = '') {
+        $event = Event::where('url', $domain)->first();
+        if(!$event) {
+            $page = Page::where(['route' => $domain])->first();
+            if (!$page) {
+                return redirect()->route('notfound');
+            }
+        } else {
+            $page = Page::where(['event_id' => $event->id, 'homepage' => Page::HOME_PAGE])->first();
+            if (!$page) {
+                $page = Page::where(['event_id' => $event->id])->first();
+            }    
+        }
+        
+        $data['event'] = $this->event->url ?? $event->url ?? '' ;
+        $data['principal'] = $this->event->principal ?? $event->principal ?? false;
+        $data['html'] = $this->htmlPage($page);
+
+        return view('pagebuilder.base-view', $data);
+    }
+
+    public function domainUri(string $event = '', string $uri = '')
+    {
+        $isTemplate = Template::where('url', $event)->first() ?? false;
+        if($isTemplate) {
+            $page = Page::where(['route' => $uri])->first();
+            if (!$page) {
+                return redirect()->route('notfound');
+            }
+        } else {
+            $event = Event::where('url', $event)->first();
+            if(!$event) {
+                return redirect()->route('notfound');
+            }
+
+            $page = Page::where(['event_id' => $event->id, 'route' => $uri])->first();
+            if(!$page) {
+                $page = Page::where(['event_id' => $event->id, 'homepage' => Page::HOME_PAGE])->first();
+            }
+    
+            if (!$page) {
+                $page = Page::where(['event_id' => $event->id])->first();
+            }
+        }
+      
+        $data['event'] = $this->event->url ?? $event->url ?? '' ;
+        $data['principal'] = $this->event->principal ?? false;
+        $data['html'] = $this->htmlPage($page);
+
+        return view('pagebuilder.base-view', $data);
     }
 
     /**
