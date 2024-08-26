@@ -240,14 +240,40 @@ body {
   color: #fff;
 }
 
-#contato ul {
+#contato .social-link {
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: flex-end;
 }
 
-#contato ul li {
+#contato .social-link a {
+  display: flex;
+  list-style-type: none;
+  margin-left: 25px;
+}
+
+#contato .social-link a {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  transition: all ease-out 0.2s;
+  color: #000
+}
+
+#contato .social-link a:hover{
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  background-color: #000;
+  color: #fff;
+}
+
+#contato .social-link a i {
+  font-size: 30px;
+}
+/* #contato ul li {
   display: flex;
   list-style-type: none;
   margin-left: 25px;
@@ -257,7 +283,7 @@ body {
   margin-left: 0;
 }
 
-#contato ul li a {
+#contato ul li a.social-link {
   display: flex;
   width: 40px;
   height: 40px;
@@ -269,12 +295,12 @@ body {
   color: #000
 }
 
-#contato ul li a:hover {
+#contato ul li a.social-link:hover {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
   background-color: #000;
   color: #fff;
 }
 
-#contato ul li a i {
+#contato ul li a.social-link div {
   font-size: 30px;
-}
+} */
