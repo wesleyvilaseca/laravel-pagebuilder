@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function index()
     {
-        if(Auth::user()->isAdmin) {
+        if(Auth::user()->isAdmin()) {
             $list = $this->repository->all();
         } else {
             $list = $this->repository->where('super_admin', 'N')->get();
@@ -163,7 +163,7 @@ class UserController extends Controller
             return redirect()->back();
         }
 
-        if($user->isAdmin && !Auth::user()->isAdmin) {
+        if($user->isAdmin && !Auth::user()->isAdmin()) {
             return redirect()->back();
         }
 
