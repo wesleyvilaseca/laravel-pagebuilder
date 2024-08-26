@@ -82,8 +82,8 @@ class ControllersWebsiteController extends Controller
         return view('common.404.pagenotfound', $data);
     }
 
-    public function editora(Request $request, $event = '') {
-        echo $this->uri($request, $event);
+    public function editoras(Request $request, $event = '') {
+        dd('pagina da editora');
     }
 }
  

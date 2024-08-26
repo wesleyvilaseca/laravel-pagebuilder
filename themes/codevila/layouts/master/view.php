@@ -1,5 +1,9 @@
 <?php
 use App\Supports\Helper\Utils;
+use Illuminate\Support\Facades\Request;
+
+$params = Request::route()->parameters();
+$uri =  $params['domain'] ?? null;
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -21,6 +25,7 @@ use App\Supports\Helper\Utils;
 
         <script defer>
             const site_url = '<?= Utils::get_site_url() ?>';
+            const subdomain = '<?= $url ?>';
             window.uspEvent = '<?= @$_GET['event'] ?? '' ?>';
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -209,7 +209,7 @@ Route::middleware(['check.theme.site'])->group(function() {
      */
     Route::get('/', [ControllersWebsiteController::class, 'index']);
     Route::get('/notfound', [ControllersWebsiteController::class, 'notfound'])->name('notfound');
-    Route::get('/editoras/', [ControllersWebsiteController::class, 'editora']);
+    Route::get('/editoras/', [ControllersWebsiteController::class, 'editoras']);
     Route::get('/editora/{editora}', [ControllersWebsiteController::class, 'editora']);
 
     /**
