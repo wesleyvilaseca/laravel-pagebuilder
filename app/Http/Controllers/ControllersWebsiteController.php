@@ -38,6 +38,8 @@ class ControllersWebsiteController extends Controller
                     $page = Page::where(['event_id' => $this->event->id])->first();
                 }
             }
+            $data['uri'] = $this->uri;
+            $data['template'] = false;
             $data['event'] = $this->event->url ?? '' ;
             $data['principal'] = $this->event->principal ?? false;
             $data['html'] = $this->htmlPage($page);
@@ -49,6 +51,8 @@ class ControllersWebsiteController extends Controller
         if(!$this->event && $template) {
             if(sizeof($this->uri) > 1) {
                 $page = $template->pages->where('route', end($this->uri))->first();
+                $data['uri'] = $this->uri;
+                $data['template'] = true;
                 $data['event'] = '';
                 $data['principal'] = false;
                 $data['html'] = $this->htmlPage($page);
