@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AuthorBookController;
+use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\EventAttachmentController;
 use App\Http\Controllers\Admin\EventBannerGalleryController;
@@ -110,7 +112,6 @@ Route::middleware(['auth'])->group(function() {
     /**
      * event-publishers
      */
-    
     Route::get('/event/{id}/publishers',[EventPublisherController::class, 'index'])->name('event.publishers');
     Route::get('/event/{id}/available',[EventPublisherController::class, 'available'])->name('event.publishers.available');
     Route::post('/event/{id}/available',[EventPublisherController::class, 'attachPublisherEvent'])->name('event.publishers.available');
@@ -125,6 +126,24 @@ Route::middleware(['auth'])->group(function() {
     Route::put('/publisher/{id}/update',     [PublisherController::class, 'update'])->name('publisher.update');
     Route::post('/publisher/store',     [PublisherController::class, 'store'])->name('publisher.store');
     Route::get('/publisher/{id}/delete',  [PublisherController::class, 'delete'])->name('publisher.delete');
+
+    /**
+     * author|books
+     */
+    Route::get('/author',     [AuthorController::class, 'index'])->name('authors');
+    Route::get('/author/create',     [AuthorController::class, 'create'])->name('author.create');
+    Route::get('/author/{id}/edit',     [AuthorController::class, 'edit'])->name('author.edit');
+    Route::put('/author/{id}/update',     [AuthorController::class, 'update'])->name('author.update');
+    Route::post('/author/store',     [AuthorController::class, 'store'])->name('author.store');
+    Route::get('/author/{id}/delete',  [AuthorController::class, 'delete'])->name('author.delete');
+
+    /**
+     * book-authors
+     */
+    Route::get('/book/{id}/authors',[AuthorBookController::class, 'index'])->name('book.authors');
+    Route::get('/book/{id}/available',[AuthorBookController::class, 'available'])->name('book.authors.available');
+    Route::post('/book/{id}/available',[AuthorBookController::class, 'attachPublisherEvent'])->name('book.authors.available');
+    Route::post('/book/{bookId}/available/{authorId}',[AuthorBookController::class, 'detachEventPublisher'])->name('book.authors.detach');
 
      /**
      * editoras|publisher
@@ -158,7 +177,6 @@ Route::middleware(['auth'])->group(function() {
     Route::put('/event/{id}/attachment/{bannerId}/update',     [EventAttachmentController::class, 'update'])->name('event.attachment.update');
     Route::get('/event/{id}/attachment/{bannerId}/show',     [EventAttachmentController::class, 'show'])->name('event.attachment.show');
     Route::delete('/event/{id}/attachment/{bannerId}/delete',     [EventAttachmentController::class, 'delete'])->name('event.attachment.delete');
-
     
     /**
      * event benchmap

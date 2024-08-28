@@ -30,11 +30,11 @@
         value="{{ @$book->name ?? old('name') }}">
 </div>
 
-<div class="form-group mb-3">
+{{-- <div class="form-group mb-3">
     <label for="author">Autor(es), organizador(es)</label>
     <input type="text" class="form-control form-control-sm" id="author" name="author"
         value="{{ @$book->author ?? old('author') }}">
-</div>
+</div> --}}
 
 <div class="form-group mb-3">
     <label for="subject">Assunto</label>

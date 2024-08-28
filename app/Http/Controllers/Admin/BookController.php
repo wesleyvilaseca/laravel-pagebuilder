@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuthorBook;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Models\PublisherBook;
@@ -18,7 +19,8 @@ class BookController extends Controller
         protected Book $repository,
         protected Publisher $publisherRepository,
         protected PublisherBook $publisherBookRepository,
-        protected UploadFileService $uploadFileService
+        protected UploadFileService $uploadFileService,
+        protected AuthorBook $authorBookRepository
     )
     {
         $this->middleware(['can:books']);
@@ -132,7 +134,7 @@ class BookController extends Controller
             $book = $this->repository->create([
                 'name' => $request->name,
                 'subject' => @$request->subject,
-                'author' => @$request->author,
+                // 'author' => @$request->author,
                 'isbn' => @$request->isbn,
                 'description' => $request->description,
                 'price' => @$request->price,
@@ -242,7 +244,7 @@ class BookController extends Controller
             $book = $this->repository->where('id', $book->id)->update([
                 'name' => $request->name,
                 'subject' => @$request->subject,
-                'author' => @$request->author,
+                // 'author' => @$request->author,
                 'isbn' => @$request->isbn,
                 'description' => $request->description,
                 'price' => @$request->price,
@@ -277,11 +279,12 @@ class BookController extends Controller
 
             if (!empty($files)) {
                 foreach($files as $file) {
-                    $this->uploadFileService->deleteFile(null, $file, true);
+                    $this->uploadFileService->deleteFile(null, $file);
                 }
             }
 
             $this->publisherBookRepository->where('book_id', $id)->delete();
+            $this->authorBookRepository->where('book_id', $id)->delete();
             $book->delete();
             DB::commit();
             return redirect()->route('books')->with('success', 'Livro removido com sucesso');

@@ -13,7 +13,12 @@ class Book extends Model
 
     const MODEL_ALIAS = 'book';
     const FILE_CATEGORY_BOOK_SINGLE_IMAGE = 'book-image';
-    const FILE_CATEGORY_BOOK_IMAGE_GALLERY = 'book-gallery'; 
+    const FILE_CATEGORY_BOOK_IMAGE_GALLERY = 'book-gallery';
+
+    public function authors()
+    {
+        return $this->belongsToMany(Author::class, 'author_books', 'book_id', 'author_id');
+    }
 
     public function uploads()
     {
@@ -23,6 +28,22 @@ class Book extends Model
     public function publishers()
     {
         return $this->belongsToMany(Publisher::class, 'publisher_books', 'book_id', 'publisher_id');
+    }
+
+    public function authorsAvailable($filter = null)
+    {
+        $authors = Author::whereNotIn('authors.id', function ($query) {
+            $query->select('author_books.author_id');
+            $query->from('author_books');
+            $query->whereRaw("author_books.book_id={$this->id}");
+        })
+            ->where(function ($queryFilter) use ($filter) {
+                if ($filter)
+                    $queryFilter->where('authors.name', 'LIKE', "%{$filter}%");
+            })
+            ->paginate();
+
+        return $authors;
     }
 
     /**
