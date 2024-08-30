@@ -1,7 +1,9 @@
 import event from './event';
+import publisher from './publisher';
 
 const modules = {
-    event
+    event,
+    publisher
 }
 
 export default modules;

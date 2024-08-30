@@ -20,6 +20,7 @@ class CreatePublishersTable extends Migration
             $table->string('site')->nullable();
             $table->string('email')->nullable();
             $table->json('data')->nullable();
+            $table->string('url')->nullable();
             $table->integer('status')->nullable();
             $table->timestamps();
         });

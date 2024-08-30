@@ -3,9 +3,11 @@ import HtmlBlockEventDescriptionComponent from './HtmlBlockEventDescriptionCompo
 import ListBenchMapGalleryEventComponent from './ListBenchMapGalleryEventComponent/initComponent.js';
 import HtmlBlockEventAttachmentsComponent from './HtmlBlockEventAttachmentsComponent/initComponent.js';
 import BlockEventGoogleMapsLocationComponent from './BlockEventGoogleMapsLocationComponent/initComponent.js';
+import BlockEventPublishersComponent from './BlockEventPublishersComponent/initComponent.js';
 
 window.SlideinBannerEventComponent = SlideinBannerEventComponent;
 window.HtmlBlockEventDescriptionComponent = HtmlBlockEventDescriptionComponent;
 window.ListBenchMapGalleryEventComponent = ListBenchMapGalleryEventComponent;
 window.HtmlBlockEventAttachmentsComponent = HtmlBlockEventAttachmentsComponent;
 window.BlockEventGoogleMapsLocationComponent = BlockEventGoogleMapsLocationComponent;
+window.BlockEventPublishersComponent = BlockEventPublishersComponent;

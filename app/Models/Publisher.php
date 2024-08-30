@@ -13,7 +13,7 @@ class Publisher extends Model
     const FILE_CATEGORY_LOGO = 'publisher-logo';
     const FILE_CATEGORY_PUBLISHER_BOOK_PRICE_LIST = 'publisher-price-list';
 
-    protected $fillable = ['name', 'description', 'site', 'email', 'data', 'status'];
+    protected $fillable = ['name', 'description', 'site', 'email', 'data', 'url', 'status'];
 
     public function uploads()
     {
@@ -23,6 +23,11 @@ class Publisher extends Model
     public function books()
     {
         return $this->belongsToMany(Book::class, 'publisher_books', 'publisher_id', 'book_id');
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'event_publishers', 'publisher_id', 'event_id');
     }
 
     /**

@@ -102,6 +102,7 @@ class PublisherController extends Controller
                 'description' => $request->description,
                 'site' => @$request->site,
                 'email' => @$request->email,
+                'url' => Str::slug($request->name),
                 'data' => json_encode((object)[
                     'social' => $social,
                     'address' => $address
@@ -230,6 +231,7 @@ class PublisherController extends Controller
                 'description' => $request->description,
                 'site' => @$request->site,
                 'email' => @$request->email,
+                'url' => Str::slug($request->name),
                 'data' => json_encode((object)[
                     'social' => $social,
                     'address' => $address

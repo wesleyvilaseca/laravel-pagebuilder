@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\EventBannerGalleryController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\PublisherController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
@@ -24,4 +25,6 @@ Route::group([
 ], function () {
     Route::get('/event', [EventController::class, 'index']);
     Route::get('/event-banners', [EventBannerGalleryController::class, 'index']);
+    Route::get('/event-publishers', [PublisherController::class, 'index']);
+    Route::get('/event-publisher/{url}', [PublisherController::class, 'getPublisher']);
 });
