@@ -26,5 +26,5 @@ Route::group([
     Route::get('/event', [EventController::class, 'index']);
     Route::get('/event-banners', [EventBannerGalleryController::class, 'index']);
     Route::get('/event-publishers', [PublisherController::class, 'index']);
-    Route::get('/event-publisher/{url}', [PublisherController::class, 'getPublisher']);
+    Route::get('/event-publisher', [PublisherController::class, 'getPublisher']);
 });

@@ -10,6 +10,8 @@ class Page extends Model
     use HasFactory;
 
     const HOME_PAGE = 1;
+    const URL_PAGE_PUBLISHER = 'editora';
+    
     protected $table = 'pages';
     protected $fillable = ['event_id', 'name', 'layout', 'route', 'homepage', 'data'];
 

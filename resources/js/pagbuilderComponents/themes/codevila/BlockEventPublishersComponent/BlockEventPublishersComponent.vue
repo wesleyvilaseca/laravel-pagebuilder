@@ -18,8 +18,8 @@
                             <div class="col-lg-3 col-md-6 col-sm-12 mb-4" v-for="(publisher, index) in publishersState.data" :key="index">
                                 <div class="card card-event">
                                     <img class="card-img-top" :src="publisher.logo" :alt="publisher.name">
-                                    <div class="card-footer">
-                                    <span @click.prevent="goToPublisher(publisher)"> {{ publisher.name }} </span>
+                                    <div class="card-footer" @click.prevent="goToPublisher(publisher)">
+                                    <span> {{ publisher.name }} </span>
                                     </div>
                                 </div>
                             </div>
@@ -185,7 +185,7 @@ export default {
         },
 
         goToPublisher(publisher) {
-            console.log(publisher)
+            return window.location.href = `editoras/${publisher.url}/editora`;
         },
         btnLoad(showLoadign) {
             if (showLoadign) {

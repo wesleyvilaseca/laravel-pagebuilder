@@ -1,6 +1,7 @@
 <script>
     const event = "{{ @$event ?? '' }}";
     const eventPrincipal = "{{ @$principal ?? 0 }}";
+    const publisher = "{{ @$publisher ?? '' }}"
     window.uspEvent = event;
     if (!event) {
         console.warning("Não há evento selectionado");
@@ -10,7 +11,7 @@
 {!! $html !!}
 
 
-
+{{-- 
 <script>
 // Função para atualizar os hrefs dos links
 function updateLinks() {
@@ -41,4 +42,59 @@ function updateLinks() {
 
 // Chamar a função ao carregar a página
 window.onload = updateLinks;
+</script> --}}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // // Obtenha a URL atual
+        const currentUrl = window.location.href;
+
+        // Defina o valor dinâmico de `event`
+        var sub = event; // Altere isso conforme necessário
+
+        // Verifique se a URL tem exatamente dois parâmetros e o segundo parâmetro é igual ao `event`
+        const regex = new RegExp(`^https?://[^/]+/${sub}(?!/)$`);
+        if (regex.test(currentUrl)) {
+            // Se for igual, adicione um evento de clique a todos os links
+            document.querySelectorAll('a[href]').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault(); // Evite o comportamento padrão do link
+                    
+                    // Redirecione para a nova URL com o caminho adicional
+                    const newUrl = `${currentUrl}/${link.getAttribute('href')}`;
+                    window.location.href = newUrl;
+                });
+            });
+        }
+
+
+        // Adicione um evento de clique a todos os links
+        document.querySelectorAll('a[href]').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                const linkHref = link.getAttribute('href');
+
+                if (linkHref === 'home') {
+                    e.preventDefault(); 
+                    const urlPath = window.location.pathname.split('/').filter(Boolean);
+                    const secondParam = urlPath[0]; 
+                    if (secondParam === sub) {
+                        const newUrl = `${window.location.origin}/${sub}/home`;
+                        return window.location.href = newUrl;
+                    } else {
+                        const newUrl = `${window.location.origin}/home`;
+                        return window.location.href = newUrl;
+                    }
+                }
+
+                // Verifique se a URL atual já contém o caminho do href
+                if (currentUrl.includes(`/${linkHref}`)) {
+                    e.preventDefault(); // Evite o comportamento padrão do link
+
+                    // Redirecione para a URL até o ponto em que o caminho do href aparece
+                    const newUrl = currentUrl.split(`/${linkHref}`)[0] + `/${linkHref}`;
+                    window.location.href = newUrl;
+                }
+            });
+        });
+    });
 </script>

@@ -4,6 +4,7 @@ import ListBenchMapGalleryEventComponent from './ListBenchMapGalleryEventCompone
 import HtmlBlockEventAttachmentsComponent from './HtmlBlockEventAttachmentsComponent/initComponent.js';
 import BlockEventGoogleMapsLocationComponent from './BlockEventGoogleMapsLocationComponent/initComponent.js';
 import BlockEventPublishersComponent from './BlockEventPublishersComponent/initComponent.js';
+import BlockEventPublisherComponent from './BlockEventPublisherComponent/initComponent.js';
 
 window.SlideinBannerEventComponent = SlideinBannerEventComponent;
 window.HtmlBlockEventDescriptionComponent = HtmlBlockEventDescriptionComponent;
@@ -11,3 +12,4 @@ window.ListBenchMapGalleryEventComponent = ListBenchMapGalleryEventComponent;
 window.HtmlBlockEventAttachmentsComponent = HtmlBlockEventAttachmentsComponent;
 window.BlockEventGoogleMapsLocationComponent = BlockEventGoogleMapsLocationComponent;
 window.BlockEventPublishersComponent = BlockEventPublishersComponent;
+window.BlockEventPublisherComponent = BlockEventPublisherComponent;

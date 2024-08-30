@@ -38,6 +38,12 @@ class ControllersWebsiteController extends Controller
                     $page = Page::where(['event_id' => $this->event->id])->first();
                 }
             }
+
+            //if publisher page, send url
+            if(end($this->uri) == Page::URL_PAGE_PUBLISHER) {
+                $data['publisher'] = prev($this->uri);
+            }
+
             $data['uri'] = $this->uri;
             $data['template'] = false;
             $data['event'] = $this->event->url ?? '' ;
