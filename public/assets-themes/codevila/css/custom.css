@@ -273,6 +273,35 @@ body {
 #contato .social-link a i {
   font-size: 30px;
 }
+
+#contato .title {
+  font-size: 12px;
+  padding-bottom: 15px;
+  text-transform: uppercase;
+}
+
+#contato .copyright {
+  padding-top: 20px;
+  font-size: 13px;
+}
+
+@media (max-width: 767.98px) {
+  #contato .title {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+  #contato .social-link {
+      padding-top: 10px;
+      display:flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+  }
+}
+
 /* #contato ul li {
   display: flex;
   list-style-type: none;

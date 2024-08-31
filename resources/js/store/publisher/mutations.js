@@ -1,7 +1,10 @@
-import cript from "../../supports/cript";
 import state from "./state";
 
 const mutations = {
+    SET_PUBLISHER(payload) {
+        state.value.publisher = payload;
+    },
+
     SET_PUBLISHERS(payload, filter = null) {
         const getProxy = (data) => {
             return new Proxy(data, {
@@ -14,7 +17,7 @@ const mutations = {
         var publishers;
         var newPublishers;
         if(state.value.filter == filter) {
-            publishers = getProxy(state.value.data);
+            publishers = getProxy(state.value.publishers.data);
             newPublishers = getProxy(payload.data);
         } else {
             publishers = [];
@@ -22,11 +25,11 @@ const mutations = {
         }
 
         const mergedObject = [...publishers, ...newPublishers]
-        state.value.data = mergedObject;
+        state.value.publishers.data = mergedObject;
         
         const meta = payload.meta;
         var next_page = meta.current_page + 1
-        state.value.meta = {
+        state.value.publishers.meta = {
             prev_page: meta.from,
             current_page: meta.current_page,
             per_page: meta.per_page,

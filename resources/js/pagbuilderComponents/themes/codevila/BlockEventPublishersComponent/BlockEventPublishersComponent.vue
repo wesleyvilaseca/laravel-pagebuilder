@@ -2,7 +2,7 @@
           <template v-if="!preloader">
             <div class="publishers-event pt-5 pb-5" :class="{ loaded: !preloader }">
                 <div class="container">
-                    <div v-if="publishersState.data.length === 0">Não há Editoras</div>
+                    <div v-if="publishersState.publishers.data.length === 0">Não há Editoras</div>
                     <div v-else>
                         <div class="row my-4">
                             <div class="col-md-9">
@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div class="row my-4">
-                            <div class="col-lg-3 col-md-6 col-sm-12 mb-4" v-for="(publisher, index) in publishersState.data" :key="index">
+                            <div class="col-lg-3 col-md-6 col-sm-12 mb-4" v-for="(publisher, index) in publishersState.publishers.data" :key="index">
                                 <div class="card card-event">
                                     <img class="card-img-top" :src="publisher.logo" :alt="publisher.name">
                                     <div class="card-footer" @click.prevent="goToPublisher(publisher)">
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-center d-grid gap-2 d-md-block" v-if="publishersState.meta.next_page">
+                    <div class="text-center d-grid gap-2 d-md-block" v-if="publishersState.publishers.meta.next_page">
                         <button :style="btnStyles" type="button" class="btn btn-dark" @click.prevent="getPublishers()"
                             v-html="textButton" :disabled="btnDisabled">
                         </button>
@@ -169,7 +169,7 @@ export default {
     methods: {
         async getPublishers() {
             this.btnLoad(true);
-            const page = this.publishersState.meta.next_page;
+            const page = this.publishersState.publishers.meta.next_page;
             var params = {
                 page: this.publishersState.filter == this.filter ? page : '',
                 flag: this.event,
@@ -201,7 +201,7 @@ export default {
          publishersState: {
             deep: true,
             handler(newValue, oldeValue) {
-                if (this.publishersState.data.length > 0) {
+                if (this.publishersState.publishers.data.length > 0) {
                     return this.preloader = false;
                 }
             }

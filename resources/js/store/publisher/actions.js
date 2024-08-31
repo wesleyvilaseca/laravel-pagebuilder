@@ -10,6 +10,15 @@ const actions = {
         } catch (error) {
             console.error(error);
         }
+    },
+
+    async getPublisher(params) {
+        try {
+            const { data } = await Http.get('event-publisher', { params });
+            mutations.SET_PUBLISHER(data.data);
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
