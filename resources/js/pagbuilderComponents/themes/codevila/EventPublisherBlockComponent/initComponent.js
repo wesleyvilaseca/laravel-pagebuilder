@@ -1,5 +1,5 @@
 import { createVNode, render } from 'vue';
-import EventPubEventPublisherBlockComponentlisherComponent from './EventPublisherBlockComponent.vue';
+import EventPublisherBlockComponent from './EventPublisherBlockComponent.vue';
 /**
  * 
  * @param { string } elementId 
