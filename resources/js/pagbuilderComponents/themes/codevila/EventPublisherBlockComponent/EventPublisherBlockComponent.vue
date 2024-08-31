@@ -213,7 +213,7 @@ import VueSkeletonLoader from 'vue3-skeleton-loader';
 import 'vue3-skeleton-loader/dist/style.css';
 
 export default {
-    name: 'BlockEventPublisherComponent',
+    name: 'EventPublisherBlockComponent',
     props: {
         event: {
             type: String,

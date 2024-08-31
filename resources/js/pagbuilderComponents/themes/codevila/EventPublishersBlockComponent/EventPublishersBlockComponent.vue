@@ -130,7 +130,7 @@ import VueSkeletonLoader from 'vue3-skeleton-loader';
 import 'vue3-skeleton-loader/dist/style.css';
 
 export default {
-    name: 'BlockEventPublishersComponent',
+    name: 'EventPublishersBlockComponent',
     props: {
         event: {
             mobileScreem: false,

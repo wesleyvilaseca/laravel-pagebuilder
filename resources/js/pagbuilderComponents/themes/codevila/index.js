@@ -3,13 +3,13 @@ import HtmlBlockEventDescriptionComponent from './HtmlBlockEventDescriptionCompo
 import ListBenchMapGalleryEventComponent from './ListBenchMapGalleryEventComponent/initComponent.js';
 import HtmlBlockEventAttachmentsComponent from './HtmlBlockEventAttachmentsComponent/initComponent.js';
 import BlockEventGoogleMapsLocationComponent from './BlockEventGoogleMapsLocationComponent/initComponent.js';
-import BlockEventPublishersComponent from './BlockEventPublishersComponent/initComponent.js';
-import BlockEventPublisherComponent from './BlockEventPublisherComponent/initComponent.js';
+import EventPublishersBlockComponent from './EventPublishersBlockComponent/initComponent.js';
+import EventPublisherBlockComponent from './EventPublisherBlockComponent/initComponent.js';
 
 window.SlideinBannerEventComponent = SlideinBannerEventComponent;
 window.HtmlBlockEventDescriptionComponent = HtmlBlockEventDescriptionComponent;
 window.ListBenchMapGalleryEventComponent = ListBenchMapGalleryEventComponent;
 window.HtmlBlockEventAttachmentsComponent = HtmlBlockEventAttachmentsComponent;
 window.BlockEventGoogleMapsLocationComponent = BlockEventGoogleMapsLocationComponent;
-window.BlockEventPublishersComponent = BlockEventPublishersComponent;
-window.BlockEventPublisherComponent = BlockEventPublisherComponent;
+window.EventPublishersBlockComponent = EventPublishersBlockComponent;
+window.EventPublisherBlockComponent = EventPublisherBlockComponent;

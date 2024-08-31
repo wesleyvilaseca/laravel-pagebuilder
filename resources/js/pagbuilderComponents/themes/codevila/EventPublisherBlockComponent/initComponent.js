@@ -1,5 +1,5 @@
 import { createVNode, render } from 'vue';
-import EventPublisherComponent from './BlockEventPublisherComponent.vue';
+import EventPubEventPublisherBlockComponentlisherComponent from './EventPublisherBlockComponent.vue';
 /**
  * 
  * @param { string } elementId 
@@ -7,7 +7,7 @@ import EventPublisherComponent from './BlockEventPublisherComponent.vue';
  * @param { string } publisher - event props
  */
 export default function BlockEventPublisherComponent(elementId, event = '', publisher = '') {
-    const vnode = createVNode(EventPublisherComponent, { event: event, publisher: publisher });
+    const vnode = createVNode(EventPublisherBlockComponent, { event: event, publisher: publisher });
     render(vnode, document.getElementById(elementId));
     
 }
