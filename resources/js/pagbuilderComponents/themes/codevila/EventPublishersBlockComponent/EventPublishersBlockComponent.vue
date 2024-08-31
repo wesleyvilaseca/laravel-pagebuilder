@@ -17,7 +17,7 @@
                         <div class="row my-4">
                             <div class="col-lg-3 col-md-6 col-sm-12 mb-4" v-for="(publisher, index) in publishersState.publishers.data" :key="index">
                                 <div class="card card-event">
-                                    <img class="card-img-top" :src="publisher.logo" :alt="publisher.name">
+                                    <img class="card-img-top img-100" :src="publisher.logo" :alt="publisher.name">
                                     <div class="card-footer" @click.prevent="goToPublisher(publisher)">
                                     <span> {{ publisher.name }} </span>
                                     </div>
@@ -120,6 +120,25 @@ outline: 0px;
 .btn-dark:hover {
     background-color: #343a40;
 }
+
+.img-100 {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.img-80 {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.img-60 {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
 
 </style>
 
