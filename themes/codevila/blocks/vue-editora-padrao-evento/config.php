@@ -5,6 +5,15 @@ return [
     'category' => 'Blocos eventos',
     'icon' => 'fa fa-cube',
     'slug' => 'vue-editora-padrao-evento',
-    'fields' => [],
+    'fields' => [
+        'title' => [
+            'label' => 'Título',
+            'type' => 'text',
+        ],
+        'content' => [
+            'label' => 'Conteúdo',
+            'type' => 'textarea',
+        ]
+    ],
     'settings' => []
 ];
