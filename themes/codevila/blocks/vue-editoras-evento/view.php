@@ -3,7 +3,9 @@
 <div id='<?= $id ?>'></div>
 
 <script>
-    var _event = window.uspEvent ? window.uspEvent : event ? event : '';
-    var id  = '<?= $id ?>';
-    window.BlockEventPublishersComponent(id, _event);
+    $(document).ready(function() {
+        var _event = window.uspEvent ? window.uspEvent : event ? event : '';
+        var id  = '<?= $id ?>';
+        window.BlockEventPublishersComponent(id, _event);
+    });
 </script>
