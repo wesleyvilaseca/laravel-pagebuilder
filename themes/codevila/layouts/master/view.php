@@ -42,5 +42,7 @@ $uri = @isset($params['domain']) ? $params['domain'] : null;
         <script src="<?= Utils::getasset('assets-themes/codevila/js/isotope.pkgd.min.js') ?>"></script>
         <script src="<?= Utils::getasset('assets-themes/codevila/js/magnify/jquery.magnific-popup.min.js') ?>"></script>
         <script src="<?= Utils::getasset('assets-themes/codevila/js/main.js') ?>"></script>
+        <script src="<?= mix('js/sitebuilder-app.js') ?>"></script>
+
     </body>
 </html>
