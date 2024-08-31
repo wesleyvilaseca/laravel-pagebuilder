@@ -146,8 +146,8 @@
         align-items: center;
     }
 
-    .publisher-detail .identify .logo img {
-        max-width: 100px;
+    .publisher-detail .identify img.logo {
+        max-width: 200px;
     }
 
     .publisher-detail .identify .name {
