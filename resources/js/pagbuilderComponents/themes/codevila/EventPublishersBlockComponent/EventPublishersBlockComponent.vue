@@ -17,7 +17,7 @@
                         <div class="row my-4">
                             <div class="col-lg-3 col-md-6 col-sm-12 mb-4" v-for="(publisher, index) in publishersState.publishers.data" :key="index">
                                 <div class="card card-event">
-                                    <img class="card-img-top img-100" :src="publisher.logo" :alt="publisher.name">
+                                    <img class="card-img-top img-160" :src="publisher.logo" :alt="publisher.name">
                                     <div class="card-footer" @click.prevent="goToPublisher(publisher)">
                                     <span> {{ publisher.name }} </span>
                                     </div>
@@ -121,6 +121,22 @@ outline: 0px;
     background-color: #343a40;
 }
 
+.card-event {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.img-160 {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+}
+
 .img-100 {
     width: 100px;
     height: 100px;
@@ -138,7 +154,6 @@ outline: 0px;
     height: 60px;
     object-fit: cover;
 }
-
 
 </style>
 
