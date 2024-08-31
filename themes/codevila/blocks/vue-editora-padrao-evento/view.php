@@ -4,7 +4,7 @@
 
 <script>
     var _event = window.uspEvent ? window.uspEvent : event ? event : '';
-    var _publisher = publisher ? publisher : '';
+    var _publisher = typeof publisher !== 'undefined' ? publisher : '';
     var id  = '<?= $id ?>';
-    window.BlockEventPublisherComponent(id, event, publisher);
+    window.BlockEventPublisherComponent(id, event, _publisher);
 </script>
