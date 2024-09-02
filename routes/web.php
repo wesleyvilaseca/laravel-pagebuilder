@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\EventBenchMapGalleryController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\EventManegerController;
 use App\Http\Controllers\Admin\EventPublisherController;
+use App\Http\Controllers\Admin\EventSheduleGalleryController;
 use App\Http\Controllers\Admin\PageBuilderController;
 use App\Http\Controllers\Admin\PainelController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -121,6 +122,7 @@ Route::middleware(['auth'])->group(function() {
      * editoras|publisher
      */
     Route::get('/publisher',     [PublisherController::class, 'index'])->name('publishers');
+    Route::any('/publisher/search',            [PublisherController::class, 'index'])->name('publishers.search');
     Route::get('/publisher/create',     [PublisherController::class, 'create'])->name('publisher.create');
     Route::get('/publisher/{id}/edit',     [PublisherController::class, 'edit'])->name('publisher.edit');
     Route::put('/publisher/{id}/update',     [PublisherController::class, 'update'])->name('publisher.update');
@@ -188,6 +190,17 @@ Route::middleware(['auth'])->group(function() {
     Route::put('/event/{id}/benchmap/{benchmapId}/update',     [EventBenchMapGalleryController::class, 'update'])->name('event.benchmap.gallery.update');
     Route::get('/event/{id}/benchmap/{benchmapId}/show',     [EventBenchMapGalleryController::class, 'show'])->name('event.benchmap.gallery.show');
     Route::delete('/event/{id}/benchmap/{benchmapId}/delete',     [EventBenchMapGalleryController::class, 'delete'])->name('event.benchmap.gallery.delete');
+
+     /**
+     * event schedule
+     */
+    Route::get('/event/{id}/schedule',     [EventSheduleGalleryController::class, 'index'])->name('event.schedule.gallery');
+    Route::get('/event/{id}/schedule-create',     [EventSheduleGalleryController::class, 'create'])->name('event.schedule.gallery.create');
+    Route::post('/event/{id}/schedule-create',     [EventSheduleGalleryController::class, 'store'])->name('event.schedule.gallery.store');
+    Route::get('/event/{id}/schedule/{scheduleId}/edit',     [EventSheduleGalleryController::class, 'edit'])->name('event.schedule.gallery.edit');
+    Route::put('/event/{id}/schedule/{scheduleId}/update',     [EventSheduleGalleryController::class, 'update'])->name('event.schedule.gallery.update');
+    Route::get('/event/{id}/schedule/{scheduleId}/show',     [EventSheduleGalleryController::class, 'show'])->name('event.schedule.gallery.show');
+    Route::delete('/event/{id}/schedule/{scheduleId}/delete',     [EventSheduleGalleryController::class, 'delete'])->name('event.schedule.gallery.delete');
 
     /**
      * page builder

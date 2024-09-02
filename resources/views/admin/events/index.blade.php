@@ -10,7 +10,6 @@
                     <th scope="col">Url</th>
                     <th scope="col">Status</th>
                     <th scope="col">#</th>
-                    {{-- <th>#</th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -60,6 +59,9 @@
                                   </a>
                                   <a class="dropdown-item" href="{{ route('event.benchmap.gallery', $event->id) }}">
                                     <i class="fas fa-images text-warning"></i> Mapa de bancadas do evento
+                                  </a>
+                                  <a class="dropdown-item" href="{{ route('event.schedule.gallery', $event->id) }}">
+                                    <i class="fas fa-images text-warning"></i> Programação do evento
                                   </a>
                                   <a class="dropdown-item" href="{{ route('event.attachments', $event->id) }}">
                                     <i class="fas fa-paperclip text-warning"></i> Anexos

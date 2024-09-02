@@ -36,6 +36,10 @@ class Event extends Model
         return $this->hasMany(EventAttachment::class, 'event_id');
     }
 
+    public function schedules() {
+        return $this->hasMany(EventSchedule::class, 'event_id');
+    }
+
     /**
      * Cateroies not linked with this product
      */
@@ -59,26 +63,34 @@ class Event extends Model
         $uploadFileService = new UploadFileService(new SystemUpload(), new UploadRelation());
         $this->banners->each(function ($banner) use ($uploadFileService) {
             if($banner->uploads[0]) {
-                $uploadFileService->deleteFile('', $banner->uploads[0], true);
+                $uploadFileService->deleteFile('', $banner->uploads[0]);
             }
 
             $banner->delete();
         });
 
-        $this->banchMaps->each(function ($banner) use ($uploadFileService) {
-            if($banner->uploads[0]) {
-                $uploadFileService->deleteFile('', $banner->uploads[0], true);
+        $this->banchMaps->each(function ($benchmap) use ($uploadFileService) {
+            if($benchmap->uploads[0]) {
+                $uploadFileService->deleteFile('', $benchmap->uploads[0]);
             }
 
-            $banner->delete();
+            $benchmap->delete();
         });
 
-        $this->attachments->each(function ($banner) use ($uploadFileService) {
-            if($banner->uploads[0]) {
-                $uploadFileService->deleteFile('', $banner->uploads[0], true);
+        $this->attachments->each(function ($attachement) use ($uploadFileService) {
+            if($attachement->uploads[0]) {
+                $uploadFileService->deleteFile('', $attachement->uploads[0]);
             }
 
-            $banner->delete();
+            $attachement->delete();
+        });
+
+        $this->schedules->each(function ($schedule) use ($uploadFileService) {
+            if($schedule->uploads[0]) {
+                $uploadFileService->deleteFile('', $schedule->uploads[0]);
+            }
+
+            $schedule->delete();
         });
         parent::delete();
     }
