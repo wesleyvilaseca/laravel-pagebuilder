@@ -31,7 +31,7 @@ return [
             "options" => [
                 ['value' => 'select_layout', 'label' => 'Select Layout'],
                 ['value' => 'select_layout2', 'label' => 'Select Layout2'],
-            ]
+            ],
         ]
     ]
 ];

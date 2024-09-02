@@ -5,6 +5,8 @@ import HtmlBlockEventAttachmentsComponent from './HtmlBlockEventAttachmentsCompo
 import BlockEventGoogleMapsLocationComponent from './BlockEventGoogleMapsLocationComponent/initComponent.js';
 import EventPublishersBlockComponent from './EventPublishersBlockComponent/initComponent.js';
 import EventPublisherBlockComponent from './EventPublisherBlockComponent/initComponent.js';
+import ScheduleEventComponent from './ScheduleEventComponent/initComponent.js';
+import BooksEventComponent from './BooksEventComponent/initComponent.js';
 
 window.SlideinBannerEventComponent = SlideinBannerEventComponent;
 window.HtmlBlockEventDescriptionComponent = HtmlBlockEventDescriptionComponent;
@@ -13,3 +15,5 @@ window.HtmlBlockEventAttachmentsComponent = HtmlBlockEventAttachmentsComponent;
 window.BlockEventGoogleMapsLocationComponent = BlockEventGoogleMapsLocationComponent;
 window.EventPublishersBlockComponent = EventPublishersBlockComponent;
 window.EventPublisherBlockComponent = EventPublisherBlockComponent;
+window.ScheduleEventComponent = ScheduleEventComponent;
+window.BooksEventComponent = BooksEventComponent;

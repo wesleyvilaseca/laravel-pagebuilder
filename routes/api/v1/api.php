@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\EventBannerGalleryController;
+use App\Http\Controllers\Api\EventBooksController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\EventScheduleGalleryController;
 use App\Http\Controllers\Api\PublisherController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
@@ -25,6 +27,8 @@ Route::group([
 ], function () {
     Route::get('/event', [EventController::class, 'index']);
     Route::get('/event-banners', [EventBannerGalleryController::class, 'index']);
+    Route::get('/event-schedules', [EventScheduleGalleryController::class, 'index']);
     Route::get('/event-publishers', [PublisherController::class, 'index']);
     Route::get('/event-publisher', [PublisherController::class, 'getPublisher']);
+    Route::get('/event-books', [EventBooksController::class, 'index']);
 });

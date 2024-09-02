@@ -134,4 +134,10 @@ class Utils
 
         return false;
     }
+
+    public static function numberFormat($number, $decimals = 2, $sep = ",", $k = "")
+    {
+        $var = number_format($number, $decimals, $sep, $k);
+        return  $var;
+    }
 }
