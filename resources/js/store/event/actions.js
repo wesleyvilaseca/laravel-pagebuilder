@@ -15,11 +15,11 @@ const actions = {
     },
 
     async getEvent(flag) {
-        const hasEvent = localStorage.getItem('event');
+        // const hasEvent = localStorage.getItem('event');
 
-        if (hasEvent) {
-            mutations.SET_EVENT(JSON.parse(cript.decript(hasEvent)));
-        }
+        // if (hasEvent) {
+        //     mutations.SET_EVENT(JSON.parse(cript.decript(hasEvent)));
+        // }
 
         try {
             const params = { flag: flag};
