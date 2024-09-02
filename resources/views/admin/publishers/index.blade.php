@@ -13,7 +13,25 @@
     </style>
 
     <div class="container-fluid">
-        <a href="{{ route('publisher.create') }}" class="btn btn-primary btn-sm">ADD</a>
+        <a href="{{ route('publisher.create') }}" class="btn btn-primary btn-sm mb-3">ADD</a>
+
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <form action="{{ route('publishers.search') }}" method="POST" class="form-search">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" name="filter" placeholder="Editora" class="form-control"
+                                value="{{ $filters['filter'] ?? '' }}">
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-dark">Pesquisar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <table class="table" id="customers-table">
             <thead>
@@ -55,6 +73,14 @@
                 @endforelse
             </tbody>
         </table>
+
+        <div class="pt-2">
+            @if (isset($filters))
+            {!! $publishers->appends($filters)->links('pagination::bootstrap-4') !!}
+            @else
+                {!! $publishers->links('pagination::bootstrap-4') !!}
+            @endif
+        </div>
     </div>
 @stop
 
@@ -64,7 +90,12 @@
 
     <script>
         $(document).ready(function() {
-            $('#customers-table').DataTable();
+            $('#customers-table').DataTable({
+                paging: false,
+                searching: false,
+                ordering: false,
+                info: false
+            });
         });
 
         function deleteSite(title) {

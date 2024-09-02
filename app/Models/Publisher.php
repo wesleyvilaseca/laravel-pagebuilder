@@ -15,6 +15,21 @@ class Publisher extends Model
 
     protected $fillable = ['name', 'description', 'site', 'email', 'data', 'url', 'status'];
 
+    public function search($filter = null)
+    {
+        $results = $this->where([
+            ['name', 'LIKE', "%{$filter}%"],
+        ])
+        ->orWhere([
+                ['description', 'LIKE', "%{$filter}%"],
+                ['site', 'LIKE', "%{$filter}%"],
+                ['email', 'LIKE', "%{$filter}%"]
+                ])
+        ->paginate(8);
+
+        return $results;
+    }
+
     public function uploads()
     {
         return $this->belongsToMany(SystemUpload::class, 'upload_relations', 'relation_id', 'system_upload_id')->wherePivot('alias_model_relation', self::MODEL_ALIAS);

@@ -22,14 +22,19 @@ class PublisherController extends Controller
         $this->middleware(['can:publishers']);
     }
 
-    public function index() {
+    public function index(Request $request) {
+        if($request->filter) {
+            $data['publishers'] = $this->repository->search($request->filter);
+            $data['filters'] = $request->except('_token');
+        } else {
+            $data['publishers'] = $this->repository->paginate(8);
+        }
+
         $data['publisher_'] = true;
         $data['title']  = 'Editoras';
         $data['toptitle'] =  $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
         $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
-
-        $data['publishers'] = $this->repository->all();
 
         return view('admin.publishers.index', $data);
     }
