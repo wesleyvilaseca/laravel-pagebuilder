@@ -43,6 +43,7 @@ class EventService {
     }
 
     public function getBooksEvent(string $url, EventRequest $request) {
+        // dd($request->all());
                 // Obter o evento pelo URL
         $event = $this->eventRepository->where('url', $url)->first();
         if (!$event) {

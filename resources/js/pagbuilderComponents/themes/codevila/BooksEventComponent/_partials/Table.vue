@@ -1,12 +1,34 @@
 <template>
   <div class="data-table">
+    <div class="filter-section">
+      <div class="row">
+        <div class="col-md-2">
+          <select v-model="perPageModel" @change="changePerPage" class="form-select">
+            <option v-for="num in perPageOptions" :key="num" :value="num">{{ num }}</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <input v-model="searchQuery" class="form-control" type="text" placeholder="Buscar..." />
+        </div>
+        <div class="col-md-2">
+          <select v-model="selectedFilter" class="form-select">
+            <option v-for="filter in searchFilters" :key="filter.value" :value="filter.value">
+              {{ filter.label }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button @click="search" class="btn btn-dark">Buscar</button>
+        </div>
+      </div>
+    </div>
+
     <div class="main-table">
       <table class="table">
         <thead>
           <tr>
             <th class="table-head">#</th>
-            <th v-for="column in columns" :key="column" @click="sortByColumn(column.column)"
-                class="table-head">
+            <th v-for="column in columns" :key="column" @click="sortByColumn(column.column)" class="table-head">
               {{ column.title }}
               <span v-if="column.column === sortedColumn">
                 <i v-if="order === 'asc'" class="fas fa-arrow-up"></i>
@@ -31,25 +53,27 @@
                   </ul>
                 </td>
               </template>
-              <template v-else>  <td>{{ value }}</td> </template>
+              <template v-else>
+                <td>{{ value }}</td>
+              </template>
             </template>
           </tr>
         </tbody>
       </table>
     </div>
+
     <nav v-if="pagination && tableData.length > 0">
       <ul class="pagination">
         <li class="page-item" :class="{'disabled': currentPage === 1}">
           <a class="page-link" href="#" @click.prevent="changePage(currentPage - 1)">Anterior</a>
         </li>
-        <li v-for="page in pagesNumber" :key="page" class="page-item"
-            :class="{'active': page === pagination.meta.current_page}">
+        <li v-for="page in pagesNumber" :key="page" class="page-item" :class="{'active': page === pagination.meta.current_page}">
           <a href="javascript:void(0)" @click.prevent="changePage(page)" class="page-link">{{ page }}</a>
         </li>
         <li class="page-item" :class="{'disabled': currentPage === pagination.meta.last_page}">
           <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Próximo</a>
         </li>
-        <span style="margin-top: 8px;"> &nbsp; <i>Mostrado {{ totalData }} of {{ pagination.meta.total }} registros.</i></span>
+        <span style="margin-top: 8px;">&nbsp; <i>Mostrado {{ totalData }} de {{ pagination.meta.total }} registros.</i></span>
       </ul>
     </nav>
   </div>
@@ -58,57 +82,70 @@
 <script>
 export default {
   props: {
+    searchFilters: { type: Array, default: () => [] },
     tableData: { type: Array, default: () => [] },
     pagination: { type: Object, default: () => ({ meta: { to: 1, from: 1 } }) },
     columns: { type: Array, required: true },
     sortedColumn: { type: String, default: '' },
     order: { type: String, default: 'asc' },
     currentPage: { type: Number, default: 1 },
-    perPage: { type: Number, default: 5 }
+    perPage: { type: Number, default: 10 }
+  },
+  data() {
+    return {
+      selectedFilter: '',
+      perPageModel: '',
+      searchQuery: '',
+      perPageOptions: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+    };
+  },
+  mounted() {
+    this.selectedFilter = this.searchFilters[0].value;
+    this.perPageModel = this.perPage
   },
   computed: {
     pagesNumber() {
       if (!this.pagination.meta.to) {
-        return []
+        return [];
       }
-      let from = this.pagination.meta.current_page - this.offset
+      let from = this.pagination.meta.current_page - this.offset;
       if (from < 1) {
-        from = 1
+        from = 1;
       }
-      let to = from + (this.offset * 2)
+      let to = from + this.offset * 2;
       if (to >= this.pagination.meta.last_page) {
-        to = this.pagination.meta.last_page
+        to = this.pagination.meta.last_page;
       }
-      let pagesArray = []
+      let pagesArray = [];
       for (let page = from; page <= to; page++) {
-        pagesArray.push(page)
+        pagesArray.push(page);
       }
-      return pagesArray
+      return pagesArray;
     },
     totalData() {
-      return (this.pagination.meta.to - this.pagination.meta.from) + 1
+      return this.pagination.meta.to - this.pagination.meta.from + 1;
     }
   },
   methods: {
     serialNumber(key) {
-      return (this.currentPage - 1) * this.perPage + 1 + key
+      return (this.currentPage - 1) * this.perPage + 1 + key;
     },
     changePage(pageNumber) {
-      this.$emit('update:currentPage', pageNumber)
+      this.$emit('update:currentPage', pageNumber);
     },
     sortByColumn(column) {
-      const newOrder = (this.sortedColumn === column && this.order === 'asc') ? 'desc' : 'asc'
-      this.$emit('update:sortedColumn', column)
-      this.$emit('update:order', newOrder)
+      const newOrder = this.sortedColumn === column && this.order === 'asc' ? 'desc' : 'asc';
+      this.$emit('update:sortedColumn', column);
+      this.$emit('update:order', newOrder);
+    },
+    search() {
+      this.$emit('search', this.searchQuery, this.selectedFilter);
+    },
+    changePerPage() {
+      this.$emit('update:perPage', this.perPageModel);
     }
-  },
-  filters: {
-    columnHead(value) {
-      return value.split('_').join(' ').toUpperCase()
-    }
-  },
-  name: 'DataTable'
-}
+  }
+};
 </script>
 
 <style scoped>

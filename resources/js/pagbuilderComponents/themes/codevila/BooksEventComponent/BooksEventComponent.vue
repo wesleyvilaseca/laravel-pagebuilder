@@ -9,9 +9,12 @@
             :order="order"
             :currentPage="currentPage"
             :perPage="perPage"
+            :searchFilters="searchFilters"
             @update:currentPage="handlePageChange"
             @update:sortedColumn="handleSortChange"
             @update:order="handleOrderChange"
+            @search="handleSearch"
+            @update:perPage="handlePerPageChange"
              />
           </template>
 
@@ -61,6 +64,14 @@ export default {
         Table
     },
     data: () => ({
+        searchFilters: [
+            { label: 'Livro', value: 'name' },
+            { label: 'Assunto', value: 'subject' },
+            { label: 'Editora', value: 'publisher_name' },
+            { label: 'ISBN', value: 'isbn' },
+            { label: 'Preço', value: 'price' },
+            { label: 'Autor', value: 'author_name' }
+        ],
         columns: [
             {
                 title: 'Nome',
@@ -102,7 +113,9 @@ export default {
         sortedColumn: 'name',
         order: 'asc',
         currentPage: 1,
-        perPage: 10
+        perPage: 10,
+        filterSelected: "",
+        search: "",
     }),
     setup() {},
     computed: {},
@@ -122,8 +135,10 @@ export default {
                 page: this.currentPage,
                 column: this.sortedColumn,
                 order: this.order,
-                per_page: this.perPage
+                per_page: this.perPage,
                 };
+
+            params[this.filterSelected] = this.search;
     
             const { data } = await Http.get('event-books', { params });
             this.books = data.data
@@ -132,6 +147,14 @@ export default {
             this.preloader = false;
             console.log(error)
            }
+        },
+        handlePerPageChange(perPage) {
+            this.pagination = { meta: { to: 1, from: 1 }};
+            this.sortedColumn = 'name'; 
+            this.order = 'asc';
+            this.currentPage = 1;
+            this.perPage = perPage;
+            this.getBooks();
         },
          handlePageChange(pageNumber) {
             this.currentPage = pageNumber
@@ -144,12 +167,16 @@ export default {
         handleOrderChange(order) {
             this.order = order
             this.getBooks()
+        },
+        handleSearch(search, selectedFilter) {
+            this.filterSelected = selectedFilter,
+            this.search = search;
+            this.getBooks();
         }
     },
     watch: {
         books() {
             if(this.books.length > 0) {
-                console.log(this.books)
                 this.preloader = false;
             }
         }
