@@ -20,8 +20,8 @@ class EventBooksResource extends JsonResource
             'subject' => $this->subject ?? '',
             'isbn' => $this->isbn ?? '',
             'price' => Utils::numberFormat($this->price) ?? '',
-            'presential_discount' => $this->presential_discount ?? '',
-            'virtual_discount' => $this->virtual_discount ?? '',
+            'presential_discount' => $this->presential_discount ? $this->presential_discount . '%' : '',
+            'virtual_discount' => $this->virtual_discount ? $this->virtual_discount . '%' : '',
             'link' => $this->link ?? '',
             // 'url' => $this->url ?? '',
             'authors' => AuthorResource::collection($this->authors)
