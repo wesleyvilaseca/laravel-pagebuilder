@@ -61,6 +61,9 @@
                                   <a class="dropdown-item" href="{{ route('publisher.edit', $publisher->id) }}">
                                     <i class="fas fa-edit text-primary"></i> Editar
                                   </a>
+                                  <a class="dropdown-item" href="{{ route('publisher.books', $publisher->url) }}">
+                                    <i class="fas fa-book text-warning"></i> Livros
+                                  </a>
                                   <a class="dropdown-item" href="{{ route('publisher.delete', $publisher->id) }}" onclick="return deleteSite('{{ $publisher->name }}');" >
                                     <i class="fas fa-trash text-danger"></i> Apagar
                                   </a>

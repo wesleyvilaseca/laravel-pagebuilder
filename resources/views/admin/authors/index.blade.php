@@ -13,7 +13,12 @@
             <tbody>
                 @forelse ($authors as $author)
                     <tr>
-                        <td>{{ $author->first_name }}</td>
+                        <td>
+                            @if ($author->last_name)
+                            {{ $author->last_name }}, 
+                            @endif
+                            {{ $author->first_name }}
+                        </td>
                         <td style="width=10px;">
                             <div class="btn-group" role="group">
                                 <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

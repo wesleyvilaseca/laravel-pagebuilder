@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\PageBuilderController;
 use App\Http\Controllers\Admin\PainelController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PermissionRoleController;
+use App\Http\Controllers\Admin\PublisherBooksController;
 use App\Http\Controllers\Admin\PublisherController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TemplateController;
@@ -128,6 +129,21 @@ Route::middleware(['auth'])->group(function() {
     Route::put('/publisher/{id}/update',     [PublisherController::class, 'update'])->name('publisher.update');
     Route::post('/publisher/store',     [PublisherController::class, 'store'])->name('publisher.store');
     Route::get('/publisher/{id}/delete',  [PublisherController::class, 'delete'])->name('publisher.delete');
+
+    /**
+     * publisher | books
+     */
+    Route::get('/publisher/{url}/books',  [PublisherBooksController::class, 'index'])->name('publisher.books');
+    Route::get('/publisher/{url}/book-create',  [PublisherBooksController::class, 'create'])->name('publisher.book.create');
+    Route::post('/publisher/{url}/book-create',  [PublisherBooksController::class, 'store'])->name('publisher.book.store');
+    Route::get('/publisher/{url}/book/{id}/edit',  [PublisherBooksController::class, 'edit'])->name('publisher.book.edit');
+    Route::put('/publisher/{url}/book/{id}',  [PublisherBooksController::class, 'update'])->name('publisher.book.update');
+    Route::get('/publisher/{url}/book/{id}/show',  [PublisherBooksController::class, 'show'])->name('publisher.book.show');
+    Route::delete('/publisher/{url}/book/{id}/delete',  [PublisherBooksController::class, 'delete'])->name('publisher.book.delete');
+    Route::delete('/publisher/{url}/books-delete',  [PublisherBooksController::class, 'deleteBatch'])->name('publisher.books.delete');
+    Route::post('/publisher/{url}/book-batch-create',  [PublisherBooksController::class, 'batchStore'])->name('publisher.books.batch');
+
+
 
     /**
      * author|books

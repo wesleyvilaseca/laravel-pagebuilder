@@ -23,7 +23,7 @@ class AuthorBookController extends Controller
         if (!$book) {
             return redirect()->back();
         }
-
+        
         $data['title'] = 'Autores do livro ' . $book->name;
         $data['toptitle'] = $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];

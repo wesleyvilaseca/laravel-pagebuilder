@@ -40,8 +40,7 @@ class Book extends Model
             ->where(function ($queryFilter) use ($filter) {
                 if ($filter)
                     $queryFilter->where('authors.name', 'LIKE', "%{$filter}%");
-            })
-            ->paginate();
+            })->get();
 
         return $authors;
     }

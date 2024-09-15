@@ -20,6 +20,9 @@
                     <tr>
                         <td><input type="checkbox" name="authors[]" value="{{ $author->id }}"></td>
                         <td>
+                            @if ($author->last_name)
+                            {{ $author->last_name }}, 
+                            @endif
                             {{ $author->first_name }}
                         </td>
                     </tr>

@@ -23,7 +23,7 @@ class CreateBooksTable extends Migration
             $table->double('presential_price', 10, 2)->nullable();
             $table->double('presential_discount', 10, 2)->nullable();
             $table->double('virtual_discount', 10, 2)->nullable();
-            $table->string('url')->nullable();
+            $table->string('url', 300)->nullable();
             $table->string('link')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
