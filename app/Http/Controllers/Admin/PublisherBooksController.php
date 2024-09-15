@@ -292,9 +292,17 @@ class PublisherBooksController extends Controller
                 $data['publisher_id'] = $publisher->id;
                 $data['description'] = '';
                 $data['status'] = 1;
-    
-                $newBook = $this->bookService->store($data);
-    
+
+                try {
+                    $newBook = $this->bookService->store($data);
+                } catch (Exception $e) {
+                    if (str_contains($e->getMessage(), 'A editora já possui um livro com o nome')) {
+                        continue;
+                    }
+
+                    throw new Exception($e->getMessage());
+                }
+
                 $author = $book['AUTOR'];
                 $author = explode(',', $author);
                 if(sizeof($author) > 1) {
