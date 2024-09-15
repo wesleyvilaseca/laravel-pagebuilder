@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\EventRequest;
+use App\Models\Book;
 use App\Models\Event;
 use Error;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -60,7 +61,7 @@ class EventService {
         }
 
         // Construir a consulta dos livros usando a tabela pivot
-        $query = \App\Models\Book::whereHas('publishers', function ($query) use ($publisherIds) {
+        $query = Book::whereHas('publishers', function ($query) use ($publisherIds) {
             $query->whereIn('publishers.id', $publisherIds); // Especificar a tabela para evitar ambiguidade
         })->where('status', 1);
 
