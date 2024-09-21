@@ -44,18 +44,7 @@
           <tr v-for="(data, key1) in tableData" :key="data.id" class="m-datatable__row">
             <td>{{ serialNumber(key1) }}</td>
             <template v-for="(value, key) in data" :key="key">
-              <template v-if="key == 'authors'">
-                <td v-if="data.authors && data.authors.length > 0">
-                  <ul>
-                    <li v-for="author in data.authors" :key="author.first_name + author.last_name">
-                      {{ author.first_name }} {{ author.last_name }}
-                    </li>
-                  </ul>
-                </td>
-              </template>
-              <template v-else>
-                <td>{{ value }}</td>
-              </template>
+              <td>{{ value }}</td>
             </template>
           </tr>
         </tbody>

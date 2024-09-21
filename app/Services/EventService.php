@@ -6,6 +6,7 @@ use App\Http\Requests\EventRequest;
 use App\Models\Book;
 use App\Models\Event;
 use Error;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EventService {
@@ -44,8 +45,13 @@ class EventService {
     }
 
     public function getBooksEvent(string $url, EventRequest $request) {
-        // dd($request->all());
-                // Obter o evento pelo URL
+        // DB::listen(function ($query) {
+        //     // Mostra a query, os bindings e o tempo de execução
+        //     logger($query->sql);
+        //     logger($query->bindings);
+        //     logger($query->time);
+        // });
+        // Obter o evento pelo URL
         $event = $this->eventRepository->where('url', $url)->first();
         if (!$event) {
             throw new NotFoundHttpException('Event not found');
@@ -83,29 +89,18 @@ class EventService {
             $query->where('price', $request->price);
         }
 
-        if ($request->has('presential_discount')) {
+        if ($request->has('price_discount')) {
             // Supondo que o desconto presencial é armazenado como um número com ponto decimal
-            $query->where('presential_discount', $request->presential_discount);
-        }
-
-        if ($request->has('virtual_discount')) {
-            // Supondo que o desconto virtual é armazenado como um número com ponto decimal
-            $query->where('virtual_discount', $request->virtual_discount);
+            $query->where('price_discount', $request->price_discount);
         }
 
         if ($request->has('link')) {
             $query->where('link', 'like', '%' . $request->link . '%');
         }
 
-        if ($request->has('url')) {
-            $query->where('url', $request->url);
-        }
-
         // Filtro pelos autores
         if ($request->has('author_name')) {
-            $query->whereHas('authors', function ($query) use ($request) {
-                $query->where('first_name', 'like', '%' . $request->author_name . '%');
-            });
+            $query->where('author', 'like', '%' . $request->author_name . '%');
         }
 
         // Filtro pelas editoras

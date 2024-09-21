@@ -20,11 +20,11 @@ class EventBooksResource extends JsonResource
             'subject' => $this->subject ?? '',
             'isbn' => $this->isbn ?? '',
             'price' => Utils::numberFormat($this->price) ?? '',
-            'presential_discount' => $this->presential_discount ? $this->presential_discount . '%' : '',
-            'virtual_discount' => $this->virtual_discount ? $this->virtual_discount . '%' : '',
+            'price_discount' => $this->price_discount ? $this->price_discount . '%' : '',
             'link' => $this->link ?? '',
+            'authors' => $this->author
             // 'url' => $this->url ?? '',
-            'authors' => AuthorResource::collection($this->authors)
+            // 'authors' => AuthorResource::collection($this->authors)
         ];
     }
 }

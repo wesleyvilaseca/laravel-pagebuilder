@@ -91,12 +91,8 @@ export default {
                 column: 'price'
             },
             {
-                title: 'Desconto presencial',
-                column: 'presential_discount'
-            },
-            {
-                title: 'Desconto virtual',
-                column: 'virtual_discount'
+                title: 'Preço do desconto',
+                column: 'price_discount'
             },
             {
                 title: 'Link',
