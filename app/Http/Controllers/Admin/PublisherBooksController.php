@@ -327,7 +327,7 @@ class PublisherBooksController extends Controller
             
            
             DB::commit();
-            return redirect()->route('publisher.books', $publisherUrl)->with('success', 'Livros removidos com sucesso');
+            return redirect()->route('publisher.books', $publisherUrl)->with('success', 'Livros criados com sucesso');
         } catch (Exception $e) {
             DB::rollback();
             return redirect()->route('publisher.books', $publisherUrl)->with('warning',  $e->getMessage());
