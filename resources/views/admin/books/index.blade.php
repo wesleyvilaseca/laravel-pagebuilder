@@ -19,6 +19,7 @@
             <thead>
                 <tr>
                     <th scope="col">Livro</th>
+                    <th> Autor </th>
                     <th scope="col">#</th>
                 </tr>
             </thead>
@@ -26,6 +27,7 @@
                 @forelse ($books as $book)
                     <tr>
                         <td>{{ $book->name }}</td>
+                        <td>{{ $book->author }}</td>
                         <td style="width=10px;">
                             <div class="btn-group" role="group">
                                 <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
