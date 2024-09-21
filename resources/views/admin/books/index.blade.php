@@ -35,9 +35,6 @@
                                   <a class="dropdown-item" href="{{ route('book.edit', $book->id) }}">
                                     <i class="fas fa-edit text-primary"></i> Editar
                                   </a>
-                                  <a class="dropdown-item" href="{{ route('book.authors', $book->id) }}">
-                                    <i class="fas fa-user-edit text-success"></i> Autores(as)
-                                  </a>
                                   <a class="dropdown-item" href="{{ route('book.show', $book->id) }}">
                                     <i class="far fa-eye text-info"></i> Visualizar
                                   </a>

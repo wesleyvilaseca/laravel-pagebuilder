@@ -9,16 +9,16 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'author', 'subject', 'isbn', 'description',  'price', 'presential_discount', 'virtual_discount', 'link', 'url', 'status'];
+    protected $fillable = ['name', 'author', 'subject', 'isbn', 'description',  'price', 'price_discount', 'link', 'url', 'status'];
 
     const MODEL_ALIAS = 'book';
     const FILE_CATEGORY_BOOK_SINGLE_IMAGE = 'book-image';
     const FILE_CATEGORY_BOOK_IMAGE_GALLERY = 'book-gallery';
 
-    public function authors()
-    {
-        return $this->belongsToMany(Author::class, 'author_books', 'book_id', 'author_id');
-    }
+    // public function authors()
+    // {
+    //     return $this->belongsToMany(Author::class, 'author_books', 'book_id', 'author_id');
+    // }
 
     public function uploads()
     {

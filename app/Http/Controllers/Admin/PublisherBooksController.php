@@ -39,7 +39,7 @@ class PublisherBooksController extends Controller
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
         $data['breadcrumb'][] = ['route' => route('publishers'), 'title' => 'Editoras'];
         $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
-        $data['books'] = $publisher->books()->with('authors')->get();
+        $data['books'] = $publisher->books()->get();
         $data['publisher'] = $publisher;
 
         return view('admin.publisher-books.index', $data);
@@ -284,11 +284,11 @@ class PublisherBooksController extends Controller
                 $data = [];
                 $data['isbn'] = $book['ISBN'];
                 $data['name'] = $book['TITULO'];
+                $data['author'] = $book['AUTOR'];
                 $data['subject'] = $book['ASSUNTO'];
                 $data['price'] = floatval(str_replace(',', '.', $book['PREÇO CAPA']));
-                $data['presential_discount'] = floatval(str_replace(',', '.', $book['PREÇO DESCONTO']));
+                $data['price_discount'] = floatval(str_replace(',', '.', $book['PREÇO DESCONTO']));
                 $data['link'] = $book['URL_LIVRO'];
-                $data['virtual_discount'] = $data['presential_discount'];
                 $data['publisher_id'] = $publisher->id;
                 $data['description'] = '';
                 $data['status'] = 1;
@@ -303,26 +303,26 @@ class PublisherBooksController extends Controller
                     throw new Exception($e->getMessage());
                 }
 
-                $author = $book['AUTOR'];
-                $author = explode(',', $author);
-                if(sizeof($author) > 1) {
-                    $author = ['first_name' => $author[1], 'last_name' => $author[0]];
-                } elseif (sizeof($author) == 1) {
-                    $author = ['first_name' => $author[0], 'last_name' => ''];
-                }
+                // $author = $book['AUTOR'];
+                // $author = explode(',', $author);
+                // if(sizeof($author) > 1) {
+                //     $author = ['first_name' => $author[1], 'last_name' => $author[0]];
+                // } elseif (sizeof($author) == 1) {
+                //     $author = ['first_name' => $author[0], 'last_name' => ''];
+                // }
     
-                $newAuthor = $this->authorRepository
-                ->where([
-                    'first_name' => $author['first_name'],
-                    'last_name' => $author['last_name']
-                    ])
-                    ->first();
+                // $newAuthor = $this->authorRepository
+                // ->where([
+                //     'first_name' => $author['first_name'],
+                //     'last_name' => $author['last_name']
+                //     ])
+                //     ->first();
                     
-                if (!$newAuthor) {
-                    $newAuthor = $this->authorRepository->create($author);
-                }
+                // if (!$newAuthor) {
+                //     $newAuthor = $this->authorRepository->create($author);
+                // }
     
-                $newBook->authors()->attach($newAuthor->id);
+                // $newBook->authors()->attach($newAuthor->id);
             }
             
            

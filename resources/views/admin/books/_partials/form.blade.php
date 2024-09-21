@@ -30,11 +30,11 @@
         value="{{ @$book->name ?? old('name') }}">
 </div>
 
-{{-- <div class="form-group mb-3">
+<div class="form-group mb-3">
     <label for="author">Autor(es), organizador(es)</label>
     <input type="text" class="form-control form-control-sm" id="author" name="author"
         value="{{ @$book->author ?? old('author') }}">
-</div> --}}
+</div>
 
 <div class="form-group mb-3">
     <label for="subject">Assunto</label>
@@ -62,16 +62,9 @@
 </div>
 
 <div class="form-group mt-2">
-    <label>Desconto presencial (valor percentual):</label>
-    <input type="number" name="presential_discount" class="form-control form-control-sm" placeholder="15.5" step="0.01" min="0"
-        value="{{ $book->presential_discount ?? old('presential_discount') }}">
-</div>
-
-<div class="form-group mt-2">
-    <label class="mb-0">Desconto virtual (valor percentual):</label>
-    <div><small>Caso não informado, o valor do desconto será o mesmo do presencial</small></div>
-    <input type="number" name="virtual_discount" class="form-control form-control-sm" placeholder="15.5" step="0.01" min="0"
-        value="{{ $book->virtual_discount ?? old('virtual_discount') }}">
+    <label>Preço do desconto:</label>
+    <input type="number" name="price_discount" class="form-control form-control-sm" placeholder="15.5" step="0.01" min="0"
+        value="{{ $book->price_discount ?? old('price_discount') }}">
 </div>
 
 <div class="form-group mb-3">

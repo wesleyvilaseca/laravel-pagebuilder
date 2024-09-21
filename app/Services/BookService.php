@@ -39,13 +39,12 @@ class BookService {
 
             $book = $this->repository->create([
                 'name' => $data['name'],
+                'author' => @$data['author'],
                 'subject' => @$data['subject'],
                 'isbn' => @$data['isbn'],
                 'description' => $data['description'],
                 'price' => @$data['price'],
-                'presential_price' => @$data['presential_price'],
-                'presential_discount' => @$data['presential_discount'],
-                'virtual_discount' => @$data['virtual_discount'] ?? @$data['presential_discount'] ?? '',
+                'price_discount' => @$data['price_discount'],
                 'link' => @$data['link'],
                 'url' => $url,
                 'status' => $data['status'],

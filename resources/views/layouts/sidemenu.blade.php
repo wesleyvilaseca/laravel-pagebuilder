@@ -30,15 +30,6 @@
                         </li>
                     @endcan
 
-                    @can('authors')
-                        <li class="{{ @$authors_ ? 'ativo' : '' }}">
-                            <a href="{{ route('authors') }}">
-                                <i class="fas fa-user-edit"></i>
-                                <span>Autores</span>
-                            </a>
-                        </li>
-                    @endcan
-
                    @can('publishers')
                         <li class="{{ @$publisher_ ? 'ativo' : '' }}">
                             <a href="{{ route('publishers') }}">

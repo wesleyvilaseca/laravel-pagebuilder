@@ -16,7 +16,9 @@ class AuthorController extends Controller
         protected AuthorBook $authorBookRepository
     )
     {
-        $this->middleware(['can:authors']);
+        // $this->middleware(['can:authors']);
+        //descotinua mas mantido o script para caso mudem de ideia
+        abort(404);
     }
 
     public function index() {
