@@ -76,16 +76,15 @@ class PublisherController extends Controller
     }
 
     public function store(Request $request) {
+        $request->validate([
+            'logo' => 'required|file|mimes:jpg,jpeg,png|max:5048',
+            'price_list' =>  'file|mimes:pdf|max:5048',
+            'name' => 'required|string|unique:publishers,name',
+            'status' => 'required|integer',
+            'description' => 'required|string'
+        ]);
         DB::beginTransaction();
         try {
-            $request->validate([
-                'logo' => 'required|file|mimes:jpg,jpeg,png|max:2048',
-                'price_list' =>  'file|mimes:pdf|max:2048',
-                'name' => 'required|string|unique:publishers,name',
-                'status' => 'required|integer',
-                'description' => 'required|string'
-            ]);
-
             $address = (object) [
                 'address' => @$request->address,
                 'zip_code' => @$request->zip_code,
@@ -165,8 +164,8 @@ class PublisherController extends Controller
         }
 
         $request->validate([
-            'logo' => 'file|mimes:jpg,jpeg,png|max:2048',
-            'price_list' => 'file|mimes:pdf|max:2048',
+            'logo' => 'file|mimes:jpg,jpeg,png|max:5048',
+            'price_list' => 'file|mimes:pdf|max:5048',
             'name' => 'required|string|unique:publishers,name,' . $id,
             'description' => 'required|string',
             'status' => 'required|integer'
