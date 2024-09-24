@@ -24,6 +24,14 @@
     bottom: auto;
     right: auto;
   }
+
+  #header .navbar-brand img {
+    max-width: 120px;
+  }
+
+  .navbar-toggler {
+    margin-top: 20px;
+  }
 }
 
 @media (max-width: 767.98px) {
@@ -52,4 +60,14 @@
     padding-top: 30px;
     justify-content: center;
   }
+
+  #header .navbar-brand img {
+    max-width: 110px;
+  }
+
+  .navbar-toggler {
+    margin-top: 15px;
+  }
 }
+
+
