@@ -22,6 +22,22 @@ class BookService {
         
     }
 
+    public function getBookByIsbnAndUrlAndPublisher(string $isbn, string $url, string $publisherId) {
+        $data = [
+            'url' => $url,
+            'isbn' => $isbn,
+            'publisher_id' => $publisherId
+        ];
+
+        $publisher = $this->publisherRepository->find($data['publisher_id']);
+        if ($publisher) {
+            return $publisher->books()->firstWhere([
+                'url' => $data['url'],
+                'isbn' => $data['isbn'],
+            ]);
+        }
+    }
+
     public function store( array $data ) {
         DB::beginTransaction();
         try {
@@ -29,11 +45,11 @@ class BookService {
             $data['url'] = $url;
             if (isset($data['publisher_id'])) {
                 $hasBookName  = $this->publisherRepository->whereHas('books', function ($query) use ($data) {
-                    $query->where(['url' => $data['url'], 'isbn' => $data['isbn'], 'price' => $data['price']]);
+                    $query->where(['url' => $data['url'], 'isbn' => $data['isbn']]);
                 })->where('id', $data['publisher_id'])->exists();
 
                 if($hasBookName) {
-                    throw new Exception('A editora já possui um livro com o nome ' . $data['name'] . ' e ISBN: ' . $data['isbn'] . ' e price: R$ ' .$data['price'] );
+                    throw new Exception('A editora já possui um livro com o nome ' . $data['name'] . ' e ISBN: ' . $data['isbn'] );
                 }
             }
 

@@ -12,6 +12,7 @@ use App\Services\UploadFileService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PublisherBooksController extends Controller
 {
@@ -239,14 +240,43 @@ class PublisherBooksController extends Controller
             'csv_book_file.max' => 'O arquivo não pode ter mais de 5 MB.',
         ]);
 
+        $getFileEconding = function ($filename) {
+            $finfo = finfo_open(FILEINFO_MIME_ENCODING);
+            $encoding = finfo_file($finfo, $filename);
+            finfo_close($finfo);
+        
+            return $encoding;
+        };
+
         $file = $request->file('csv_book_file');
         $filePath = $file->getRealPath();
+
+        $encoding = $getFileEconding($filePath);
+        if ($encoding != 'utf-8') {
+            $content = file_get_contents($filePath); 
+            $convertedContent = mb_convert_encoding($content, 'UTF-8', 'ISO-8859-1');
+            file_put_contents($filePath, $convertedContent);
+
+            if($getFileEconding($filePath) != 'utf-8') {
+                return redirect()->back()->withErrors([
+                    'incorrect_encode' => 'O arquivo CSV precisa estar em UTF-8',
+                    'convert_fail' => 'O arquivo ' . $file->getClientOriginalName() . ' está encodado em ' . $encoding . ' e não foi possível passar para UTF-8' 
+                ]);
+            }
+        }
 
         $fileHandle = fopen($filePath, 'r');
         if ($fileHandle === false) {
             return redirect()->back()->withErrors(['csv_book_file' => 'Não foi possível abrir o arquivo CSV.']);
         }
 
+        $firstLine = fgets($fileHandle);
+        if (strpos($firstLine, ';') === false) {
+            fclose($fileHandle);
+            return redirect()->back()->withErrors(['csv_book_file' => 'O arquivo não é um CSV separado por vírgulas.']);
+        }
+
+        fseek($fileHandle, 0);
         $header = fgetcsv($fileHandle, 0, ';');
         $header = array_map(function($column) {
             return trim($column);
@@ -257,7 +287,7 @@ class PublisherBooksController extends Controller
         if ($header !== $expectedHeaders) {
             return redirect()->back()->withErrors(['csv_book_file' => 'O arquivo CSV não tem as colunas corretas. Esperado: ISBN, TITULO, AUTOR, EDITORA, PREÇO CAPA, PREÇO DESCONTO, ASSUNTO, URL_LIVRO']);
         }
-
+        
         DB::beginTransaction();
         try {
             $rows = [];
@@ -294,9 +324,15 @@ class PublisherBooksController extends Controller
                 $data['status'] = 1;
 
                 try {
-                    $newBook = $this->bookService->store($data);
+                   $this->bookService->store($data);
                 } catch (Exception $e) {
                     if (str_contains($e->getMessage(), 'A editora já possui um livro com o nome')) {
+                        $book = $this->bookService->getBookByIsbnAndUrlAndPublisher($data['isbn'],  Str::slug($data['name']), $publisher->id);
+                        if (!$book) {
+                            continue;
+                        }
+
+                        $this->bookService->update($data, $book);
                         continue;
                     }
 

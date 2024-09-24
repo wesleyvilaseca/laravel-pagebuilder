@@ -41,7 +41,7 @@
         @endif
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="overflow-x: auto;">
         <table class="table" id="customers-table">
             <thead>
                 <tr>
@@ -50,8 +50,13 @@
                             <input id="select-all" type="checkbox">
                         </th>
                     @endif
-                    <th scope="col">Livro</th>
-                    <th scope="col">Autor</th>
+                    <th scope="col">ISBN</th>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Autores</th>
+                    <th scope="col">Preço de Capa</th>
+                    <th scope="col">Preço com Desconto</th>
+                    <th scope="col">Assunto</th>
+                    <th scope="col">Link</th>
                     <th scope="col">#</th>
                 </tr>
             </thead>
@@ -61,8 +66,13 @@
                         <td class="text-center">
                             <input type="checkbox" class="book-checkbox" name="books[]" value="{{ $book->id }}">
                         </td>
+                        <td>{{ $book->isbn }}</td>
                         <td>{{ $book->name }}</td>
                         <td>{{ $book->author }}</td>
+                        <td>{{ $book->price }}</td>
+                        <td>{{ $book->price_discount }}</td>
+                        <td>{{ $book->subject }}</td>
+                        <td><a href="{{ $book->link ?? '#'}}" target="_blank">Link</a></td>
                         <td style="width=10px;">
                             <div class="btn-group" role="group">
                                 <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -145,6 +155,7 @@
                     [10, 25, 50, 100, 500, 800, -1],
                     [10, 25, 50, 100, 500, 800,  "Todos"]
                 ],
+                responsive: true,
                 paging: true,
                 searching: true,
                 ordering: false,
