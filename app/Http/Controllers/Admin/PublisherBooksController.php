@@ -277,16 +277,21 @@ class PublisherBooksController extends Controller
         }
 
         fseek($fileHandle, 0);
-        $header = fgetcsv($fileHandle, 0, ';');
-        $header = array_map(function($column) {
+        $csv_header = fgetcsv($fileHandle, 0, ';');
+        $csv_header = array_map(function($column) {
             return trim($column);
-        }, $header);
+        }, $csv_header);
 
-        $expectedHeaders = ['ISBN', 'TITULO', 'AUTOR', 'EDITORA', 'PREÇO CAPA', 'PREÇO DESCONTO', 'ASSUNTO', 'URL_LIVRO'];
-
-        if ($header !== $expectedHeaders) {
-            return redirect()->back()->withErrors(['csv_book_file' => 'O arquivo CSV não tem as colunas corretas. Esperado: ISBN, TITULO, AUTOR, EDITORA, PREÇO CAPA, PREÇO DESCONTO, ASSUNTO, URL_LIVRO']);
+        $qtdExpectedColumns = 8;
+        if (sizeof($csv_header) > $qtdExpectedColumns) {
+            return redirect()->back()->withErrors(['csv_book_file' => 'O arquivo CSV possuí mais de ' . $qtdExpectedColumns . ' colunas']);
         }
+
+        $header = ['ISBN', 'TITULO', 'AUTOR', 'EDITORA', 'PRECO_CAPA', 'PRECO_DESCONTO', 'ASSUNTO', 'URL_LIVRO'];
+
+        // if ($header !== $expectedHeaders) {
+        //     return redirect()->back()->withErrors(['csv_book_file' => 'O arquivo CSV não tem as colunas corretas. Esperado: ISBN, TITULO, AUTOR, EDITORA, PREÇO CAPA, PREÇO DESCONTO, ASSUNTO, URL_LIVRO']);
+        // }
         
         DB::beginTransaction();
         try {
@@ -316,8 +321,8 @@ class PublisherBooksController extends Controller
                 $data['name'] = $book['TITULO'];
                 $data['author'] = $book['AUTOR'];
                 $data['subject'] = $book['ASSUNTO'];
-                $data['price'] = floatval(str_replace(',', '.', $book['PREÇO CAPA']));
-                $data['price_discount'] = floatval(str_replace(',', '.', $book['PREÇO DESCONTO']));
+                $data['price'] = floatval(str_replace(',', '.', $book['PRECO_CAPA']));
+                $data['price_discount'] = floatval(str_replace(',', '.', $book['PRECO_DESCONTO']));
                 $data['link'] = $book['URL_LIVRO'];
                 $data['publisher_id'] = $publisher->id;
                 $data['description'] = '';
