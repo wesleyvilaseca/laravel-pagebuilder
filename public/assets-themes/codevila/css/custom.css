@@ -221,6 +221,11 @@ body {
   font-weight: 700;
 }
 
+#contato .items {
+  display: flex;
+  justify-content: space-between;
+}
+
 #contato .email {
   border-radius: 5px;
   background-color: var(--secondary);
@@ -251,10 +256,10 @@ body {
 }
 
 #contato .social-link {
-  margin: 0;
   padding: 0;
   display: flex;
   justify-content: flex-end;
+  margin-top: auto;
 }
 
 #contato .social-link a {
@@ -299,25 +304,7 @@ body {
   font-size: 13px;
 }
 
-@media (max-width: 767.98px) {
-  #contato .title {
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-  #contato .social-link {
-      padding-top: 10px;
-      display:flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-  }
-}
-
 /**cookies component*/
-
 .cookie-notification {
   position: fixed;
   left: 0;
