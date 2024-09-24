@@ -17,7 +17,7 @@
   <select class="form-control" id="exampleFormControlSelect1" name="role_id" required>
     <option disabled selected>Selecione uma opção</option>
         @foreach ($roles_list as $role)
-            <option value="{{ $role->id }}" {{ $role_user == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
+            <option value="{{ $role->id }}" {{ ($role_user ?? null) == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
         @endforeach
   </select>
 </div>
