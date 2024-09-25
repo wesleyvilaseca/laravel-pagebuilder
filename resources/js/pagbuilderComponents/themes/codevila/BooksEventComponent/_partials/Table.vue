@@ -65,7 +65,7 @@
         <li class="page-item" :class="{'disabled': currentPage === pagination.meta.last_page}">
           <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Próximo</a>
         </li>
-        <span style="margin-top: 8px;">&nbsp; <i>Mostrado {{ totalData }} de {{ pagination.meta.total }} registros.</i></span>
+        <span style="margin-top: 8px;">&nbsp; <i>Mostrando {{ totalData }} de {{ pagination.meta.total }} registros.</i></span>
       </ul>
     </nav>
   </div>
@@ -154,8 +154,6 @@ export default {
       this.$emit('update:order', newOrder);
     },
     search() {
-      if (!this.searchQuery) return;
-
       this.$emit('search', this.searchQuery, this.selectedFilter);
     },
     changePerPage() {
