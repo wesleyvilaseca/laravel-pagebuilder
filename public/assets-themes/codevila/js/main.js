@@ -63,10 +63,13 @@ jQuery(document).ready(function ($) {
 
 
   function checkCookie() {
+    const element = document.getElementById("cookie-notice");
+    if (!element) return;
+
     if (document.cookie.split(';').some((item) => item.trim().startsWith('cookieaccepted=1'))) {
-      document.getElementById("cookie-notice").style.visibility = "hidden";
+     element.style.visibility = "hidden";
     } else {
-      document.getElementById("cookie-notice").style.visibility = "visible";
+      element.style.visibility = "visible";
     }
   }
 
