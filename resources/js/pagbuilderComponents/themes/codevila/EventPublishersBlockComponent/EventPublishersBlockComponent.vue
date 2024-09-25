@@ -2,17 +2,17 @@
           <template v-if="!preloader">
             <div class="publishers-event pt-5 pb-5" :class="{ loaded: !preloader }">
                 <div class="container">
-                    <div v-if="publishersState.publishers.data.length === 0">
-                         <div class="row my-4">
-                            <div class="col-md-9 mb-2">
-                                <div class="form-group">
-                                    <input type="text" v-model="filter" class="form-control form-control-lg" id="inputPassword2" placeholder="Busca por editoras" @keydown.enter.prevent="getPublishers()">
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-2">
-                                <button type="submit" class="btn btn-dark btn-lg btn-block" @click.prevent="getPublishers()">Pesquisar</button>
+                    <div class="row my-4">
+                        <div class="col-md-9 mb-2">
+                            <div class="form-group">
+                                <input type="text" v-model="filter" class="form-control form-control-lg" id="inputPassword2" placeholder="Busca por editoras" @keydown.enter.prevent="getPublishers()">
                             </div>
                         </div>
+                        <div class="col-md-3 mb-2">
+                            <button type="submit" class="btn btn-dark btn-lg btn-block" @click.prevent="getPublishers()">Pesquisar</button>
+                        </div>
+                    </div>
+                    <div v-if="publishersState.publishers.data.length === 0">
                         <div class="text-center">Não há Editoras</div>
                     </div>
                     <div v-else>
