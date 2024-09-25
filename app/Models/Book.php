@@ -25,11 +25,6 @@ class Book extends Model
         return $this->belongsToMany(SystemUpload::class, 'upload_relations', 'relation_id', 'system_upload_id')->wherePivot('alias_model_relation', self::MODEL_ALIAS);
     }
 
-    public function publishers()
-    {
-        return $this->belongsToMany(Publisher::class, 'publisher_books', 'book_id', 'publisher_id');
-    }
-
     public function authorsAvailable($filter = null)
     {
         $authors = Author::whereNotIn('authors.id', function ($query) {
@@ -45,6 +40,29 @@ class Book extends Model
         return $authors;
     }
 
+    public function publishers()
+    {
+        return $this->belongsToMany(Publisher::class, 'publisher_books', 'book_id', 'publisher_id');
+    }
+
+    public function search(array $filters) {
+        $query = Book::query();
+
+        if (isset($filters['selected_filter']) && isset($filters['filter'])) {
+            if ($filters['selected_filter'] === 'publisher_name') {
+                $query->whereHas('publishers', function ($query) use ($filters) {
+                    $query->where('name', 'like', '%' . $filters['filter'] . '%');
+                });
+            } else {
+                $query->where($filters['selected_filter'], 'like', '%' . $filters['filter'] . '%');
+            }
+        }
+
+        $query->orderBy('name', 'asc');
+
+        return $query->paginate(10);
+
+    }
     /**
      * Define an accessor to cast the 'data' column to an object.
      *

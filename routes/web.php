@@ -167,6 +167,7 @@ Route::middleware(['auth'])->group(function() {
      * editoras|publisher
      */
     Route::get('/books',     [BookController::class, 'index'])->name('books');
+    Route::any('/books/search',            [BookController::class, 'index'])->name('books.search');
     Route::get('/books/create',     [BookController::class, 'create'])->name('book.create');
     Route::get('/books/{id}/edit',     [BookController::class, 'edit'])->name('book.edit');
     Route::get('/books/{id}/show',     [BookController::class, 'show'])->name('book.show');

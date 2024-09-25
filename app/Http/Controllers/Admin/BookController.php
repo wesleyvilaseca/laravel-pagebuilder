@@ -28,14 +28,23 @@ class BookController extends Controller
         $this->middleware(['can:books']);
     }
 
-    public function index() {
+    public function index(Request $request) {
+        if($request->filter) {
+            $filters['filter'] = $request->filter;
+            $filters['selected_filter'] = $request->selected_filter;
+
+            $data['books'] = $this->repository->search($filters);
+            $data['filters'] = $request->except('_token');
+        } else {
+            $data['books'] = $this->repository->paginate(10);
+        }
+
         $data['books_'] = true;
         $data['title']  = 'Livros';
         $data['toptitle'] =  $data['title'];
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
         $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
 
-        $data['books'] = $this->repository->all();
         return view('admin.books.index', $data);
     }
 
@@ -47,7 +56,7 @@ class BookController extends Controller
         $data['breadcrumb'][] = ['route' => route('books'), 'title' => 'Livros'];
         $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
         $data['publishers'] = $this->publisherRepository->all();
-        $data['action']         = route('book.store');
+        $data['action'] = route('book.store');
 
         return view('admin.books.create', $data);
     }
