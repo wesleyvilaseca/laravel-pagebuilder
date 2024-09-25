@@ -3,31 +3,30 @@
     <div class="filter-section">
       <div class="row">
         <div class="col-md-2">
-          <select v-model="perPageModel" @change="changePerPage" class="form-select">
+          <select v-model="perPageModel" @change="changePerPage" class="form-select mb-2">
             <option v-for="num in perPageOptions" :key="num" :value="num">{{ num }}</option>
           </select>
         </div>
         <div class="col-md-6">
-          <input v-model="searchQuery" class="form-control" type="text" placeholder="Buscar..." />
+          <input v-model="searchQuery" class="form-control mb-2" type="text" placeholder="Buscar..." @keydown.enter.prevent="search()" />
         </div>
         <div class="col-md-2">
-          <select v-model="selectedFilter" class="form-select">
+          <select v-model="selectedFilter" class="form-select mb-2">
             <option v-for="filter in searchFilters" :key="filter.value" :value="filter.value">
               {{ filter.label }}
             </option>
           </select>
         </div>
-        <div class="col-md-2">
-          <button @click="search" class="btn btn-dark">Buscar</button>
+        <div class="col-md-2 col-sm-12">
+            <button @click="search" class="btn btn-dark btn-block">Buscar</button>
         </div>
       </div>
     </div>
 
-    <div class="main-table">
+    <div class="main-table mt-3 mb-3">
       <table class="table">
         <thead>
           <tr>
-            <th class="table-head">#</th>
             <th v-for="column in columns" :key="column" @click="sortByColumn(column.column)" class="table-head">
               {{ column.title }}
               <span v-if="column.column === sortedColumn">
@@ -39,13 +38,17 @@
         </thead>
         <tbody>
           <tr v-if="tableData.length === 0">
-            <td class="lead text-center" :colspan="columns.length + 2">No data found.</td>
+            <td class="lead text-center" :colspan="columns.length + 2">Não há resultado</td>
           </tr>
           <tr v-for="(data, key1) in tableData" :key="data.id" class="m-datatable__row">
-            <td>{{ serialNumber(key1) }}</td>
-            <template v-for="(value, key) in data" :key="key">
-              <td>{{ value }}</td>
-            </template>
+            <td v-for="column in columns" :key="column.column">
+              <template v-if="column.column == 'link'">
+                <a :href="data[column.column]" target="_blank"> Veja no site</a>
+              </template>
+              <template v-else>
+                  {{ data[column.column] }}
+              </template>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -67,6 +70,29 @@
     </nav>
   </div>
 </template>
+
+<style scoped>
+  .main-table table {
+    font-size: 0.80rem;
+    white-space: nowrap;
+    display: block;
+    overflow-x: auto;
+  }
+
+  .btn-dark {
+    background-color: #000;
+  }
+
+  .btn-dark:hover {
+      background-color: #343a40;
+  }
+
+  @media (max-width: 768px) {
+    .main-table table {
+      font-size: 0.75rem;
+    }
+  }
+</style>
 
 <script>
 export default {
@@ -128,6 +154,8 @@ export default {
       this.$emit('update:order', newOrder);
     },
     search() {
+      if (!this.searchQuery) return;
+
       this.$emit('search', this.searchQuery, this.selectedFilter);
     },
     changePerPage() {

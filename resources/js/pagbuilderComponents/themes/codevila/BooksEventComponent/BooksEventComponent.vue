@@ -1,21 +1,26 @@
 <template>
       <div class="container pt-5 pb-5">
           <template v-if="!preloader">
-            <Table
-            :tableData="books"
-            :pagination="pagination"
-            :columns="columns"
-            :sortedColumn="sortedColumn"
-            :order="order"
-            :currentPage="currentPage"
-            :perPage="perPage"
-            :searchFilters="searchFilters"
-            @update:currentPage="handlePageChange"
-            @update:sortedColumn="handleSortChange"
-            @update:order="handleOrderChange"
-            @search="handleSearch"
-            @update:perPage="handlePerPageChange"
-             />
+            <div :class="['table-container', { loading: loadingTable }]">
+                <template v-if="loadingTable">
+                    <div class="spinner"></div>
+                </template>
+                <Table
+                :tableData="books"
+                :pagination="pagination"
+                :columns="columns"
+                :sortedColumn="sortedColumn"
+                :order="order"
+                :currentPage="currentPage"
+                :perPage="perPage"
+                :searchFilters="searchFilters"
+                @update:currentPage="handlePageChange"
+                @update:sortedColumn="handleSortChange"
+                @update:order="handleOrderChange"
+                @search="handleSearch"
+                @update:perPage="handlePerPageChange"
+                />
+            </div>
           </template>
 
           <template v-if="preloader">
@@ -26,21 +31,63 @@
       </div>
 </template>
 <style scoped>
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.5s ease-in-out;
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+        opacity: 0;
+    }
+
+    .schedule-gallery img {
+        width: 100%;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+  .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #000;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
   }
 
-  .fade-enter-from,
-  .fade-leave-to {
-    opacity: 0;
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
-.schedule-gallery img {
-    width: 100%;
-    transition: opacity 0.5s ease-in-out;
-}
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
 
+  .table-container {
+    position: relative;
+  }
+
+  .table-container.loading {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .table-container .spinner {
+    opacity: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 </style>
 
 <script>
@@ -74,34 +121,35 @@ export default {
         ],
         columns: [
             {
-                title: 'Nome',
+                title: 'ISBN',
+                column: 'isbn',
+            },
+            {
+                title: 'Título',
                 column: 'name'
+            },
+            {
+                title:  'Autor(es)',
+                column: 'authors'
+            },
+            {
+                title: 'Preço de Capa',
+                column: 'price'
+            },
+            {
+                title: 'Preço com Desconto',
+                column: 'price_discount'
             },
             {
                 title: 'Assunto',
                 column: 'subject'
             },
             {
-                title: 'ISBN',
-                column: 'isbn',
-
-            },
-            {
-                title: 'Preço',
-                column: 'price'
-            },
-            {
-                title: 'Preço do desconto',
-                column: 'price_discount'
-            },
-            {
                 title: 'Link',
-                column: 'link'
+                column: 'link',
+                type: 'link'
             },
-            {
-                title:  'Autores(as)',
-                column: 'author'
-            }
+
         ],
         preloader: true,
         books: [],
@@ -112,6 +160,7 @@ export default {
         perPage: 10,
         filterSelected: "",
         search: "",
+        loadingTable: false,
     }),
     setup() {},
     computed: {},
@@ -125,24 +174,28 @@ export default {
     created() {},
     methods: {
         async getBooks() {
-           try {
-            const params = { 
-                flag: this.event,
-                page: this.currentPage,
-                column: this.sortedColumn,
-                order: this.order,
-                per_page: this.perPage,
+            this.loadingTable = true;
+            try {
+                const params = { 
+                    flag: this.event,
+                    page: this.currentPage,
+                    column: this.sortedColumn,
+                    order: this.order,
+                    per_page: this.perPage,
                 };
 
-            params[this.filterSelected] = this.search;
+                params[this.filterSelected] = this.search;
     
-            const { data } = await Http.get('event-books', { params });
-            this.books = data.data
-            this.pagination = data
+                const { data } = await Http.get('event-books', { params });
+                this.books = data.data;
+                this.pagination = data;
+                this.loadingTable = true;
            } catch (error) {
-            this.preloader = false;
-            console.log(error)
-           }
+                console.log(error)
+           } finally {
+                this.loadingTable = false;
+                this.preloader = false;
+            }
         },
         handlePerPageChange(perPage) {
             this.pagination = { meta: { to: 1, from: 1 }};
