@@ -62,19 +62,17 @@ jQuery(document).ready(function ($) {
 });
 
 
-window.onload = function() {
-  if (document.cookie.indexOf("cookieaccepted=1") < 0) {
-    document.getElementById("cookie-notice").style.visibility = "visible";
-  } else {
+  function checkCookie() {
+    if (document.cookie.split(';').some((item) => item.trim().startsWith('cookieaccepted=1'))) {
+      document.getElementById("cookie-notice").style.visibility = "hidden";
+    } else {
+      document.getElementById("cookie-notice").style.visibility = "visible";
+    }
+  }
+
+  function acceptCookie() {
+    document.cookie = "cookieaccepted=1; expires=Thu, 18 Dec 2030 12:00:00 UTC; path=/";
     document.getElementById("cookie-notice").style.visibility = "hidden";
   }
-};
 
- function acceptCookie() {
-  document.cookie = "cookieaccepted=1; expires=Thu, 18 Dec 2030 12:00:00 UTC; path=/";
-  document.getElementById("cookie-notice").style.visibility = "hidden";
-}
-
-function myFunction() {
-  document.getElementById("cookie-notice").style.visibility = "hidden";
-}
+  window.onload = checkCookie;
