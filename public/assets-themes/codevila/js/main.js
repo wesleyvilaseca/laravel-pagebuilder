@@ -61,18 +61,18 @@ jQuery(document).ready(function ($) {
   });
 });
 
-/**
- * dinamic links
- */
 
-function get_link(route, classid) {
-  let imageroute = site_url + '/' + route;
-  return $(`.${classid}`).attr('src', imageroute);
-}
+window.onload = function() {
+  if (document.cookie.indexOf("cookieaccepted=1") < 0) {
+    document.getElementById("cookie-notice").style.visibility = "visible";
+  } else {
+    document.getElementById("cookie-notice").style.visibility = "hidden";
+  }
+};
 
-document.cookie.indexOf("cookieaccepted") < 0 && (document.getElementById("cookie-notice").style.visibility = "visible");
-function acceptCookie() {
-  document.cookie = "cookieaccepted=1; expires=Thu, 18 Dec 2030 12:00:00 UTC; path=/", document.getElementById("cookie-notice").style.visibility = "hidden"
+ function acceptCookie() {
+  document.cookie = "cookieaccepted=1; expires=Thu, 18 Dec 2030 12:00:00 UTC; path=/";
+  document.getElementById("cookie-notice").style.visibility = "hidden";
 }
 
 function myFunction() {
