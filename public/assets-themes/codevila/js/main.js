@@ -66,7 +66,9 @@ function checkCookie() {
   const element = document.getElementById("cookie-notice");
   if (!element) return;
 
-  if (document.cookie.split(';').some((item) => item.trim().startsWith('cookieaccepted=1'))) {
+  const cookieExists = document.cookie.split(';').some((item) => item.trim().startsWith('cookieaccepted=1'));
+
+  if (cookieExists) {
       element.style.visibility = "hidden";
   } else {
       element.style.visibility = "visible";
