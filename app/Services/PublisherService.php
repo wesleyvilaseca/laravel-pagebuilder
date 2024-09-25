@@ -36,6 +36,6 @@ class PublisherService {
             $query->where('name', 'LIKE', "%$filter%");
         }
     
-        return $query->paginate(16);
+        return $query->orberBy('asc')->paginate(16);
     }
  }
