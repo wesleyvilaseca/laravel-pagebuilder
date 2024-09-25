@@ -74,8 +74,8 @@
 <style scoped>
   .main-table table {
     font-size: 0.80rem;
-    white-space: nowrap;
-    display: block;
+    /* white-space: nowrap; */
+    /* display: block; */
     overflow-x: auto;
   }
 

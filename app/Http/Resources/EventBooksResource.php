@@ -22,7 +22,8 @@ class EventBooksResource extends JsonResource
             'price' => $this->price ? 'R$ ' . Utils::numberFormat($this->price) : '',
             'price_discount' => $this->price_discount ? 'R$ ' . Utils::numberFormat($this->price_discount) : '',
             'link' => $this->link ?? '',
-            'authors' => $this->author
+            'authors' => $this->author,
+            'publisher' => $this->publishers[0]->name ?? ''
             // 'url' => $this->url ?? '',
             // 'authors' => AuthorResource::collection($this->authors)
         ];
