@@ -141,7 +141,7 @@ class EventBannerGalleryController extends Controller
         }
 
         $request->validate([
-            'image' => 'required|file|mimes:jpg,jpeg,png|max:5048',
+            'image' => 'required|file|mimes:jpg,jpeg,png,gif|max:5048',
             'image_mobile' => 'nullable|file|mimes:jpg,jpeg,png|max:5048',
             'name' => 'required|string',
             'description' => 'nullable|string',
