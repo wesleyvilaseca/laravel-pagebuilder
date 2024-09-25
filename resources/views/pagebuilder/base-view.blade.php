@@ -72,12 +72,11 @@ window.onload = updateLinks;
         document.querySelectorAll('a[href]').forEach(function(link) {
             link.addEventListener('click', function(e) {
                 const linkHref = link.getAttribute('href');
-
                 if (linkHref === 'inicio') {
                     e.preventDefault(); 
                     const urlPath = window.location.pathname.split('/').filter(Boolean);
                     const secondParam = urlPath[0]; 
-                    if (secondParam === sub) {
+                    if (secondParam === sub && eventPrincipal == false) {
                         const newUrl = `${window.location.origin}/${sub}/inicio`;
                         return window.location.href = newUrl;
                     } else {
