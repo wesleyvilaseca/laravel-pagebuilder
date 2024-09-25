@@ -11,18 +11,6 @@
                                         <div class="name pt-2"> {{ publisherData.name }} </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-8 address">
-                                    <div class="address-detail">
-                                        <div>{{ publisherData.address.address }} <span v-if="publisherData.address.number"> {{publisherData.address.number}} </span></div>
-                                        <div v-if="publisherData.address.district"> {{ publisherData.address.district }} </div>
-                                        <div v-if="publisherData.address.zip_code"> {{ publisherData.address.zip_code }} </div>
-                                        <div v-if="publisherData.address.city">
-                                            {{ publisherData.address.city }}
-                                            <span v-if="publisherData.address.state"> - {{ publisherData.address.state }} </span>
-                                        </div>
-                                        
-                                    </div>
-                                </div> -->
                             </div>
                         </section>
                         
@@ -38,7 +26,7 @@
                                             Lista de preços
                                         </div>
                                         <div class="card-body text-center">
-                                           <a :href="publisherData.price_list">
+                                           <a :href="publisherData.price_list" target="_blank">
                                             <i class="fa-solid fa-file-pdf"></i> 
                                             Download
                                            </a>
@@ -51,7 +39,7 @@
                                             Site da editora
                                         </div>
                                         <div class="card-body text-center">
-                                            <a href="#"> {{  publisherData.site }} </a>
+                                            <a :href="publisherData.site" target="_blank"> {{  publisherData.site }} </a>
                                         </div>
                                     </div>
                                 </div>

@@ -5,12 +5,12 @@
                     <div v-if="publishersState.publishers.data.length === 0">Não há Editoras</div>
                     <div v-else>
                         <div class="row my-4">
-                            <div class="col-md-9">
+                            <div class="col-md-9 mb-2">
                                 <div class="form-group">
                                     <input type="text" v-model="filter" class="form-control form-control-lg" id="inputPassword2" placeholder="Busca por editoras" @keydown.enter.prevent="getPublishers()">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 mb-2">
                                 <button type="submit" class="btn btn-dark btn-lg btn-block" @click.prevent="getPublishers()">Pesquisar</button>
                             </div>
                         </div>
