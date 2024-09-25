@@ -66,9 +66,7 @@ function checkCookie() {
   const element = document.getElementById("cookie-notice");
   if (!element) return;
 
-  const cookieExists = document.cookie.split(';').some((item) => item.trim().startsWith('cookieaccepted=1'));
-
-  if (cookieExists) {
+  if (localStorage.getItem('cookieaccepted') === '1') {
       element.style.visibility = "hidden";
   } else {
       element.style.visibility = "visible";
@@ -76,11 +74,8 @@ function checkCookie() {
 }
 
 function acceptCookie() {
-  const now = new Date();
-  const expirationDate = new Date(now);
-  expirationDate.setFullYear(now.getFullYear() + 1);
-
-  document.cookie = `cookieaccepted=1; expires=${expirationDate.toUTCString()}; path=/`;
+  localStorage.setItem('cookieaccepted', '1');
+  console.log("Cookie accepted:", localStorage.getItem('cookieaccepted'));
   document.getElementById("cookie-notice").style.visibility = "hidden";
 }
 
