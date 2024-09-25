@@ -73,15 +73,15 @@ window.onload = updateLinks;
             link.addEventListener('click', function(e) {
                 const linkHref = link.getAttribute('href');
 
-                if (linkHref === 'início') {
+                if (linkHref === 'inicio') {
                     e.preventDefault(); 
                     const urlPath = window.location.pathname.split('/').filter(Boolean);
                     const secondParam = urlPath[0]; 
                     if (secondParam === sub) {
-                        const newUrl = `${window.location.origin}/${sub}/início`;
+                        const newUrl = `${window.location.origin}/${sub}/inicio`;
                         return window.location.href = newUrl;
                     } else {
-                        const newUrl = `${window.location.origin}/início`;
+                        const newUrl = `${window.location.origin}/inicio`;
                         return window.location.href = newUrl;
                     }
                 }

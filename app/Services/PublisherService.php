@@ -36,6 +36,6 @@ class PublisherService {
             $query->where('name', 'LIKE', "%$filter%");
         }
     
-        return $query->paginate(10);
+        return $query->paginate(16);
     }
  }

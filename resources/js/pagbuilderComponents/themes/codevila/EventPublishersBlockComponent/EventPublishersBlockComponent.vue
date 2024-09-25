@@ -7,7 +7,7 @@
                         <div class="row my-4">
                             <div class="col-md-9">
                                 <div class="form-group">
-                                    <input type="text" v-model="filter" class="form-control form-control-lg" id="inputPassword2" placeholder="Busca por editoras">
+                                    <input type="text" v-model="filter" class="form-control form-control-lg" id="inputPassword2" placeholder="Busca por editoras" @keydown.enter.prevent="getPublishers()">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -15,11 +15,13 @@
                             </div>
                         </div>
                         <div class="row my-4">
-                            <div class="col-lg-3 col-md-6 col-sm-12 mb-4" v-for="(publisher, index) in publishersState.publishers.data" :key="index">
-                                <div class="card card-event">
-                                    <img class="card-img-top img-160" :src="publisher.logo" :alt="publisher.name">
+                            <div class="col-lg-3 col-md-6 col-sm-6 mb-4" v-for="(publisher, index) in publishersState.publishers.data" :key="index">
+                                <div class="card card-event" @click.prevent="goToPublisher(publisher)">
+                                    <div class="card-body">
+                                        <img class="card-img-top" :src="publisher.logo" :alt="publisher.name">
+                                    </div>
                                     <div class="card-footer" @click.prevent="goToPublisher(publisher)">
-                                    <span> {{ publisher.name }} </span>
+                                        <span> {{ publisher.name }} </span>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +88,7 @@
 
 
 .load_more_btn {
-border-radius: 25px;
+    border-radius: 25px;
 }
 
 
@@ -97,6 +99,19 @@ background: #4060ff;
 .load_more_btn:focus {
 box-shadow: none;
 outline: 0px;
+}
+
+.card-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+img.card-img-top {
+    max-width: 80%;
+    height: auto;
+    object-fit: contain;
+    max-height: 120px;
 }
 
 .card-footer {
@@ -129,9 +144,10 @@ outline: 0px;
     justify-content: center;
     align-items: center;
     text-align: center;
+    cursor: pointer;
 }
 
-.img-160 {
+/* .img-160 {
     width: 160px;
     height: 160px;
     object-fit: cover;
@@ -154,7 +170,7 @@ outline: 0px;
     width: 60px;
     height: 60px;
     object-fit: cover;
-}
+} */
 
 </style>
 
@@ -220,7 +236,11 @@ export default {
         },
 
         goToPublisher(publisher) {
-            return window.location.href = `editoras/${publisher.url}/editora`;
+            if (window.location.pathname.includes(this.event)) {
+                return window.location.href = `editoras/${publisher.url}/editora`;
+            }
+
+            return window.location.href = `${this.event}/editoras/${publisher.url}/editora`;
         },
         btnLoad(showLoadign) {
             if (showLoadign) {
