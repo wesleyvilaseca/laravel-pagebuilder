@@ -65,7 +65,7 @@
         <li class="page-item" :class="{'disabled': currentPage === pagination.meta.last_page}">
           <a class="page-link" href="#" @click.prevent="changePage(currentPage + 1)">Próximo</a>
         </li>
-        <span style="margin-top: 8px;">&nbsp; <i>Mostrando {{ totalData }} de {{ pagination.meta.total }} registros.</i></span>
+        <span style="margin-top: 8px;">&nbsp; <i>Mostrando {{ pagination.meta.to }} de {{ pagination.meta.total }} registros.</i></span>
       </ul>
     </nav>
   </div>
