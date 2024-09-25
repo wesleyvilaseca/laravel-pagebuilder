@@ -93,6 +93,32 @@
 
     @yield('js')
 
+    <script>
+        $.extend(true, $.fn.dataTable.defaults, {
+            language: {
+                "sEmptyTable": "Nenhum dado disponível na tabela",
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ entradas",
+                "sInfoEmpty": "Mostrando 0 até 0 de 0 entradas",
+                "sInfoFiltered": "(filtrado de _MAX_ entradas totais)",
+                "sLengthMenu": "Mostrar _MENU_ entradas",
+                "sLoadingRecords": "Carregando...",
+                "sProcessing": "Processando...",
+                "sSearch": "Pesquisar:",
+                "sZeroRecords": "Nenhum registro encontrado",
+                "oPaginate": {
+                    "sFirst": "Primeiro",
+                    "sLast": "Último",
+                    "sNext": "Próximo",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Ativar para classificar a coluna em ordem crescente",
+                    "sSortDescending": ": Ativar para classificar a coluna em ordem decrescente"
+                }
+            }
+        });
+    </script>
+
 </body>
 
 </html>
