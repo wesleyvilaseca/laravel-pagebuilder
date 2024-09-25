@@ -45,32 +45,30 @@
 }
 
 @media (max-width: 768px) {
-  .carousel-item {
-    height: 300px;
-  }
-
-    .carousel-item img {
-     object-position: 60% 100%;
+  .carousel-item img {
+     width: 100%;
+     height: 100%;
+     object-position: 50% 70%;
   }
 }
 
 @media (max-width: 580px) {
-  .carousel-item {
-    max-width: 100%;
-  }
-
   .carousel-item img {
-    object-position: 70% 90%;
+     width: 100%;
+     height: 100%;
+     object-position: 40% 70%;
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 480px) {
   .carousel-item {
-    max-width: 100%;
+    height: 480px;
   }
 
   .carousel-item img {
-    object-position: 50% 90%;
+     width: 100%;
+     height: 100%;
+     object-position: 50% 80%;
   }
 }
 </style>
@@ -99,7 +97,7 @@ export default {
     created() {},
     methods: {
           updateLayout() {
-            this.mobileScreem = window.innerWidth <= 400;
+            this.mobileScreem = window.innerWidth <= 480;
 
             this.banners = [];
             this.banners = this.gallery;
