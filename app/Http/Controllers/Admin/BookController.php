@@ -36,7 +36,7 @@ class BookController extends Controller
             $data['books'] = $this->repository->search($filters);
             $data['filters'] = $request->except('_token');
         } else {
-            $data['books'] = $this->repository->paginate(10);
+            $data['books'] = $this->repository->paginate(8);
         }
 
         $data['books_'] = true;
