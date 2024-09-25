@@ -62,20 +62,24 @@ jQuery(document).ready(function ($) {
 });
 
 
-  function checkCookie() {
-    const element = document.getElementById("cookie-notice");
-    if (!element) return;
+function checkCookie() {
+  const element = document.getElementById("cookie-notice");
+  if (!element) return;
 
-    if (document.cookie.split(';').some((item) => item.trim().startsWith('cookieaccepted=1'))) {
-     element.style.visibility = "hidden";
-    } else {
+  if (document.cookie.split(';').some((item) => item.trim().startsWith('cookieaccepted=1'))) {
+      element.style.visibility = "hidden";
+  } else {
       element.style.visibility = "visible";
-    }
   }
+}
 
-  function acceptCookie() {
-    document.cookie = "cookieaccepted=1; expires=Thu, 18 Dec 2030 12:00:00 UTC; path=/";
-    document.getElementById("cookie-notice").style.visibility = "hidden";
-  }
+function acceptCookie() {
+  const now = new Date();
+  const expirationDate = new Date(now);
+  expirationDate.setFullYear(now.getFullYear() + 1);
 
-  window.onload = checkCookie;
+  document.cookie = `cookieaccepted=1; expires=${expirationDate.toUTCString()}; path=/`;
+  document.getElementById("cookie-notice").style.visibility = "hidden";
+}
+
+window.onload = checkCookie;
