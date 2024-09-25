@@ -17,17 +17,20 @@ class Publisher extends Model
 
     public function search($filter = null)
     {
-        $results = $this->where([
-            ['name', 'LIKE', "%{$filter}%"],
-        ])
-        ->orWhere([
-                ['description', 'LIKE', "%{$filter}%"],
-                ['site', 'LIKE', "%{$filter}%"],
-                ['email', 'LIKE', "%{$filter}%"]
-                ])
-        ->paginate(8);
+        $query = $this->with(['uploads' => function($query) {
+            $query->wherePivot('alias_category', 'publisher-logo');
+        }]);
 
-        return $results;
+        if ($filter) {
+            $query->where(function($q) use ($filter) {
+                $q->where('name', 'LIKE', "%{$filter}%")
+                  ->orWhere('description', 'LIKE', "%{$filter}%")
+                  ->orWhere('site', 'LIKE', "%{$filter}%")
+                  ->orWhere('email', 'LIKE', "%{$filter}%");
+            });
+        }
+
+        return $query->orderBy('name', 'asc')->paginate(8);;
     }
 
     public function uploads()

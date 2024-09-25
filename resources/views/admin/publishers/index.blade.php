@@ -46,10 +46,7 @@
                     <tr>
                         <td>{{ $publisher->name }}</td>
                         <td> 
-                            @php
-                                $logo = $publisher->uploads()->wherePivot('alias_category', 'publisher-logo')->first();    
-                            @endphp
-                            <img src="{{ asset('storage/' . $logo['server_file'])}}" alt="Descrição da Imagem">
+                            <img src="{{ asset('storage/' . $publisher->uploads->first()->server_file)}}" alt="Descrição da Imagem">
                         </td>
 
                         <td style="width=10px;">

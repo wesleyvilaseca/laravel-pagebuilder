@@ -27,7 +27,9 @@ class PublisherController extends Controller
             $data['publishers'] = $this->repository->search($request->filter);
             $data['filters'] = $request->except('_token');
         } else {
-            $data['publishers'] = $this->repository->paginate(8);
+            $data['publishers'] = $this->repository->with(['uploads' => function($query) {
+                $query->wherePivot('alias_category', 'publisher-logo');
+            }])->orderBy('name', 'asc')->paginate(8);
         }
 
         $data['publisher_'] = true;
