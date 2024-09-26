@@ -48,7 +48,7 @@ class UploadFileService {
                     'filenameSuffix' => '', // Sufixo para o nome do arquivo
                 ];
 
-                $filePath = $targetDirectory . $filename;
+                $filePath = $targetDirectory . '/' . $filename . '.webp';
     
                 // Criação do WebP
                 $webp = WebPConverter::createWebpImage($filePath, $options);
