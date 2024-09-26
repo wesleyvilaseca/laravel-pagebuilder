@@ -49,10 +49,11 @@ class UploadFileService {
     
                 // Criação do WebP
                 $webp = WebPConverter::createWebpImage($tempPath, $options);
-                if (file_exists($tempPath)) {
-                    unlink($tempPath);
+                $tempFile = $targetDirectory . $filename . '.' . $file->getClientOriginalExtension();
+                if (file_exists($tempFile)) {
+                    unlink($tempFile);
                 }
-                
+
                 $server_file = str_replace($file->getClientOriginalExtension(), 'webp', $server_file);
                 $mime_type = 'image/webp';
             } else {
