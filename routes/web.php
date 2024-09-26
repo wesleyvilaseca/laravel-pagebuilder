@@ -42,6 +42,7 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->prefix('admin')->group(function() {
     Route::get('/painel', [PainelController::class, 'index'])->name('painel');
+    Route::get('/purge-varnish-cache', [PainelController::class, 'purgeVarnishCache'])->name('cache.clear');
 
     /**
      * usuers
