@@ -32,17 +32,23 @@ class UploadFileService {
     
             $publicId = sha1(uniqid(rand(), true));
             $filename = $publicId . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
-            $filePath = $file->getRealPath();
     
             // Verifica se o arquivo é uma imagem
             if (in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif']) && function_exists('imagewebp')) {
+                $targetDirectory = storage_path("app/public/{$directory}");
+                if (!is_dir($targetDirectory)) {
+                    mkdir($targetDirectory, 0777, true);
+                }
+
                 $options = [
                     'saveFile' => true, // Salva o arquivo convertido
                     'quality' => 80,    // Qualidade padrão
-                    'savePath' => storage_path("app/public/{$directory}"), // Caminho onde o arquivo WebP será salvo
+                    'savePath' => $targetDirectory, // Caminho onde o arquivo WebP será salvo
                     'filename' => $filename, // Nome do arquivo sem extensão
                     'filenameSuffix' => '', // Sufixo para o nome do arquivo
                 ];
+
+                $filePath = $targetDirectory . $filename;
     
                 // Criação do WebP
                 $webp = WebPConverter::createWebpImage($filePath, $options);
