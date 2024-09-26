@@ -163,7 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         // by rafael inicio
-        RichanFongdasen\Varnishable\ServiceProvider::class,
+        // RichanFongdasen\Varnishable\ServiceProvider::class,
         // by rafael fim
 
         /*
@@ -233,7 +233,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         // by rafael inicio
-        'Varnishable' => RichanFongdasen\Varnishable\Facade::class,
+        // 'Varnishable' => RichanFongdasen\Varnishable\Facade::class,
         // by rafael fim
     ],
 
