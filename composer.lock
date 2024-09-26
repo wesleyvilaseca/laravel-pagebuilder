@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "425fe0b046166fc62df1f826ec108182",
+    "content-hash": "629181a280b7afd6e66eeb63e55b552d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -190,6 +190,52 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "codebuds/webp-converter",
+            "version": "0.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codebuds33/webp-converter.git",
+                "reference": "20d97782b94fdb3a17476a9733c183e6814aa3ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codebuds33/webp-converter/zipball/20d97782b94fdb3a17476a9733c183e6814aa3ae",
+                "reference": "20d97782b94fdb3a17476a9733c183e6814aa3ae",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": "^8.0",
+                "symfony/http-foundation": "^5.0 || ^6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9",
+                "roave/security-advisories": "dev-latest"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CodeBuds\\WebPConverter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dennis de Best",
+                    "email": "dennis@codebuds.com"
+                }
+            ],
+            "description": "A service that uses php GD to convert Jpeg, Png, Gif and Bmp into WebP",
+            "support": {
+                "issues": "https://github.com/codebuds33/webp-converter/issues",
+                "source": "https://github.com/codebuds33/webp-converter/tree/0.5.1"
+            },
+            "time": "2022-10-24T21:15:20+00:00"
         },
         {
             "name": "defuse/php-encryption",

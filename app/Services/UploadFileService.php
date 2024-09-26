@@ -5,11 +5,13 @@ namespace App\Services;
 use App\Models\SystemUpload;
 use App\Models\Upload;
 use App\Models\UploadRelation;
+use CodeBuds\WebPConverter\WebPConverter;
 use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use WebPConvert\WebPConvert;
 
 class UploadFileService {
 
@@ -22,15 +24,41 @@ class UploadFileService {
     public function upload(UploadedFile $file, string $directory = 'uploads', string $disk = 'public'): array
     {
         try {
-            $publicId = sha1(uniqid(rand(), true));
+            // $publicId = sha1(uniqid(rand(), true));
 
-            $filename = $publicId . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
+            // $filename = $publicId . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
     
-            $server_file = $file->storeAs($directory, $filename, $disk);
+            // $server_file = $file->storeAs($directory, $filename, $disk);
     
+            $publicId = sha1(uniqid(rand(), true));
+            $filename = $publicId . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+            $filePath = $file->getRealPath();
+    
+            // Verifica se o arquivo é uma imagem
+            if (in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif']) && function_exists('imagewebp')) {
+                $options = [
+                    'saveFile' => true, // Salva o arquivo convertido
+                    'quality' => 80,    // Qualidade padrão
+                    'savePath' => storage_path("app/public/{$directory}/"), // Caminho onde o arquivo WebP será salvo
+                    'filename' => $filename, // Nome do arquivo sem extensão
+                    'filenameSuffix' => '', // Sufixo para o nome do arquivo
+                ];
+    
+                // Criação do WebP
+                $webp = WebPConverter::createWebpImage($filePath, $options);
+                // O servidor do arquivo será o caminho do WebP
+                $server_file = "{$directory}/{$filename}.webp";
+    
+                $mime_type = 'image/webp';
+            } else {
+                // Caso não seja uma imagem, armazena normalmente
+                $filename .= '.' . $file->getClientOriginalExtension();
+                $server_file = $file->storeAs($directory, $filename, $disk);
+                $mime_type = $file->getMimeType();
+            }
             return [
                 'server_file' => $server_file,
-                'mime_type' => $file->getMimeType(),
+                'mime_type' => $mime_type,
                 'public_id' => $publicId,
                 'original_file' => $file->getClientOriginalName()
             ];
