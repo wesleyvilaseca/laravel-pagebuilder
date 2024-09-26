@@ -13,6 +13,7 @@
         "laravel/passport": "^10.4",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "richan-fongdasen/laravel-varnishable": "^2.2",
         "spatie/browsershot": "^3.61"
     },
     "require-dev": {

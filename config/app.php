@@ -162,6 +162,10 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        // by rafael inicio
+        RichanFongdasen\Varnishable\ServiceProvider::class,
+        // by rafael fim
+
         /*
          * Package Service Providers...
          */
@@ -228,7 +232,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        // by rafael inicio
+        'Varnishable' => RichanFongdasen\Varnishable\Facade::class,
+        // by rafael fim
     ],
 
 ];
