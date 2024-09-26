@@ -133,7 +133,6 @@ export default {
                 column: 'authors'
             },
             {
-
                 title:  'Editora',
                 column: 'publisher'
             },

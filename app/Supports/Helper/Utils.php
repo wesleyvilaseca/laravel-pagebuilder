@@ -10,11 +10,11 @@ class Utils
         $route = '';
 
         if($event) {
-            $route =  env('APP_URL') . '/admin/gerenciar-evento/' . $event;
+            $route =  env('APP_URL') . '/settings/gerenciar-evento/' . $event;
         }
 
         if($template) {
-            $route =  env('APP_URL') . '/admin/template-pages/' . $template;
+            $route =  env('APP_URL') . '/settings/template-pages/' . $template;
         }
 
         return $route;

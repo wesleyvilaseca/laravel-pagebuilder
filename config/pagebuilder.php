@@ -15,7 +15,7 @@ return [
         'base_url' => Utils::getPageRoute(),
         'language' => 'en',
         'assets_url' => env('APP_URL') . '/assets',
-        'uploads_url' => Utils::getasset('/storage/pagebuilder/uploads')
+        'uploads_url' => env('APP_URL') . '/storage/pagebuilder/uploads'
     ],
 
     /*
