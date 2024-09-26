@@ -20,7 +20,7 @@
                             <div class="col-lg-3 col-md-6 col-sm-6 mb-4" v-for="(publisher, index) in publishersState.publishers.data" :key="index">
                                 <div class="card card-event" @click.prevent="goToPublisher(publisher)">
                                     <div class="card-body">
-                                        <img class="card-img-top" :src="publisher.logo" :alt="publisher.name">
+                                        <img class="card-img-top" :src="publisher.logo" :alt="publisher.name" loading="lazy">
                                     </div>
                                     <div class="card-footer" @click.prevent="goToPublisher(publisher)">
                                         <span> {{ publisher.name }} </span>
