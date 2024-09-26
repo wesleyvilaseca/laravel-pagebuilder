@@ -36,9 +36,8 @@ class UploadFileService {
             // Verifica se o arquivo é uma imagem
             if (in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif']) && function_exists('imagewebp')) {
                 $targetDirectory = storage_path("app/public/{$directory}");
-                if (!is_dir($targetDirectory)) {
-                    mkdir($targetDirectory, 0777, true);
-                }
+                $server_file = $file->storeAs($directory, $filename . '.' . $file->getClientOriginalExtension(), $disk);
+                $tempPath = $file->getRealPath();
 
                 $options = [
                     'saveFile' => true, // Salva o arquivo convertido
@@ -47,13 +46,11 @@ class UploadFileService {
                     'filename' => $filename, // Nome do arquivo sem extensão
                     'filenameSuffix' => '', // Sufixo para o nome do arquivo
                 ];
-
-                $filePath = $targetDirectory . '/' . $filename . '.webp';
     
                 // Criação do WebP
-                $webp = WebPConverter::createWebpImage($filePath, $options);
+                $webp = WebPConverter::createWebpImage($tempPath, $options);
                 // O servidor do arquivo será o caminho do WebP
-                $server_file = "{$directory}/{$filename}.webp";
+                $server_file = str_replace($file->getClientOriginalExtension(), 'webp', $server_file);
     
                 $mime_type = 'image/webp';
             } else {
