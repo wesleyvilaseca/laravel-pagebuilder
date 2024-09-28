@@ -62,7 +62,11 @@ class ActiveThemeEventSiteMiddleware
         $event = Event::where('url', $url[0])->first();
         //is event and try acess with a subdomain
         if($event && sizeof($url) > 1) {
-            $page = Page::where(['route' => end($url), 'event_id' => $event->id])->first();
+            if(in_array("editora", $url)) {
+                $page = Page::where(['event_id' => $event->id, 'route' =>'editora'])->first();
+            } else {
+                $page = Page::where(['route' => end($url), 'event_id' => $event->id])->first();
+            }
 
             //if page dont exists
             if (!$page) {
