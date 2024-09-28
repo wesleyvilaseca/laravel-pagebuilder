@@ -8,7 +8,7 @@
           </select>
         </div>
         <div class="col-md-6">
-          <input v-model="searchQuery" class="form-control mb-2" type="text" placeholder="Buscar..." @keydown.enter.prevent="search()" />
+          <input v-model="searchQuery" class="form-control mb-2" type="text" placeholder="Buscar livro..." @keydown.enter.prevent="search()" />
         </div>
         <div class="col-md-2">
           <select v-model="selectedFilter" class="form-select mb-2">
@@ -38,7 +38,12 @@
         </thead>
         <tbody>
           <tr v-if="tableData.length === 0">
-            <td class="lead text-center" :colspan="columns.length + 2">Não há resultado</td>
+            <template v-if="defaufTableMsgBody.showDefaultMessage">
+              <td class="lead text-center" :colspan="columns.length + 2">{{ defaufTableMsgBody.msg }}</td>
+            </template>
+            <template v-else>
+              <td class="lead text-center" :colspan="columns.length + 2">Não há resultado</td>
+            </template>
           </tr>
           <tr v-for="(data, key1) in tableData" :key="data.id" class="m-datatable__row">
             <td v-for="column in columns" :key="column.column">
@@ -104,7 +109,13 @@ export default {
     sortedColumn: { type: String, default: '' },
     order: { type: String, default: 'asc' },
     currentPage: { type: Number, default: 1 },
-    perPage: { type: Number, default: 10 }
+    perPage: { type: Number, default: 10 },
+    defaufTableMsgBody: { 
+      type: Object,
+      default: {
+        showDefaultMessage: true,
+        msg: "Pesquisa de livros "
+    } }
   },
   data() {
     return {
@@ -112,6 +123,7 @@ export default {
       perPageModel: '',
       searchQuery: '',
       perPageOptions: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+      lastSearchQuery: null
     };
   },
   mounted() {
@@ -154,6 +166,14 @@ export default {
       this.$emit('update:order', newOrder);
     },
     search() {
+
+      if (!this.searchQuery || (this.searchQuery == this.lastSearchQuery)) return;
+
+      if (this.defaufTableMsgBody.showDefaultMessage) {
+        this.defaufTableMsgBody.showDefaultMessage = false;
+      }
+
+      this.lastSearchQuery = this.searchQuery;
       this.$emit('search', this.searchQuery, this.selectedFilter);
     },
     changePerPage() {
