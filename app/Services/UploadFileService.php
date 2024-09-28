@@ -27,7 +27,7 @@ class UploadFileService {
             $publicId = sha1(uniqid(rand(), true));
             $filename = $publicId . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
     
-            if (in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif']) && function_exists('imagewebp')) {
+            if (in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png']) && function_exists('imagewebp')) {
                 $targetDirectory = storage_path("app/public/{$directory}");
                 $server_file = $file->storeAs($directory, $filename . '.' . $file->getClientOriginalExtension(), $disk);
                 $tempPath = $file->getRealPath();
