@@ -484,6 +484,12 @@ background: #28a745;
   opacity: 1;
 }
 
+.break-word {
+  max-width: 200px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
 @media (max-width:689.98px) {
   .cookie-notification .ct-close {
       display: none;

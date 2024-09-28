@@ -26,6 +26,12 @@
             background-color: #343a40;
         }
 
+        .break-word {
+            max-width: 200px;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
         @media (max-width: 768px) {
             table {
             font-size: 0.75rem;
@@ -80,7 +86,7 @@
                 @forelse ($books as $book)
                     <tr>
                         <td>{{ $book->isbn }}</td>
-                        <td>{{ $book->name }}</td>
+                        <td class="break-word">{{ $book->name }}</td>
                         <td>{{ $book->author }}</td>
                         <td>{{ $book->price }}</td>
                         <td>{{ $book->price_discount }}</td>

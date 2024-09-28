@@ -46,7 +46,7 @@
             </template>
           </tr>
           <tr v-for="(data, key1) in tableData" :key="data.id" class="m-datatable__row">
-            <td v-for="column in columns" :key="column.column">
+            <td v-for="column in columns" :key="column.column" class="break-word">
               <template v-if="column.column == 'link'">
                 <a :href="data[column.column]" target="_blank"> Veja no site</a>
               </template>
