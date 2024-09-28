@@ -23,31 +23,23 @@ class UploadFileService {
     
     public function upload(UploadedFile $file, string $directory = 'uploads', string $disk = 'public'): array
     {
-        try {
-            // $publicId = sha1(uniqid(rand(), true));
-
-            // $filename = $publicId . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
-    
-            // $server_file = $file->storeAs($directory, $filename, $disk);
-    
+        try {    
             $publicId = sha1(uniqid(rand(), true));
             $filename = $publicId . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
     
-            // Verifica se o arquivo é uma imagem
             if (in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif']) && function_exists('imagewebp')) {
                 $targetDirectory = storage_path("app/public/{$directory}");
                 $server_file = $file->storeAs($directory, $filename . '.' . $file->getClientOriginalExtension(), $disk);
                 $tempPath = $file->getRealPath();
 
                 $options = [
-                    'saveFile' => true, // Salva o arquivo convertido
-                    'quality' => 80,    // Qualidade padrão
-                    'savePath' => $targetDirectory, // Caminho onde o arquivo WebP será salvo
-                    'filename' => $filename, // Nome do arquivo sem extensão
-                    'filenameSuffix' => '', // Sufixo para o nome do arquivo
+                    'saveFile' => true,
+                    'quality' => 70,
+                    'savePath' => $targetDirectory,
+                    'filename' => $filename,
+                    'filenameSuffix' => '',
                 ];
     
-                // Criação do WebP
                 $webp = WebPConverter::createWebpImage($tempPath, $options);
                 if (Storage::disk($disk)->exists($server_file)) {
                     Storage::disk($disk)->delete($server_file);
@@ -56,7 +48,6 @@ class UploadFileService {
                 $server_file = str_replace($file->getClientOriginalExtension(), 'webp', $server_file);
                 $mime_type = 'image/webp';
             } else {
-                // Caso não seja uma imagem, armazena normalmente
                 $filename .= '.' . $file->getClientOriginalExtension();
                 $server_file = $file->storeAs($directory, $filename, $disk);
                 $mime_type = $file->getMimeType();
