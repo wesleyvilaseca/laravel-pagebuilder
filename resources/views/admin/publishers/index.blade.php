@@ -46,7 +46,7 @@
                     <tr>
                         <td>{{ $publisher->name }}</td>
                         <td> 
-                            <img src="{{ asset('storage/' . $publisher->uploads->first()?->server_file )}}" alt="Descrição da Imagem">
+                            <img src="{{ asset('storage/' . $publisher->uploads->first()?->server_file )}}" alt="Descrição da Imagem" loading="lazy">
                         </td>
 
                         <td style="width=10px;">
