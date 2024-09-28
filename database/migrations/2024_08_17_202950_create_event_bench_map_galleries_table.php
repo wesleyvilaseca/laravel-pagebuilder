@@ -20,7 +20,7 @@ class CreateEventBenchMapGalleriesTable extends Migration
             $table->string('description', 500)->nullable();
             $table->integer('order')->nullable();
             $table->string('link')->nullable();
-            $table->string('status')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

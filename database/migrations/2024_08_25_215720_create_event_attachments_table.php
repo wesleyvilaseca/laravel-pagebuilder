@@ -19,7 +19,7 @@ class CreateEventAttachmentsTable extends Migration
             $table->string('name')->nullable();
             $table->string('description', 500)->nullable();
             $table->integer('order')->nullable();
-            $table->string('status')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

@@ -13,8 +13,6 @@
 
         table {
             font-size: 0.80rem;
-            white-space: nowrap;
-            display: block;
             overflow-x: auto;
         }
 
@@ -68,7 +66,7 @@
             </div>
         </div>
 
-        <table class="table" id="customers-table" style="overflow-x: auto;">
+        <table class="table" id="customers-table">
             <thead>
                 <tr>
                     <th scope="col">ISBN</th>
@@ -91,7 +89,7 @@
                         <td>{{ $book->price }}</td>
                         <td>{{ $book->price_discount }}</td>
                         <td>{{ $book->subject }}</td>
-                        <td>{{ $book->publishers[0]->name }}</td>
+                        <td>{{ $book->publishers[0]?->name ?? '' }}</td>
                         <td><a href="{{ $book->link }}">Link</a></td>
                         <td style="width=10px;">
                             <div class="btn-group" role="group">

@@ -19,7 +19,7 @@ class CreateAuthorsTable extends Migration
             $table->string('last_name')->nullable();
             $table->longText('description')->nullable();
             $table->json('data')->nullable()->comment('to uso to put social or some other information new');
-            $table->string('status')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
