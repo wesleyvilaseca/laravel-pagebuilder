@@ -116,6 +116,10 @@ class UserController extends Controller
             return redirect()->back();
         }
 
+        if($user->isAdmin() && !Auth::user()->isAdmin()) {
+            return redirect()->back();
+        }
+
         $validate = Validator::make($request->all(), [
             'first_name'    => 'required|string',
             'last_name' => 'required|string',
