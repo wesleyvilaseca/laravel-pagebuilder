@@ -149,31 +149,6 @@ img.card-img-top {
     cursor: pointer;
 }
 
-/* .img-160 {
-    width: 160px;
-    height: 160px;
-    object-fit: cover;
-    display: block;
-}
-
-.img-100 {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-}
-
-.img-80 {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-}
-
-.img-60 {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-} */
-
 </style>
 
 <script>
@@ -239,15 +214,15 @@ export default {
 
         goToPublisher(publisher) {
             if (window.location.pathname.includes(this.event)) {
-                return window.location.href = `editoras/${publisher.url}/editora`;
+                return window.location.href = `editora/${publisher.url}`;
             }
 
-            return window.location.href = `${this.event}/editoras/${publisher.url}/editora`;
+            return window.location.href = `${this.event}/editora/${publisher.url}`;
         },
         btnLoad(showLoadign) {
             if (showLoadign) {
                 this.btnDisabled = true;
-                this.textButton = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                this.textButton = '<i class="fas fa-spinner fa-spin"></i> Carregando...';
             } else {
                 this.btnDisabled = false;
                 this.textButton = 'Carregar mais editoras'
