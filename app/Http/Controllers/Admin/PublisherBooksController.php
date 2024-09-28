@@ -134,8 +134,7 @@ class PublisherBooksController extends Controller
             'publisher_id' => 'integer|exists:publishers,url',
             'price' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
             'presential_price' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
-            'presential_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
-            'virtual_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
+            'price_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
             'status' => 'required|integer'
         ]);
 
@@ -169,8 +168,7 @@ class PublisherBooksController extends Controller
             'link' => 'string|nullable',
             'publisher_id' => 'integer|exists:publishers,url',
             'price' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
-            'presential_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
-            'virtual_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
+            'price_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
             'status' => 'required|integer'
         ]);
 
@@ -327,6 +325,10 @@ class PublisherBooksController extends Controller
                 $data['publisher_id'] = $publisher->id;
                 $data['description'] = '';
                 $data['status'] = 1;
+
+                if (!$data['isbn'] || $data['name']) {
+                    continue;
+                }
 
                 try {
                    $this->bookService->store($data);
