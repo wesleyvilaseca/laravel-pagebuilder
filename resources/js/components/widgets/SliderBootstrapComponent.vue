@@ -29,7 +29,7 @@
 </template>
 <style scoped>
 .carousel-item {
-  height: 350px;
+  height: 440px;
   width: 100%;
   overflow: hidden;
 }
