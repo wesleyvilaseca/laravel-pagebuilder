@@ -114,7 +114,7 @@ class BookController extends Controller
 
     public function store(Request $request) {
         $request->validate([
-            'image' => 'file|mimes:jpg,jpeg,png|max:5048',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png|max:5048',
             'name' => 'required|string',
             'description' => 'string|nullable',
             'author' => 'string|nullable',
@@ -124,8 +124,7 @@ class BookController extends Controller
             'publisher_id' => 'integer|exists:publishers,id',
             'price' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
             'presential_price' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
-            'presential_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
-            'virtual_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
+            'price_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
             'status' => 'required|integer'
         ]);
 
@@ -138,7 +137,7 @@ class BookController extends Controller
             $this->bookService->store($data);
             return redirect()->route('books')->with('success', 'Livro criado com sucesso');
         } catch (Exception $e) {
-            return redirect()->route('books')->with('warning',  $e->getMessage());
+            return redirect()->bakc()->with('warning',  $e->getMessage());
         }
     }
 
@@ -149,7 +148,7 @@ class BookController extends Controller
         }
 
         $request->validate([
-            'image' => 'file|mimes:jpg,jpeg,png|max:5048',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png|max:5048',
             'name' => 'required|string',
             'description' => 'string|nullable',
             'author' => 'string|nullable',
@@ -158,22 +157,21 @@ class BookController extends Controller
             'link' => 'string|nullable',
             'publisher_id' => 'integer|exists:publishers,id',
             'price' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
-            'presential_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
-            'virtual_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
+            'price_discount' => 'nullable|regex:/^\d+(\.\d{1,2})?$/',
             'status' => 'required|integer'
         ]);
 
         $data = $request->all();
+
         if($request->file('image')) {
             $data['file'] = $request->file('image');
         }
     
-        DB::beginTransaction();
         try {
             $this->bookService->update($data, $book);
             return redirect()->route('books')->with('success', 'Livro editado com sucesso');
         } catch (Exception $e) {
-            return redirect()->route('books')->with('warning',  $e->getMessage());
+            return redirect()->back()->with('warning',  $e->getMessage());
         }
     }
 
