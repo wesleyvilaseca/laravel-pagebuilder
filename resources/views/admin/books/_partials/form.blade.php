@@ -62,7 +62,7 @@
 </div>
 
 <div class="form-group mt-2">
-    <label>Preço do desconto:</label>
+    <label>Preço com desconto:</label>
     <input type="number" name="price_discount" class="form-control form-control-sm" placeholder="15.5" step="0.01" min="0"
         value="{{ $book->price_discount ?? old('price_discount') }}">
 </div>
