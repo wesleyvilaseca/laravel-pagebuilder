@@ -155,7 +155,7 @@ export default {
             },
 
         ],
-        preloader: true,
+        preloader: false,
         books: [],
         pagination: {},
         sortedColumn: 'name',
@@ -173,7 +173,7 @@ export default {
             this.preloader = false;
             return;
         }
-        this.getBooks();
+        // this.getBooks();
     },
     created() {},
     methods: {
