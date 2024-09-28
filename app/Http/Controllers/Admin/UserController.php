@@ -163,7 +163,7 @@ class UserController extends Controller
             return redirect()->back();
         }
 
-        if($user->isAdmin && !Auth::user()->isAdmin()) {
+        if($user->isAdmin() && !Auth::user()->isAdmin()) {
             return redirect()->back();
         }
 
