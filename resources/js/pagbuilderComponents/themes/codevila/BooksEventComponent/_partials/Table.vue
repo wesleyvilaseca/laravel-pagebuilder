@@ -27,13 +27,15 @@
       <table class="table">
         <thead>
           <tr>
+           <template v-if="defaufTableMsgBody.showDefaultMessage == false">
             <th v-for="column in columns" :key="column" @click="sortByColumn(column.column)" class="table-head">
-              {{ column.title }}
-              <span v-if="column.column === sortedColumn">
-                <i v-if="order === 'asc'" class="fas fa-arrow-up"></i>
-                <i v-else class="fas fa-arrow-down"></i>
-              </span>
-            </th>
+                {{ column.title }}
+                <span v-if="column.column === sortedColumn">
+                  <i v-if="order === 'asc'" class="fas fa-arrow-up"></i>
+                  <i v-else class="fas fa-arrow-down"></i>
+                </span>
+              </th>
+           </template>
           </tr>
         </thead>
         <tbody>
@@ -77,11 +79,12 @@
 </template>
 
 <style scoped>
+  .main-table {
+    overflow-x: auto;
+  }
+
   .main-table table {
     font-size: 0.80rem;
-    /* white-space: nowrap; */
-    /* display: block; */
-    overflow-x: auto;
   }
 
   .btn-dark {
