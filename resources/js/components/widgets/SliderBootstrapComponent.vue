@@ -29,21 +29,31 @@
 </template>
 <style scoped>
 .carousel-item {
-  height: 440px;
-  width: 100%;
+  height: auto;
+  max-width: 100%;
   overflow: hidden;
 }
 
 .carousel-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
+  height: auto;
+  max-width: 100%;
   transition: opacity 0.5s ease-in-out;
 }
 
+@media (max-width: 2000px) {
+  .carousel-item {
+    height: 440px;
+  }
+
+  .carousel-item img {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
 
 @media (max-width: 768px) {
   .carousel-item img {
@@ -59,26 +69,22 @@
   }
 }
 
-
-/* @media (max-width: 580px) {
+@media (max-width: 600px) {
   .carousel-item img {
-     width: 100%;
-     height: 100%;
-     object-position: 40% 70%;
+    object-position: 39% 70%;
   }
-} */
+}
 
-/* @media (max-width: 480px) {
+
+@media (max-width: 500px) {
   .carousel-item {
-    height: 480px;
+    height: 500px;
   }
 
   .carousel-item img {
-     width: 100%;
-     height: 100%;
-     object-position: 50% 80%;
+    object-position: 0% 100%;
   }
-} */
+}
 </style>
 
 <script>
@@ -105,7 +111,7 @@ export default {
     created() {},
     methods: {
           updateLayout() {
-            this.mobileScreem = window.innerWidth <= 600;
+            this.mobileScreem = window.innerWidth <= 500;
 
             this.banners = [];
             this.banners = this.gallery;
