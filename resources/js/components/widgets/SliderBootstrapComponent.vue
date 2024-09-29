@@ -44,6 +44,7 @@
   transition: opacity 0.5s ease-in-out;
 }
 
+
 @media (max-width: 768px) {
   .carousel-item img {
      width: 100%;
@@ -52,15 +53,22 @@
   }
 }
 
-@media (max-width: 580px) {
+@media (max-width: 700px) {
+  .carousel-item img {
+    object-position: 37% 70%;
+  }
+}
+
+
+/* @media (max-width: 580px) {
   .carousel-item img {
      width: 100%;
      height: 100%;
      object-position: 40% 70%;
   }
-}
+} */
 
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   .carousel-item {
     height: 480px;
   }
@@ -70,7 +78,7 @@
      height: 100%;
      object-position: 50% 80%;
   }
-}
+} */
 </style>
 
 <script>
@@ -97,7 +105,7 @@ export default {
     created() {},
     methods: {
           updateLayout() {
-            this.mobileScreem = window.innerWidth <= 480;
+            this.mobileScreem = window.innerWidth <= 600;
 
             this.banners = [];
             this.banners = this.gallery;
