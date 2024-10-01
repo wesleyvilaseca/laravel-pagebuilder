@@ -326,7 +326,7 @@ class PublisherBooksController extends Controller
                 $data['description'] = '';
                 $data['status'] = 1;
 
-                if (!$data['isbn'] || $data['name']) {
+                if (!$data['isbn'] || !$data['name']) {
                     continue;
                 }
 
