@@ -2,7 +2,7 @@
 @php
     use Illuminate\Support\Str;
 @endphp
-<div class="card mb-3">
+{{-- <div class="card mb-3">
     <div class="row card-body">
         <div class="col-2 text-center">
             <img src="{{ @$image->server_file ?  asset('storage/' . $image->server_file) : asset('assets/images/no-image.jpg')}}" alt="{{ @$book->name ?? ''  }}" style="max-width: 90px;" />
@@ -22,7 +22,7 @@
               </div>
         </div>
     </div>    
-</div>
+</div> --}}
 
 <div class="mb-3">
     <label for="title" class="form-label">Titulo do livro *</label>
