@@ -3,7 +3,7 @@
     <div class="mb-3" style="display: flex;  justify-content: space-between;">
         <div>
             <a href="{{ route('publisher.book.create', $publisher->url)  }}" class="btn btn-primary btn-sm">ADD</a>
-            <button class="btn btn-info btn-sm mr-2" data-toggle="modal" data-target="#exampleModal">Cadastro de livros em lote</button>
+            <button class="btn btn-info btn-sm ml-2" data-toggle="modal" data-target="#exampleModal">Cadastro de livros em lote</button>
         </div>
 
         @if (sizeof($books) > 0)
