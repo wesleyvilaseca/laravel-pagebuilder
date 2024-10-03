@@ -91,7 +91,10 @@
     <!--meus js-->
     <script src="{{ asset('assets-admin/js/plugins/sidebar/sidebar.js') }}"></script>
     <script src="{{ asset('assets-admin/js/helper.js') }}"></script>
+
     <script src="{{ mix('js/app.js') }}" defer></script>
+
+    @yield('js')
 
     <script>
         $.extend(true, $.fn.dataTable.defaults, {
@@ -118,8 +121,6 @@
             }
         });
     </script>
-
-    @yield('js')
 </body>
 
 </html>

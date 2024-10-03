@@ -131,6 +131,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
     <script>
+        $(window).on('load', function() {
+
         document.getElementById('csv_book_file').addEventListener('change', function(event) {
             const fileName = event.target.files[0] ? event.target.files[0].name : 'Selecione o arquivo';
             const label = event.target.nextElementSibling;
@@ -198,5 +200,6 @@
             });
             return true;
         }
+    })
     </script>
 @stop
