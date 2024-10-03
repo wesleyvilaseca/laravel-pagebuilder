@@ -15,7 +15,8 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "richan-fongdasen/laravel-varnishable": "^2.2",
-        "spatie/browsershot": "^3.61"
+        "spatie/browsershot": "^3.61",
+        "tightenco/ziggy": "^1.8"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

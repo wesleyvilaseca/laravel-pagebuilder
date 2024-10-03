@@ -35,3 +35,11 @@
     transition: all 1s;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+img {
+    max-width: 60px;
+    height: auto;
+}

@@ -1,9 +1,14 @@
 @extends('layouts.admin')
 @section('content')
     <div class="container-fluid">
-        <form action="{{ $action }}" method="post" enctype="multipart/form-data">
-            @csrf
-            @include('admin.publishers._partials.form')
-        </form>
+        <form-publisher-component />
     </div>
+@stop
+
+@section('js')
+    <script>
+        jQuery(function($) {
+            $('#zip_code').mask("00000-000");
+        });
+    </script>
 @stop

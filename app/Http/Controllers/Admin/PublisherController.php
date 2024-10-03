@@ -9,6 +9,8 @@ use App\Services\UploadFileService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class PublisherController extends Controller
@@ -69,9 +71,9 @@ class PublisherController extends Controller
         $data['breadcrumb'][] = ['route' => route('painel'), 'title' => 'Dashboard'];
         $data['breadcrumb'][] = ['route' => route('publishers'), 'title' => 'Editoras'];
         $data['breadcrumb'][] = ['route' => '#', 'title' => $data['title'], 'active' => true];
-        $data['logo'] = $publisher->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_LOGO)->first();
-        $data['price_list'] = $publisher->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_PUBLISHER_BOOK_PRICE_LIST)->first();
         $data['publisher'] = $publisher;
+        $data['publisher']->logo = $publisher->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_LOGO)?->first();
+        $data['publisher']->price_list = $publisher->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_PUBLISHER_BOOK_PRICE_LIST)?->first();
         $data['action']         = route('publisher.update', $publisher->id);
 
         return view('admin.publishers.edit', $data);
@@ -88,18 +90,18 @@ class PublisherController extends Controller
         DB::beginTransaction();
         try {
             $address = (object) [
-                'address' => @$request->address,
-                'zip_code' => @$request->zip_code,
-                'state' => @$request->state,
-                'district' => @$request->district,
-                'city' => @$request->city,
-                'number' => @$request->number
+                'address' => @$request->address ?? '',
+                'zip_code' => @$request->zip_code ?? '',
+                'state' => @$request->state ?? '',
+                'district' => @$request->district ?? '',
+                'city' => @$request->city ?? '',
+                'number' => @$request->number ?? ''
             ];
 
             $social = (object)[
-                'facebook' => @$request->facebook,
-                'instagram' => @$request->instagram,
-                'youtube' => @$request->youtube
+                'facebook' => @$request->facebook ?? '',
+                'instagram' => @$request->instagram ?? '',
+                'youtube' => @$request->youtube ?? ''
             ];
 
             $publisher = $this->repository->create([
@@ -145,7 +147,7 @@ class PublisherController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('publishers')->with('success', 'Editora criada com sucesso');
+            return response()->json(['message' => 'Editora criada com sucesso', 'editora' => $publisher], 200);
         } catch (Exception $e) {
             DB::rollback();
             if (isset($storedFileLogo)) {
@@ -155,14 +157,14 @@ class PublisherController extends Controller
             if (isset($storedFilePriceList)) {
                 $this->uploadFileService->deleteFile($storedFilePriceList['server_file']);
             }
-            return redirect()->route('publishers')->with('warning',  $e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 500);
         }
     }
 
     public function update(Request $request, $id) {
         $publisher = $this->repository->find($id);
         if (!$publisher) {
-            return redirect()->back()->with('error', 'Editora não localizada');
+            return response()->json(['message' => 'Editora não localizada'], 404);
         }
 
         $request->validate([
@@ -217,18 +219,18 @@ class PublisherController extends Controller
             }
 
             $address = (object) [
-                'address' => @$request->address,
-                'zip_code' => @$request->zip_code,
-                'state' => @$request->state,
-                'district' => @$request->district,
-                'city' => @$request->city,
-                'number' => @$request->number
+                'address' => @$request->address ?? '',
+                'zip_code' => @$request->zip_code ?? '',
+                'state' => @$request->state ?? '',
+                'district' => @$request->district ?? '',
+                'city' => @$request->city ?? '',
+                'number' => @$request->number ?? ''
             ];
 
             $social = (object)[
-                'facebook' => @$request->facebook,
-                'instagram' => @$request->instagram,
-                'youtube' => @$request->youtube
+                'facebook' => @$request->facebook ?? '',
+                'instagram' => @$request->instagram ?? '',
+                'youtube' => @$request->youtube ?? ''
             ];
 
             $this->repository->where('id', $publisher->id)->update([
@@ -244,7 +246,7 @@ class PublisherController extends Controller
                 ])
             ]);
             DB::commit();
-            return redirect()->route('publishers')->with('success', 'Editora editada com sucesso');
+            return response()->json(['message' => 'Editora editada com sucesso'], 200);
         } catch (Exception $e) {
             DB::rollback();
             if (isset($storedFileLogo)) {
@@ -254,7 +256,8 @@ class PublisherController extends Controller
             if (isset($storedFilePriceList)) {
                 $this->uploadFileService->deleteFile($storedFilePriceList['server_file']);
             }
-            return redirect()->route('publishers')->with('warning',  $e->getMessage());
+
+            return response()->json(['message' =>  $e->getMessage()], 500);
         }
     }
 
@@ -282,5 +285,49 @@ class PublisherController extends Controller
             DB::rollback();
             return redirect()->route('publishers')->with('warning',  $e->getMessage());
         }
+    }
+
+    public function deleteLogo($id) {
+        DB::beginTransaction();
+        try {
+            $publisher = $this->repository->find($id);
+            if (!$publisher) {
+                return response()->json(['message' => 'Editora não localizada'], 404);
+            }
+
+            $logo = $publisher->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_LOGO)->first();
+            if($logo) {
+                $this->uploadFileService->deleteFile('', $logo);
+            }
+
+            DB::commit();
+            return response()->json(['message' => 'Logo removido com sucesso'], 200);
+        } catch (Exception $e) {
+            DB::rollback();
+            Log::error('Error deleting logo: ' . $e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function deletePriceList($id) {
+        DB::beginTransaction();
+        try {
+            $publisher = $this->repository->find($id);
+            if (!$publisher) {
+                return response()->json(['message' => 'Editora não localizada'], 404);
+            }
+
+            $price_list = $publisher->uploads()->wherePivot('alias_category', $this->repository::FILE_CATEGORY_PUBLISHER_BOOK_PRICE_LIST)->first();
+            if($price_list) {
+                $this->uploadFileService->deleteFile('', $price_list);
+            }
+
+            DB::commit();
+            return response()->json(['message' => 'Lista de preço removido com sucesso'], 200);
+        } catch (Exception $e) {
+            DB::rollback();
+            Log::error('Error deleting pricelist: ' . $e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 500);
+        } 
     }
 }

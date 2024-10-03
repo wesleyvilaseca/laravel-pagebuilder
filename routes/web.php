@@ -128,8 +128,6 @@ Route::middleware(['auth'])->group(function() {
         Route::any('/publisher/search',            [PublisherController::class, 'index'])->name('publishers.search');
         Route::get('/publisher/create',     [PublisherController::class, 'create'])->name('publisher.create');
         Route::get('/publisher/{id}/edit',     [PublisherController::class, 'edit'])->name('publisher.edit');
-        Route::put('/publisher/{id}/update',     [PublisherController::class, 'update'])->name('publisher.update');
-        Route::post('/publisher/store',     [PublisherController::class, 'store'])->name('publisher.store');
         Route::get('/publisher/{id}/delete',  [PublisherController::class, 'delete'])->name('publisher.delete');
     
         /**
@@ -144,8 +142,6 @@ Route::middleware(['auth'])->group(function() {
         Route::delete('/publisher/{url}/book/{id}/delete',  [PublisherBooksController::class, 'delete'])->name('publisher.book.delete');
         Route::delete('/publisher/{url}/books-delete',  [PublisherBooksController::class, 'deleteBatch'])->name('publisher.books.delete');
         Route::post('/publisher/{url}/book-batch-create',  [PublisherBooksController::class, 'batchStore'])->name('publisher.books.batch');
-    
-    
     
         /**
          * author|books

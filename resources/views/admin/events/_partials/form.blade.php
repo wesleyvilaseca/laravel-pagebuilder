@@ -10,8 +10,19 @@
 <div class="mb-3">
     <label for="name" class="form-label">Nome do evento</label>
     <input type="text" class="form-control form-control-sm" id="name" name="name"
-        value="{{ @$event ? $event->name : '' }}">
+        value="{{ @$event ? $event->name : '' }}" onblur="getUrl()">
 </div>
+
+<div class="mb-3">
+    <label for="basic-url">Url do evento * (A url deve ser separado por traços '-' e não deve conter caracteres especiais) </label>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text pt-0 pb-0" id="route">{{ env('APP_URL') . '/'  }}</span>
+        </div>
+        <input type="text" class="form-control form-control-sm" id="url" name="url" aria-describedby="route"  value="{{ @$event ? $event->url : '' }}" required minlength="6">
+    </div>
+</div>
+
 
 <div class="mb-3">
     <label for="description" class="form-label">Descrição do evento</label>
@@ -223,5 +234,9 @@
             },
             templates: ''
         });
+
+        function getUrl() {
+            $("#url").val(slugify($("#name").val()));
+        }
     </script>
 @stop

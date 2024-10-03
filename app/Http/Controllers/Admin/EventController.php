@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class EventController extends Controller
 {
@@ -73,6 +74,11 @@ class EventController extends Controller
 
 
     public function store(EventCreateRequest $request) {
+        $request->validate([
+            'name' => 'required|string',
+            'url' => 'required|string|min:6|max:100|unique:event,url',
+        ]);
+        
         DB::beginTransaction();
         try {
             $address = (object) [
@@ -97,7 +103,7 @@ class EventController extends Controller
                     'description' => $request->description,
                     'principal' => $request->principal,
                     'status' => $request->status,
-                    'url' => Str::slug($request->name),
+                    'url' => Str::slug($request->url),
                     'theme_id' => $template->theme_id,
                     'data' => json_encode((object)[
                         'address' => $address
@@ -164,6 +170,17 @@ class EventController extends Controller
     }
 
     public function update(EventUpdateRequest $request, $id) {
+        $request->validate([
+            'name' => 'required|string',
+            'url' => [
+                'required',
+                'string',
+                'min:6',
+                'max:100',
+                Rule::unique('events', 'url')->ignore($id),
+            ],
+        ]);
+
         DB::beginTransaction();
         try {
             $event = Event::find($id); 
@@ -203,7 +220,7 @@ class EventController extends Controller
                 'description' => $request->description,
                 'principal' => $request->principal,
                 'status' => $request->status,
-                'url' => Str::slug($request->name),
+                'url' => Str::slug($request->url),
                 'theme_id' => $event->theme_id,
                 'data' => json_encode((object)[
                     'address' => $address

@@ -1,17 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-    <style>
-        /* Adicione estilos conforme necessário */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        img {
-            max-width: 60px; /* Ajuste o tamanho da imagem conforme necessário */
-            height: auto;
-        }
-    </style>
-
     <div class="container-fluid">
         <a href="{{ route('publisher.create') }}" class="btn btn-primary btn-sm mb-3">ADD</a>
 
@@ -46,7 +34,11 @@
                     <tr>
                         <td>{{ $publisher->name }}</td>
                         <td> 
-                            <img src="{{ asset('storage/' . $publisher->uploads->first()?->server_file )}}" alt="Descrição da Imagem" loading="lazy">
+                            @if ($publisher->uploads->first()?->server_file)
+                                <img src="{{ asset('storage/' . $publisher->uploads->first()?->server_file )}}" alt="Descrição da Imagem" loading="lazy">
+                            @else
+                                <img src="{{ asset('/assets/images/no-image.jpg')}}" alt="Descrição da Imagem" loading="lazy">
+                            @endif
                         </td>
 
                         <td style="width=10px;">

@@ -94,14 +94,3 @@
             </div>
         </div>
 </nav>
-
-<style>
-    .ativo a {
-        color: #16c7ff !important;
-    }
-
-    .ativo a i {
-        color: #16c7ff;
-    }
-
-</style>

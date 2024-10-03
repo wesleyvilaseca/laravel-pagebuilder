@@ -488,3 +488,14 @@
       border-right: none;
   }
   
+  .ativo a {
+    color: #16c7ff !important;
+  }
+
+.ativo a i {
+    color: #16c7ff;
+}
+
+.custom-file-input ~ .custom-file-label::after {
+  content: "Selecionar";
+}
