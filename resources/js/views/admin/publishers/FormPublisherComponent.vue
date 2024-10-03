@@ -16,14 +16,15 @@
                 <div class="col-2 text-center position-relative">
                     <img 
                     :src="imageSrcLogo" 
+                    class="position-relative"
                     style="max-width: 90px;"
                     >
                     <button
-                    v-if="selectedFileLogo || !imageSrcLogo.includes('no-image')"
-                    class="btn btn-outline-danger btn-sm btn-circle position-absolute"
-                    style="top: 0; left: 20px; z-index: 1;"
-                    @click.prevent="clearLogo"
-                    title="Limpar logo">
+                        v-if="selectedFileLogo || !imageSrcLogo.includes('no-image')"
+                        class="btn btn-outline-danger btn-sm btn-circle position-absolute"
+                        style="top: -10px; left: 50%; z-index: 1;"
+                        @click.prevent="clearLogo"
+                        title="Limpar logo">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
@@ -54,7 +55,7 @@
                         style="max-width: 90px;"></canvas>
                         <button
                         class="btn btn-outline-danger btn-sm btn-circle position-absolute"
-                        style="top: 0; left: 20px; z-index: 1;"
+                        style="top: -10px; left: 50%; z-index: 1;"
                         @click.prevent="clearPriceList()"
                         title="Limpar logo">
                             <i class="fas fa-times"></i>
@@ -458,6 +459,11 @@
 </script>
 
 <style>
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
 .btn-circle {
     width: 18px;
     height: 18px;
@@ -468,6 +474,7 @@
     justify-content: center;
     border: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: absolute;
 }
 
 .btn-circle i {

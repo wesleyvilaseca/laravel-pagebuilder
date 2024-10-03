@@ -2,11 +2,6 @@
   <div class="data-table">
     <div class="filter-section">
       <div class="row">
-        <div class="col-md-2">
-          <select v-model="perPageModel" @change="changePerPage" class="form-select mb-2">
-            <option v-for="num in perPageOptions" :key="num" :value="num">{{ num }}</option>
-          </select>
-        </div>
         <div class="col-md-6">
           <input v-model="searchQuery" class="form-control mb-2" type="text" placeholder="Buscar livro..." @keydown.enter.prevent="search()" />
         </div>
@@ -15,6 +10,11 @@
             <option v-for="filter in searchFilters" :key="filter.value" :value="filter.value">
               {{ filter.label }}
             </option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <select v-model="perPageModel" @change="changePerPage" class="form-select mb-2">
+            <option v-for="num in perPageOptions" :key="num" :value="num">{{ num }}</option>
           </select>
         </div>
         <div class="col-md-2 col-sm-12">

@@ -112,7 +112,7 @@ export default {
     },
     data: () => ({
         searchFilters: [
-            { label: 'Livro', value: 'name' },
+            { label: 'Título', value: 'name' },
             { label: 'Assunto', value: 'subject' },
             { label: 'Editora', value: 'publisher_name' },
             { label: 'ISBN', value: 'isbn' },
