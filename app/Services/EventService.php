@@ -113,6 +113,6 @@ class EventService {
         // Ordenar e paginar os resultados
         $query->orderBy($request->column ?? 'name', $request->order ?? 'asc');
         
-        return $query->paginate($request->per_page ?? 15);
+        return $query->paginate($request->per_page ?? 40);
     }
  }

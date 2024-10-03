@@ -31,7 +31,7 @@ class PublisherController extends Controller
         } else {
             $data['publishers'] = $this->repository->with(['uploads' => function($query) {
                 $query->wherePivot('alias_category', 'publisher-logo');
-            }])->orderBy('name', 'asc')->paginate(8);
+            }])->orderBy('name', 'asc')->paginate(40);
         }
 
         $data['publisher_'] = true;

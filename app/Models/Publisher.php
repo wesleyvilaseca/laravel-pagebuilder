@@ -30,7 +30,7 @@ class Publisher extends Model
             });
         }
 
-        return $query->orderBy('name', 'asc')->paginate(8);;
+        return $query->orderBy('name', 'asc')->paginate(40);
     }
 
     public function uploads()
