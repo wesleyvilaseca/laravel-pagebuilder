@@ -1,31 +1,9 @@
 @extends('layouts.admin')
 @section('content')
-    <style>
-        .top-section {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* Adicione estilos conforme necessário */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        img {
-            max-width: 60px; /* Ajuste o tamanho da imagem conforme necessário */
-            height: auto;
-        }
-
-        .custom-file-input ~ .custom-file-label::after {
-            content: "Selecionar";
-        }
-    </style>
-
-    <div class="mb-3 top-section">
+    <div class="mb-3" style="display: flex;  justify-content: space-between;">
         <div>
             <a href="{{ route('publisher.book.create', $publisher->url)  }}" class="btn btn-primary btn-sm">ADD</a>
-            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModal">Cadastro de livros em lote</button>
+            <button class="btn btn-info btn-sm mr-2" data-toggle="modal" data-target="#exampleModal">Cadastro de livros em lote</button>
         </div>
 
         @if (sizeof($books) > 0)
@@ -33,7 +11,7 @@
                 <form action="{{ route('publisher.books.delete', $publisher->url) }}" method="POST" id="publisherbook">
                     @csrf
                     @method('DELETE')
-                    <button id="delete-btn" class="btn btn-sm btn-danger" disabled onclick="return deleteBooks();">
+                    <button id="delete-btn" class="btn btn-sm btn-danger" disabled onclick="deleteBooks();">
                         <i class="fas fa-trash"></i>
                     </button>
                 </form>
@@ -124,6 +102,18 @@
           </div>
         </div>
       </div>
+      <style>
+
+        /* Adicione estilos conforme necessário */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .custom-file-input ~ .custom-file-label::after {
+            content: "Selecionar";
+        }
+    </style>
 @stop
 
 @section('js')
@@ -173,8 +163,9 @@
             $('.book-checkbox').prop('checked', this.checked);
             toggleDeleteButton();
         });
+    })
 
-        function toggleDeleteButton() {
+    function toggleDeleteButton() {
             if ($('.book-checkbox:checked').length > 0) {
                 $('#delete-btn').prop('disabled', false);
             } else {
@@ -200,6 +191,5 @@
             });
             return true;
         }
-    })
     </script>
 @stop
