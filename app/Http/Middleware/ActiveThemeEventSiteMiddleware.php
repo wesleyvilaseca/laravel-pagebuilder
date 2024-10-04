@@ -29,10 +29,6 @@ class ActiveThemeEventSiteMiddleware
         $url = explode('/', str_replace([env('APP_URL'), 'http://', 'https://'], "", request()->url()));
         $url = array_values(array_filter($url, function($value) {  return $value !== ""; }));
 
-        if(in_array(Page::URL_PAGE_PUBLISHERS, $url)) {
-            return Redirect::back();
-        };
-
         //acess principal event
         if(empty($url)) {
             $event = Event::where('principal', Event::PRINCIPAL_EVENT)->first();
