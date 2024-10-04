@@ -30,6 +30,16 @@ $uri = @isset($params['domain']) ? $params['domain'] : null;
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="<?= mix('js/sitebuilder-app.js') ?>"></script>
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0BGZRHY3R1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-0BGZRHY3R1');
+        </script>
     </head>
 
     <body>
