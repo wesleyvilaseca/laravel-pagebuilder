@@ -9,6 +9,7 @@ use App\Models\Theme;
 use App\Supports\Helper\Utils;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use PHPageBuilder\PHPageBuilder;
 
@@ -27,6 +28,10 @@ class ActiveThemeEventSiteMiddleware
 
         $url = explode('/', str_replace([env('APP_URL'), 'http://', 'https://'], "", request()->url()));
         $url = array_values(array_filter($url, function($value) {  return $value !== ""; }));
+
+        if(in_array(Page::URL_PAGE_PUBLISHERS, $url)) {
+            return Redirect::back();
+        };
 
         //acess principal event
         if(empty($url)) {

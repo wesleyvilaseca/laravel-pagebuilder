@@ -11,6 +11,7 @@ class Page extends Model
 
     const HOME_PAGE = 1;
     const URL_PAGE_PUBLISHER = 'editora';
+    const URL_PAGE_PUBLISHERS = 'editoras';
     
     protected $table = 'pages';
     protected $fillable = ['event_id', 'name', 'layout', 'route', 'homepage', 'data'];

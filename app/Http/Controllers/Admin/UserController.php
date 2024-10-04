@@ -140,6 +140,10 @@ class UserController extends Controller
                 'email'        => $request->email
             ];
 
+            if ($request->password) {
+                $data['password'] = Hash::make($request->password);
+            }
+
             $this->repository->where('id', $id)->update($data);
 
             if(!$user->roles->first()) {
