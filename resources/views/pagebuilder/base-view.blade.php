@@ -20,6 +20,10 @@
                 const urlPath = window.location.pathname.split('/').filter(Boolean);
                 const secondParam = urlPath[0]; 
 
+                if (linkHref.startsWith('http://') || linkHref.startsWith('https://')) {
+                    return;
+                }
+
                 if (linkHref === 'inicio') {
                     e.preventDefault();
                     if (secondParam === sub && eventPrincipal == false) {
