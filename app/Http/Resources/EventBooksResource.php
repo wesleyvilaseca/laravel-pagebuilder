@@ -15,7 +15,6 @@ class EventBooksResource extends JsonResource
      */
     public function toArray($request)
     {
-        if()
         return [
             'name' => $this->name,
             'subject' => $this->subject ?? '',
