@@ -79,7 +79,7 @@
   .fade-leave-to {
     opacity: 0;
   }
-  .publishers-event {
+  .publishers-event { 
     opacity: 0;
     transition: opacity 0.5s ease;
   }
