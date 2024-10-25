@@ -118,7 +118,6 @@ img.card-img-top {
 
 .card-footer {
     width: 100%;
-    text-transform: capitalize;
     background-color: #000;
     color: #fff;
     text-align: center;
