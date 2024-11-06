@@ -10,6 +10,12 @@
 
 {!! $html !!}
 
+<div class="text-center mt-4 mb-4">
+    By - <a data-cke-saved-href="https://codevila.com.br/" href="https://codevila.com.br/" target="_blank" class="IDM358HP324LB1C0"> 
+        <b data-raw-content="true">Code<span id="inqb2f">Vila</span></b>
+    </a>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const currentUrl = window.location.href;

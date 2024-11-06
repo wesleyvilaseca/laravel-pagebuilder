@@ -1,8 +1,9 @@
-FROM php:8.1
+FROM php:8.3
 
 ARG user=wesley
 ARG uid=1000
 
+# Atualiza os pacotes e instala dependências essenciais
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -12,31 +13,43 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     libzip-dev \
+    libjpeg-dev \
+    libwebp-dev \
     nodejs \
-    npm
+    npm \
+    nano
 
-# Clear cache
+# Limpa o cache do apt
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets zip
+# Instala as extensões PHP necessárias
+RUN docker-php-ext-configure gd --with-jpeg --with-webp && \
+    docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd sockets zip
 
-# Get latest Composer
+# Instala o Xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
+# Copia o Composer mais recente
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
+# Cria um usuário do sistema para executar Composer e comandos Artisan
+RUN useradd -G www-data,root -u $uid -d /home/$user $user && \
+    mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 
 WORKDIR /var/www/html
 
-# Copy application files
+# Copia os arquivos da aplicação
 COPY ./ ./
 
-# Install Composer dependencies
-RUN composer install \
+RUN chown -R $user:$user /var/www/html
+
+# Instala dependências do Composer
+RUN composer update \
     && chown -R $user:$user /var/www/html/vendor
 
-# Switch to non-root user
+# Muda para o usuário não-root
 USER $user
+
+# Define o ponto de entrada
+ENTRYPOINT ["/var/www/html/run-after-build.sh"]

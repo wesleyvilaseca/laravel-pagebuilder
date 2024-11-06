@@ -6,16 +6,30 @@ services:
       dockerfile: ./Dockerfile
       args:
         - TARGETPLATFORM=linux/amd64
-    command: 'php artisan serve --host=0.0.0.0'
-    volumes:
+    container_name: sitebuilder_app
+    environment:
+      APP_ENV: ${APP_ENV}
+      APP_DEBUG: ${APP_DEBUG}
+      DB_HOST: sitebuilder_db
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes: 
       - ./:/var/www/html
+      - ./.docker/certs/:/etc/letsencrypt
+      - ./.docker/sites-avaliable/:/etc/apache2/sites-available
+    networks:
+    - app-network
     ports:
       - 8004:8000
+      - 443:443
     depends_on:
-      - site_builder_db
-
-  site_builder_db:
-    image: mysql:5.7.34
+      sitebuilder_db:
+        condition: service_healthy
+    restart: unless-stopped
+  
+  sitebuilder_db:
+    image: mysql:8.0
     platform: linux/amd64
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -23,6 +37,18 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_USER: ${DB_USERNAME}
     volumes:
-      - ./storage/dbdata:/var/lib/mysql
+        - ./.docker/mysql/dbdata:/var/lib/mysql
+    networks:
+      - app-network
     ports:
       - "33071:3306"
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u${DB_USERNAME} -p${DB_PASSWORD}"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
