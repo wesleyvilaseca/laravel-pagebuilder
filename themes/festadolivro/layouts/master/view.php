@@ -14,10 +14,10 @@ $uri = @isset($params['domain']) ? $params['domain'] : null;
 
         <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" /> -->
 
-        <link rel="stylesheet" href="<?= Utils::getasset('assets-themes/codevila/css/owl/owl.carousel.min.css') ?>" />
-        <link rel="stylesheet" href="<?= Utils::getasset('assets-themes/codevila/css/owl/owl.theme.default.min.css') ?>" />
-        <link rel="stylesheet" href="<?= Utils::getasset('assets-themes/codevila/css/magnific-popup.css') ?>" />
-        <link rel="stylesheet" href="<?= Utils::getasset('assets-themes/codevila/css/main.css') ?>" />
+        <link rel="stylesheet" href="<?= Utils::getasset('assets-themes/festadolivro/css/owl/owl.carousel.min.css') ?>" />
+        <link rel="stylesheet" href="<?= Utils::getasset('assets-themes/festadolivro/css/owl/owl.theme.default.min.css') ?>" />
+        <link rel="stylesheet" href="<?= Utils::getasset('assets-themes/festadolivro/css/magnific-popup.css') ?>" />
+        <link rel="stylesheet" href="<?= Utils::getasset('assets-themes/festadolivro/css/main.css') ?>" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <title><?= $page->get('title'); ?></title>
@@ -47,10 +47,10 @@ $uri = @isset($params['domain']) ? $params['domain'] : null;
         <?= $body ?>
         <!--JS-->
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="<?= Utils::getasset('assets-themes/codevila/js/bootstrap.min.js') ?>"></script>
-        <script src="<?= Utils::getasset('assets-themes/codevila/js/owl.carousel.min.js') ?>"></script>
-        <script src="<?= Utils::getasset('assets-themes/codevila/js/isotope.pkgd.min.js') ?>"></script>
-        <script src="<?= Utils::getasset('assets-themes/codevila/js/magnify/jquery.magnific-popup.min.js') ?>"></script>
-        <script src="<?= Utils::getasset('assets-themes/codevila/js/main.js') ?>"></script>
+        <script src="<?= Utils::getasset('assets-themes/festadolivro/js/bootstrap.min.js') ?>"></script>
+        <script src="<?= Utils::getasset('assets-themes/festadolivro/js/owl.carousel.min.js') ?>"></script>
+        <script src="<?= Utils::getasset('assets-themes/festadolivro/js/isotope.pkgd.min.js') ?>"></script>
+        <script src="<?= Utils::getasset('assets-themes/festadolivro/js/magnify/jquery.magnific-popup.min.js') ?>"></script>
+        <script src="<?= Utils::getasset('assets-themes/festadolivro/js/main.js') ?>"></script>
     </body>
 </html>
