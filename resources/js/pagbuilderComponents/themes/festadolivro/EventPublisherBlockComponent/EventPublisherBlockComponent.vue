@@ -222,8 +222,8 @@ export default {
         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
         url: "editora-2",
         logo: "https://festadolivro.edusp.com.br/sites/default/files/inline-images/edusp-preto_0.png",
-        site: 'https://codevila.com.br',
-        email: 'https://wesley.vilaseca@gmail.com',
+        site: 'https://cardopar.com.br',
+        email: 'https://mardey@usp.br',
         price_list: 'https://festadolivro.edusp.com.br/sites/default/files/2023-10/LISTA%20DE%20PRE%C3%87OS%20-%20Alameda%20-%20Alameda%20Casa.pdf',
         address: {
             city: "Belém",
