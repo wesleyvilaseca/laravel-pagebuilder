@@ -13,4 +13,8 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-/storage/dbdata
+/.docker
+/.idea
+/.vscode
+/.certs
+/.sites-avaliable/*
